@@ -1,0 +1,88 @@
+<resources>
+    <string name="app_name">DB20-G Controller</string>
+
+    <!-- Common -->
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
+    <string name="close">Close</string>
+    <string name="error">Error</string>
+    <string name="success">Success</string>
+    <string name="loading">Loading…</string>
+    <string name="retry">Retry</string>
+
+    <!-- Tabs -->
+    <string name="tab_live">Live</string>
+    <string name="tab_channels">Channels</string>
+    <string name="tab_repeaters">Repeaters</string>
+    <string name="tab_routes">Routes</string>
+    <string name="tab_emergency">Emergency</string>
+    <string name="tab_bluetooth">Bluetooth</string>
+    <string name="tab_settings">Settings</string>
+    <string name="tab_tools">Tools</string>
+
+    <!-- Live -->
+    <string name="ptt">PTT</string>
+    <string name="transmitting">Transmitting</string>
+    <string name="receiving">Receiving</string>
+    <string name="idle">Idle</string>
+    <string name="connected">Connected</string>
+    <string name="disconnected">Disconnected</string>
+    <string name="channel">Channel</string>
+    <string name="frequency">Frequency</string>
+
+    <!-- Emergency -->
+    <string name="emergency_sos">Emergency SOS</string>
+    <string name="emergency_beacon">Emergency beacon activated</string>
+    <string name="emergency_cancel">Cancel Emergency</string>
+
+    <!-- Tools -->
+    <string name="text_messaging">Text Messaging</string>
+    <string name="sstv">SSTV Image Transmission</string>
+    <string name="spectrum_analyzer">Spectrum Analyzer</string>
+    <string name="weather_alerts">Weather Alerts</string>
+    <string name="compliance_tools">FCC Compliance Tools</string>
+
+    <!-- Compliance -->
+    <string name="fcc_license">FCC License</string>
+    <string name="callsign">Callsign</string>
+    <string name="lookup">Lookup</string>
+    <string name="license_active">Active</string>
+    <string name="license_expired">Expired</string>
+    <string name="callsign_id_timer">Callsign ID Timer</string>
+    <string name="mark_callsign_id">Mark Callsign ID</string>
+    <string name="family_members">Authorized Family Members</string>
+    <string name="add_family_member">Add Family Member</string>
+    <string name="power_limits">Power Limits by Channel</string>
+    <string name="part95_reference">FCC Part 95 Quick Reference</string>
+    <string name="violation_log">Violation Log</string>
+    <string name="no_violations">No violations recorded</string>
+    <string name="run_audit">Run Compliance Audit</string>
+
+    <!-- Translation -->
+    <string name="translation">Real-Time Translation</string>
+    <string name="translation_enabled">Translation enabled</string>
+    <string name="translation_disabled">Translation disabled</string>
+    <string name="download_model">Download Model</string>
+    <string name="model_ready">Model ready</string>
+    <string name="translating">Translating…</string>
+    <string name="original_text">Original text</string>
+    <string name="translated_text">Translated text</string>
+
+    <!-- Accessibility -->
+    <string name="font_size_small">Small</string>
+    <string name="font_size_medium">Medium</string>
+    <string name="font_size_large">Large</string>
+    <string name="font_size_extra_large">Extra Large</string>
+    <string name="high_contrast">High Contrast</string>
+    <string name="haptic_feedback">PTT Haptic Feedback</string>
+
+    <!-- Settings -->
+    <string name="settings_theme">Theme</string>
+    <string name="settings_theme_default">Dark</string>
+    <string name="settings_theme_amoled">AMOLED Black</string>
+    <string name="settings_theme_red">Red Night Vision</string>
+    <string name="settings_accessibility">Accessibility</string>
+    <string name="settings_language">Language</string>
+</resources>

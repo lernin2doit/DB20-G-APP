@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="?android:colorBackground">
+
+    <!-- Progress indicator -->
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/wizardProgress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="4"
+        android:progress="0" />
+
+    <!-- Step title -->
+    <TextView
+        android:id="@+id/tvStepTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="24dp"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="?android:textColorPrimary" />
+
+    <!-- Step content area -->
+    <FrameLayout
+        android:id="@+id/stepContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="16dp">
+
+        <!-- Step 0: Welcome -->
+        <ScrollView
+            android:id="@+id/stepWelcome"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:paddingTop="32dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Welcome to DB20-G Controller"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:textColor="?android:textColorPrimary"
+                    android:gravity="center" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="This app lets you program and control your Radioddity DB20-G GMRS radio directly from your phone.\n\nWe'll get you set up in under 60 seconds:"
+                    android:textSize="16sp"
+                    android:textColor="?android:textColorSecondary"
+                    android:lineSpacingExtra="4dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="① Enter your FCC callsign\n② Allow location for nearby repeaters\n③ Pick a channel template\n④ Connect &amp; program your radio"
+                    android:textSize="15sp"
+                    android:textColor="?android:textColorSecondary"
+                    android:lineSpacingExtra="8dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp" />
+            </LinearLayout>
+        </ScrollView>
+
+        <!-- Step 1: Callsign -->
+        <ScrollView
+            android:id="@+id/stepCallsign"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Your FCC GMRS callsign is required by law. It looks like WRXX123."
+                    android:textSize="15sp"
+                    android:textColor="?android:textColorSecondary"
+                    android:lineSpacingExtra="4dp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:hint="FCC Callsign (e.g. WRXX123)">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etCallsign"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textCapCharacters"
+                        android:maxLength="7"
+                        android:textSize="20sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switchAutoId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Enable automatic callsign ID (every 15 min)"
+                    android:checked="true" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="FCC Part 95 requires you to identify with your callsign at the beginning and end of communications, and every 15 minutes during extended conversations."
+                    android:textSize="13sp"
+                    android:textColor="?android:textColorSecondary"
+                    android:fontFamily="sans-serif-light" />
+            </LinearLayout>
+        </ScrollView>
+
+        <!-- Step 2: Location -->
+        <ScrollView
+            android:id="@+id/stepLocation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Location access lets the app find GMRS repeaters near you and show distance/bearing information."
+                    android:textSize="15sp"
+                    android:textColor="?android:textColorSecondary"
+                    android:lineSpacingExtra="4dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnGrantLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:text="Grant Location Access"
+                    style="@style/Widget.Material3.Button" />
+
+                <TextView
+                    android:id="@+id/tvLocationStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center"
+                    android:textSize="15sp"
+                    android:textColor="?android:textColorSecondary" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="You can skip this if you prefer. Repeater features will still work but you'll need to search manually."
+                    android:textSize="13sp"
+                    android:textColor="?android:textColorSecondary"
+                    android:fontFamily="sans-serif-light" />
+            </LinearLayout>
+        </ScrollView>
+
+        <!-- Step 3: Template selection -->
+        <ScrollView
+            android:id="@+id/stepTemplate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Choose a channel template to pre-load into your radio. You can always customize channels later."
+                    android:textSize="15sp"
+                    android:textColor="?android:textColorSecondary"
+                    android:lineSpacingExtra="4dp" />
+
+                <RadioGroup
+                    android:id="@+id/rgTemplates"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp">
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/rbGmrsStandard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:text="GMRS Standard 22 — All simplex channels, correct power limits"
+                        android:checked="true" />
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/rbEmergencyKit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:text="Emergency Kit — Ch 20 first, FRS interop, repeater pairs" />
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/rbFamilyPack"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:text="Family Pack — Simple 8-channel setup for family use" />
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/rbFullRepeaters"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:text="Full GMRS + Repeaters — 22 simplex + 8 repeater pairs" />
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/rbSkipTemplate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:text="Skip — I'll program channels manually" />
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/tvTemplateDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:padding="12dp"
+                    android:background="@drawable/info_panel_background"
+                    android:textSize="13sp"
+                    android:textColor="?android:textColorSecondary" />
+            </LinearLayout>
+        </ScrollView>
+
+        <!-- Step 4: Connect & Program -->
+        <ScrollView
+            android:id="@+id/stepConnect"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Connect your DB20-G radio via the USB programming cable and tap Program."
+                    android:textSize="15sp"
+                    android:textColor="?android:textColorSecondary"
+                    android:lineSpacingExtra="4dp" />
+
+                <TextView
+                    android:id="@+id/tvSetupSummary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:padding="16dp"
+                    android:textSize="14sp"
+                    android:textColor="?android:textColorPrimary"
+                    android:background="@drawable/info_panel_background"
+                    android:lineSpacingExtra="4dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnProgram"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="Connect &amp; Program Radio"
+                    style="@style/Widget.Material3.Button" />
+
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/progressProgram"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:visibility="gone"
+                    android:indeterminate="false" />
+
+                <TextView
+                    android:id="@+id/tvProgramStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center"
+                    android:textSize="14sp"
+                    android:textColor="?android:textColorSecondary" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSkipProgram"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Skip — I'll program later"
+                    style="@style/Widget.Material3.Button.TextButton" />
+            </LinearLayout>
+        </ScrollView>
+    </FrameLayout>
+
+    <!-- Navigation buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:gravity="end">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            android:visibility="gone"
+            style="@style/Widget.Material3.Button.TextButton" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnNext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Get Started" />
+    </LinearLayout>
+</LinearLayout>

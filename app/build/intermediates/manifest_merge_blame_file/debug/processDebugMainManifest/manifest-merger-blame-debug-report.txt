@@ -1,0 +1,487 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.db20g.controller"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="26"
+9        android:targetSdkVersion="34" />
+10
+11    <uses-feature
+11-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:4:5-86
+12        android:name="android.hardware.usb.host"
+12-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:4:19-59
+13        android:required="true" />
+13-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:4:60-83
+14
+15    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+15-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:6:5-71
+15-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:6:22-68
+16    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+16-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:7:5-79
+16-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:7:22-76
+17    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+17-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:8:5-81
+17-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:8:22-78
+18    <uses-permission android:name="android.permission.INTERNET" />
+18-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:9:5-67
+18-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:9:22-64
+19    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+19-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:10:5-79
+19-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:10:22-76
+20    <uses-permission
+20-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:11:5-95
+21        android:name="android.permission.BLUETOOTH"
+21-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:11:22-65
+22        android:maxSdkVersion="30" />
+22-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:11:66-92
+23    <uses-permission
+23-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:12:5-101
+24        android:name="android.permission.BLUETOOTH_ADMIN"
+24-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:12:22-71
+25        android:maxSdkVersion="30" />
+25-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:12:72-98
+26    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+26-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:13:5-76
+26-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:13:22-73
+27    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+27-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:14:5-73
+27-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:14:22-70
+28    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+28-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:15:5-77
+28-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:15:22-74
+29    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" />
+29-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:16:5-94
+29-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:16:22-91
+30    <uses-permission android:name="android.permission.WAKE_LOCK" />
+30-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:17:5-68
+30-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:17:22-65
+31    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+31-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:18:5-77
+31-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:18:22-74
+32    <uses-permission android:name="android.permission.VIBRATE" />
+32-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:19:5-66
+32-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:19:22-63
+33    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+33-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:20:5-85
+33-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:20:22-82
+34    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+34-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:21:5-81
+34-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:21:22-78
+35
+36    <queries>
+36-->[androidx.car.app:app:1.4.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\33a9a70a783f55641415c835cb9b6fa9\transformed\app-1.4.0\AndroidManifest.xml:23:5-28:15
+37        <provider
+37-->[androidx.car.app:app:1.4.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\33a9a70a783f55641415c835cb9b6fa9\transformed\app-1.4.0\AndroidManifest.xml:24:9-27:43
+38            android:name="androidx.car.app.connection.provider"
+38-->[androidx.car.app:app:1.4.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\33a9a70a783f55641415c835cb9b6fa9\transformed\app-1.4.0\AndroidManifest.xml:25:13-64
+39            android:authorities="androidx.car.app.connection" />
+39-->[androidx.car.app:app:1.4.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\33a9a70a783f55641415c835cb9b6fa9\transformed\app-1.4.0\AndroidManifest.xml:26:13-62
+40    </queries>
+41
+42    <permission
+42-->[androidx.core:core:1.12.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\38c22a3e2e2ed8547423e13bdba73ada\transformed\core-1.12.0\AndroidManifest.xml:22:5-24:47
+43        android:name="com.db20g.controller.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+43-->[androidx.core:core:1.12.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\38c22a3e2e2ed8547423e13bdba73ada\transformed\core-1.12.0\AndroidManifest.xml:23:9-81
+44        android:protectionLevel="signature" />
+44-->[androidx.core:core:1.12.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\38c22a3e2e2ed8547423e13bdba73ada\transformed\core-1.12.0\AndroidManifest.xml:24:9-44
+45
+46    <uses-permission android:name="com.db20g.controller.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+46-->[androidx.core:core:1.12.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\38c22a3e2e2ed8547423e13bdba73ada\transformed\core-1.12.0\AndroidManifest.xml:26:5-97
+46-->[androidx.core:core:1.12.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\38c22a3e2e2ed8547423e13bdba73ada\transformed\core-1.12.0\AndroidManifest.xml:26:22-94
+47
+48    <application
+48-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:23:5-145:19
+49        android:allowBackup="true"
+49-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:24:9-35
+50        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+50-->[androidx.core:core:1.12.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\38c22a3e2e2ed8547423e13bdba73ada\transformed\core-1.12.0\AndroidManifest.xml:28:18-86
+51        android:debuggable="true"
+52        android:extractNativeLibs="false"
+53        android:icon="@mipmap/ic_launcher"
+53-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:25:9-43
+54        android:label="@string/app_name"
+54-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:27:9-41
+55        android:roundIcon="@mipmap/ic_launcher_round"
+55-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:26:9-54
+56        android:supportsRtl="true"
+56-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:28:9-35
+57        android:theme="@style/Theme.DB20GController" >
+57-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:29:9-53
+58        <activity
+58-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:31:9-34:60
+59            android:name="com.db20g.controller.ui.SetupWizardActivity"
+59-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:32:13-51
+60            android:exported="false"
+60-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:33:13-37
+61            android:theme="@style/Theme.DB20GController" />
+61-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:34:13-57
+62        <activity
+62-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:36:9-39:60
+63            android:name="com.db20g.controller.ui.HardwareGuideActivity"
+63-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:37:13-53
+64            android:exported="false"
+64-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:38:13-37
+65            android:theme="@style/Theme.DB20GController" />
+65-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:39:13-57
+66        <activity
+66-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:41:9-44:60
+67            android:name="com.db20g.controller.ui.TextMessagingActivity"
+67-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:42:13-53
+68            android:exported="false"
+68-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:43:13-37
+69            android:theme="@style/Theme.DB20GController" />
+69-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:44:13-57
+70        <activity
+70-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:46:9-49:60
+71            android:name="com.db20g.controller.ui.SstvActivity"
+71-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:47:13-44
+72            android:exported="false"
+72-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:48:13-37
+73            android:theme="@style/Theme.DB20GController" />
+73-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:49:13-57
+74        <activity
+74-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:51:9-54:60
+75            android:name="com.db20g.controller.ui.SpectrumActivity"
+75-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:52:13-48
+76            android:exported="false"
+76-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:53:13-37
+77            android:theme="@style/Theme.DB20GController" />
+77-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:54:13-57
+78        <activity
+78-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:56:9-59:60
+79            android:name="com.db20g.controller.ui.WeatherActivity"
+79-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:57:13-47
+80            android:exported="false"
+80-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:58:13-37
+81            android:theme="@style/Theme.DB20GController" />
+81-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:59:13-57
+82        <activity
+82-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:61:9-64:60
+83            android:name="com.db20g.controller.ui.ComplianceActivity"
+83-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:62:13-50
+84            android:exported="false"
+84-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:63:13-37
+85            android:theme="@style/Theme.DB20GController" />
+85-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:64:13-57
+86        <activity
+86-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:66:9-69:60
+87            android:name="com.db20g.controller.ui.TranslationActivity"
+87-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:67:13-51
+88            android:exported="false"
+88-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:68:13-37
+89            android:theme="@style/Theme.DB20GController" />
+89-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:69:13-57
+90        <activity
+90-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:71:9-74:60
+91            android:name="com.db20g.controller.ui.AccessibilitySettingsActivity"
+91-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:72:13-61
+92            android:exported="false"
+92-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:73:13-37
+93            android:theme="@style/Theme.DB20GController" />
+93-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:74:13-57
+94        <activity
+94-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:76:9-89:20
+95            android:name="com.db20g.controller.ui.MainActivity"
+95-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:77:13-44
+96            android:exported="true" >
+96-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:78:13-36
+97            <intent-filter>
+97-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:79:13-82:29
+98                <action android:name="android.intent.action.MAIN" />
+98-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:80:17-69
+98-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:80:25-66
+99
+100                <category android:name="android.intent.category.LAUNCHER" />
+100-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:81:17-77
+100-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:81:27-74
+101            </intent-filter>
+102            <intent-filter>
+102-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:83:13-85:29
+103                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
+103-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:84:17-90
+103-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:84:25-87
+104            </intent-filter>
+105
+106            <meta-data
+106-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:86:13-88:61
+107                android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
+107-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:87:17-79
+108                android:resource="@xml/usb_device_filter" />
+108-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:88:17-58
+109        </activity>
+110
+111        <service
+111-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:91:9-94:63
+112            android:name="com.db20g.controller.service.RadioService"
+112-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:92:13-49
+113            android:exported="false"
+113-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:93:13-37
+114            android:foregroundServiceType="connectedDevice" />
+114-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:94:13-60
+115
+116        <!-- Android Auto Car App Service -->
+117        <service
+117-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:97:9-104:19
+118            android:name="com.db20g.controller.auto.RadioCarAppService"
+118-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:98:13-52
+119            android:exported="true" >
+119-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:99:13-36
+120            <intent-filter>
+120-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:100:13-103:29
+121                <action android:name="androidx.car.app.CarAppService" />
+121-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:101:17-73
+121-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:101:25-70
+122
+123                <category android:name="androidx.car.app.category.IOT" />
+123-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:102:17-74
+123-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:102:27-71
+124            </intent-filter>
+125        </service>
+126
+127        <meta-data
+127-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:106:9-108:59
+128            android:name="com.google.android.gms.car.application"
+128-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:107:13-66
+129            android:resource="@xml/automotive_app_desc" />
+129-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:108:13-56
+130
+131        <!-- Small (2x1) Home Screen Widget -->
+132        <receiver
+132-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:111:9-120:20
+133            android:name="com.db20g.controller.ui.RadioWidgetProvider"
+133-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:112:13-51
+134            android:exported="false" >
+134-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:113:13-37
+135            <intent-filter>
+135-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:114:13-116:29
+136                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+136-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:115:17-84
+136-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:115:25-81
+137            </intent-filter>
+138
+139            <meta-data
+139-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:117:13-119:61
+140                android:name="android.appwidget.provider"
+140-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:118:17-58
+141                android:resource="@xml/widget_info_small" />
+141-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:119:17-58
+142        </receiver>
+143
+144        <!-- Large (4x2) Home Screen Widget -->
+145        <receiver
+145-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:123:9-132:20
+146            android:name="com.db20g.controller.ui.RadioWidgetLargeProvider"
+146-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:124:13-56
+147            android:exported="false" >
+147-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:125:13-37
+148            <intent-filter>
+148-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:114:13-116:29
+149                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+149-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:115:17-84
+149-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:115:25-81
+150            </intent-filter>
+151
+152            <meta-data
+152-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:117:13-119:61
+153                android:name="android.appwidget.provider"
+153-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:118:17-58
+154                android:resource="@xml/widget_info_large" />
+154-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:119:17-58
+155        </receiver>
+156
+157        <!-- Quick Settings Tile -->
+158        <service
+158-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:135:9-144:19
+159            android:name="com.db20g.controller.ui.RadioTileService"
+159-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:136:13-48
+160            android:exported="true"
+160-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:137:13-36
+161            android:icon="@drawable/ic_launcher_foreground"
+161-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:138:13-60
+162            android:label="DB20-G PTT"
+162-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:139:13-39
+163            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE" >
+163-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:140:13-77
+164            <intent-filter>
+164-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:141:13-143:29
+165                <action android:name="android.service.quicksettings.action.QS_TILE" />
+165-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:142:17-87
+165-->C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:142:25-84
+166            </intent-filter>
+167        </service>
+168        <service
+168-->[com.google.mlkit:translate:17.0.3] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\7fdcca38a29268a77cf1a6dce7ef9259\transformed\translate-17.0.3\AndroidManifest.xml:11:9-17:19
+169            android:name="com.google.mlkit.common.internal.MlKitComponentDiscoveryService"
+169-->[com.google.mlkit:translate:17.0.3] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\7fdcca38a29268a77cf1a6dce7ef9259\transformed\translate-17.0.3\AndroidManifest.xml:12:13-91
+170            android:directBootAware="true"
+170-->[com.google.mlkit:common:18.11.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\78da4c26d0f4453c474a761018aee500\transformed\common-18.11.0\AndroidManifest.xml:17:13-43
+171            android:exported="false" >
+171-->[com.google.mlkit:translate:17.0.3] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\7fdcca38a29268a77cf1a6dce7ef9259\transformed\translate-17.0.3\AndroidManifest.xml:13:13-37
+172            <meta-data
+172-->[com.google.mlkit:translate:17.0.3] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\7fdcca38a29268a77cf1a6dce7ef9259\transformed\translate-17.0.3\AndroidManifest.xml:14:13-16:85
+173                android:name="com.google.firebase.components:com.google.mlkit.nl.translate.NaturalLanguageTranslateRegistrar"
+173-->[com.google.mlkit:translate:17.0.3] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\7fdcca38a29268a77cf1a6dce7ef9259\transformed\translate-17.0.3\AndroidManifest.xml:15:17-126
+174                android:value="com.google.firebase.components.ComponentRegistrar" />
+174-->[com.google.mlkit:translate:17.0.3] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\7fdcca38a29268a77cf1a6dce7ef9259\transformed\translate-17.0.3\AndroidManifest.xml:16:17-82
+175            <meta-data
+175-->[com.google.mlkit:language-id:17.0.6] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\343a362febcd051f34b1f14421c572c8\transformed\language-id-17.0.6\AndroidManifest.xml:11:13-13:85
+176                android:name="com.google.firebase.components:com.google.mlkit.nl.languageid.bundled.internal.ThickLanguageIdRegistrar"
+176-->[com.google.mlkit:language-id:17.0.6] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\343a362febcd051f34b1f14421c572c8\transformed\language-id-17.0.6\AndroidManifest.xml:12:17-135
+177                android:value="com.google.firebase.components.ComponentRegistrar" />
+177-->[com.google.mlkit:language-id:17.0.6] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\343a362febcd051f34b1f14421c572c8\transformed\language-id-17.0.6\AndroidManifest.xml:13:17-82
+178            <meta-data
+178-->[com.google.mlkit:language-id-common:16.1.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\90819f27d14c7d43d5e69aa87b55f836\transformed\language-id-common-16.1.0\AndroidManifest.xml:26:13-28:85
+179                android:name="com.google.firebase.components:com.google.mlkit.nl.languageid.internal.LanguageIdRegistrar"
+179-->[com.google.mlkit:language-id-common:16.1.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\90819f27d14c7d43d5e69aa87b55f836\transformed\language-id-common-16.1.0\AndroidManifest.xml:27:17-122
+180                android:value="com.google.firebase.components.ComponentRegistrar" />
+180-->[com.google.mlkit:language-id-common:16.1.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\90819f27d14c7d43d5e69aa87b55f836\transformed\language-id-common-16.1.0\AndroidManifest.xml:28:17-82
+181            <meta-data
+181-->[com.google.mlkit:common:18.11.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\78da4c26d0f4453c474a761018aee500\transformed\common-18.11.0\AndroidManifest.xml:20:13-22:85
+182                android:name="com.google.firebase.components:com.google.mlkit.common.internal.CommonComponentRegistrar"
+182-->[com.google.mlkit:common:18.11.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\78da4c26d0f4453c474a761018aee500\transformed\common-18.11.0\AndroidManifest.xml:21:17-120
+183                android:value="com.google.firebase.components.ComponentRegistrar" />
+183-->[com.google.mlkit:common:18.11.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\78da4c26d0f4453c474a761018aee500\transformed\common-18.11.0\AndroidManifest.xml:22:17-82
+184        </service>
+185
+186        <provider
+186-->[com.google.mlkit:common:18.11.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\78da4c26d0f4453c474a761018aee500\transformed\common-18.11.0\AndroidManifest.xml:9:9-13:38
+187            android:name="com.google.mlkit.common.internal.MlKitInitProvider"
+187-->[com.google.mlkit:common:18.11.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\78da4c26d0f4453c474a761018aee500\transformed\common-18.11.0\AndroidManifest.xml:10:13-78
+188            android:authorities="com.db20g.controller.mlkitinitprovider"
+188-->[com.google.mlkit:common:18.11.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\78da4c26d0f4453c474a761018aee500\transformed\common-18.11.0\AndroidManifest.xml:11:13-69
+189            android:exported="false"
+189-->[com.google.mlkit:common:18.11.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\78da4c26d0f4453c474a761018aee500\transformed\common-18.11.0\AndroidManifest.xml:12:13-37
+190            android:initOrder="99" />
+190-->[com.google.mlkit:common:18.11.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\78da4c26d0f4453c474a761018aee500\transformed\common-18.11.0\AndroidManifest.xml:13:13-35
+191
+192        <activity
+192-->[com.google.android.gms:play-services-base:18.5.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\869874c51c0d2b1355ad984b5d261a5b\transformed\play-services-base-18.5.0\AndroidManifest.xml:5:9-173
+193            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+193-->[com.google.android.gms:play-services-base:18.5.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\869874c51c0d2b1355ad984b5d261a5b\transformed\play-services-base-18.5.0\AndroidManifest.xml:5:19-85
+194            android:exported="false"
+194-->[com.google.android.gms:play-services-base:18.5.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\869874c51c0d2b1355ad984b5d261a5b\transformed\play-services-base-18.5.0\AndroidManifest.xml:5:146-170
+195            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+195-->[com.google.android.gms:play-services-base:18.5.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\869874c51c0d2b1355ad984b5d261a5b\transformed\play-services-base-18.5.0\AndroidManifest.xml:5:86-145
+196
+197        <meta-data
+197-->[com.google.android.gms:play-services-basement:18.4.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\5560cbdf073b21eb6e2d675e3d1b134b\transformed\play-services-basement-18.4.0\AndroidManifest.xml:6:9-122
+198            android:name="com.google.android.gms.version"
+198-->[com.google.android.gms:play-services-basement:18.4.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\5560cbdf073b21eb6e2d675e3d1b134b\transformed\play-services-basement-18.4.0\AndroidManifest.xml:6:20-65
+199            android:value="@integer/google_play_services_version" />
+199-->[com.google.android.gms:play-services-basement:18.4.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\5560cbdf073b21eb6e2d675e3d1b134b\transformed\play-services-basement-18.4.0\AndroidManifest.xml:6:66-119
+200
+201        <activity
+201-->[androidx.car.app:app:1.4.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\33a9a70a783f55641415c835cb9b6fa9\transformed\app-1.4.0\AndroidManifest.xml:31:9-34:75
+202            android:name="androidx.car.app.CarAppPermissionActivity"
+202-->[androidx.car.app:app:1.4.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\33a9a70a783f55641415c835cb9b6fa9\transformed\app-1.4.0\AndroidManifest.xml:32:13-69
+203            android:exported="false"
+203-->[androidx.car.app:app:1.4.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\33a9a70a783f55641415c835cb9b6fa9\transformed\app-1.4.0\AndroidManifest.xml:33:13-37
+204            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+204-->[androidx.car.app:app:1.4.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\33a9a70a783f55641415c835cb9b6fa9\transformed\app-1.4.0\AndroidManifest.xml:34:13-72
+205
+206        <receiver
+206-->[androidx.car.app:app:1.4.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\33a9a70a783f55641415c835cb9b6fa9\transformed\app-1.4.0\AndroidManifest.xml:36:9-38:40
+207            android:name="androidx.car.app.notification.CarAppNotificationBroadcastReceiver"
+207-->[androidx.car.app:app:1.4.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\33a9a70a783f55641415c835cb9b6fa9\transformed\app-1.4.0\AndroidManifest.xml:37:13-93
+208            android:exported="false" />
+208-->[androidx.car.app:app:1.4.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\33a9a70a783f55641415c835cb9b6fa9\transformed\app-1.4.0\AndroidManifest.xml:38:13-37
+209
+210        <provider
+210-->[androidx.emoji2:emoji2:1.2.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\4182f43019e8dbdf28cc216339a09760\transformed\emoji2-1.2.0\AndroidManifest.xml:24:9-32:20
+211            android:name="androidx.startup.InitializationProvider"
+211-->[androidx.emoji2:emoji2:1.2.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\4182f43019e8dbdf28cc216339a09760\transformed\emoji2-1.2.0\AndroidManifest.xml:25:13-67
+212            android:authorities="com.db20g.controller.androidx-startup"
+212-->[androidx.emoji2:emoji2:1.2.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\4182f43019e8dbdf28cc216339a09760\transformed\emoji2-1.2.0\AndroidManifest.xml:26:13-68
+213            android:exported="false" >
+213-->[androidx.emoji2:emoji2:1.2.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\4182f43019e8dbdf28cc216339a09760\transformed\emoji2-1.2.0\AndroidManifest.xml:27:13-37
+214            <meta-data
+214-->[androidx.emoji2:emoji2:1.2.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\4182f43019e8dbdf28cc216339a09760\transformed\emoji2-1.2.0\AndroidManifest.xml:29:13-31:52
+215                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+215-->[androidx.emoji2:emoji2:1.2.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\4182f43019e8dbdf28cc216339a09760\transformed\emoji2-1.2.0\AndroidManifest.xml:30:17-75
+216                android:value="androidx.startup" />
+216-->[androidx.emoji2:emoji2:1.2.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\4182f43019e8dbdf28cc216339a09760\transformed\emoji2-1.2.0\AndroidManifest.xml:31:17-49
+217            <meta-data
+217-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\acac05c0f0873ec78396298833d39d25\transformed\lifecycle-process-2.7.0\AndroidManifest.xml:29:13-31:52
+218                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+218-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\acac05c0f0873ec78396298833d39d25\transformed\lifecycle-process-2.7.0\AndroidManifest.xml:30:17-78
+219                android:value="androidx.startup" />
+219-->[androidx.lifecycle:lifecycle-process:2.7.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\acac05c0f0873ec78396298833d39d25\transformed\lifecycle-process-2.7.0\AndroidManifest.xml:31:17-49
+220            <meta-data
+220-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\b1e30af28727ae9226650e987d867588\transformed\profileinstaller-1.3.0\AndroidManifest.xml:29:13-31:52
+221                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+221-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\b1e30af28727ae9226650e987d867588\transformed\profileinstaller-1.3.0\AndroidManifest.xml:30:17-85
+222                android:value="androidx.startup" />
+222-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\b1e30af28727ae9226650e987d867588\transformed\profileinstaller-1.3.0\AndroidManifest.xml:31:17-49
+223        </provider>
+224
+225        <service
+225-->[com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\7c89e65b8438a540fa9429bd9e6576ca\transformed\transport-backend-cct-2.3.3\AndroidManifest.xml:29:9-35:19
+226            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+226-->[com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\7c89e65b8438a540fa9429bd9e6576ca\transformed\transport-backend-cct-2.3.3\AndroidManifest.xml:30:13-103
+227            android:exported="false" >
+227-->[com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\7c89e65b8438a540fa9429bd9e6576ca\transformed\transport-backend-cct-2.3.3\AndroidManifest.xml:31:13-37
+228            <meta-data
+228-->[com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\7c89e65b8438a540fa9429bd9e6576ca\transformed\transport-backend-cct-2.3.3\AndroidManifest.xml:32:13-34:39
+229                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
+229-->[com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\7c89e65b8438a540fa9429bd9e6576ca\transformed\transport-backend-cct-2.3.3\AndroidManifest.xml:33:17-94
+230                android:value="cct" />
+230-->[com.google.android.datatransport:transport-backend-cct:2.3.3] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\7c89e65b8438a540fa9429bd9e6576ca\transformed\transport-backend-cct-2.3.3\AndroidManifest.xml:34:17-36
+231        </service>
+232        <service
+232-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\3c6ddca42eb6d8814d4528069016fe6c\transformed\transport-runtime-2.2.6\AndroidManifest.xml:26:9-30:19
+233            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
+233-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\3c6ddca42eb6d8814d4528069016fe6c\transformed\transport-runtime-2.2.6\AndroidManifest.xml:27:13-117
+234            android:exported="false"
+234-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\3c6ddca42eb6d8814d4528069016fe6c\transformed\transport-runtime-2.2.6\AndroidManifest.xml:28:13-37
+235            android:permission="android.permission.BIND_JOB_SERVICE" >
+235-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\3c6ddca42eb6d8814d4528069016fe6c\transformed\transport-runtime-2.2.6\AndroidManifest.xml:29:13-69
+236        </service>
+237
+238        <receiver
+238-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\3c6ddca42eb6d8814d4528069016fe6c\transformed\transport-runtime-2.2.6\AndroidManifest.xml:32:9-34:40
+239            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+239-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\3c6ddca42eb6d8814d4528069016fe6c\transformed\transport-runtime-2.2.6\AndroidManifest.xml:33:13-132
+240            android:exported="false" />
+240-->[com.google.android.datatransport:transport-runtime:2.2.6] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\3c6ddca42eb6d8814d4528069016fe6c\transformed\transport-runtime-2.2.6\AndroidManifest.xml:34:13-37
+241        <receiver
+241-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\b1e30af28727ae9226650e987d867588\transformed\profileinstaller-1.3.0\AndroidManifest.xml:34:9-52:20
+242            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+242-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\b1e30af28727ae9226650e987d867588\transformed\profileinstaller-1.3.0\AndroidManifest.xml:35:13-76
+243            android:directBootAware="false"
+243-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\b1e30af28727ae9226650e987d867588\transformed\profileinstaller-1.3.0\AndroidManifest.xml:36:13-44
+244            android:enabled="true"
+244-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\b1e30af28727ae9226650e987d867588\transformed\profileinstaller-1.3.0\AndroidManifest.xml:37:13-35
+245            android:exported="true"
+245-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\b1e30af28727ae9226650e987d867588\transformed\profileinstaller-1.3.0\AndroidManifest.xml:38:13-36
+246            android:permission="android.permission.DUMP" >
+246-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\b1e30af28727ae9226650e987d867588\transformed\profileinstaller-1.3.0\AndroidManifest.xml:39:13-57
+247            <intent-filter>
+247-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\b1e30af28727ae9226650e987d867588\transformed\profileinstaller-1.3.0\AndroidManifest.xml:40:13-42:29
+248                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+248-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\b1e30af28727ae9226650e987d867588\transformed\profileinstaller-1.3.0\AndroidManifest.xml:41:17-91
+248-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\b1e30af28727ae9226650e987d867588\transformed\profileinstaller-1.3.0\AndroidManifest.xml:41:25-88
+249            </intent-filter>
+250            <intent-filter>
+250-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\b1e30af28727ae9226650e987d867588\transformed\profileinstaller-1.3.0\AndroidManifest.xml:43:13-45:29
+251                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+251-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\b1e30af28727ae9226650e987d867588\transformed\profileinstaller-1.3.0\AndroidManifest.xml:44:17-85
+251-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\b1e30af28727ae9226650e987d867588\transformed\profileinstaller-1.3.0\AndroidManifest.xml:44:25-82
+252            </intent-filter>
+253            <intent-filter>
+253-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\b1e30af28727ae9226650e987d867588\transformed\profileinstaller-1.3.0\AndroidManifest.xml:46:13-48:29
+254                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+254-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\b1e30af28727ae9226650e987d867588\transformed\profileinstaller-1.3.0\AndroidManifest.xml:47:17-88
+254-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\b1e30af28727ae9226650e987d867588\transformed\profileinstaller-1.3.0\AndroidManifest.xml:47:25-85
+255            </intent-filter>
+256            <intent-filter>
+256-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\b1e30af28727ae9226650e987d867588\transformed\profileinstaller-1.3.0\AndroidManifest.xml:49:13-51:29
+257                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+257-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\b1e30af28727ae9226650e987d867588\transformed\profileinstaller-1.3.0\AndroidManifest.xml:50:17-95
+257-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\b1e30af28727ae9226650e987d867588\transformed\profileinstaller-1.3.0\AndroidManifest.xml:50:25-92
+258            </intent-filter>
+259        </receiver>
+260    </application>
+261
+262</manifest>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Common USB-to-serial chipsets used in radio programming cables -->
+    <!-- Prolific PL2303 -->
+    <usb-device vendor-id="1659" product-id="8963" />
+    <!-- FTDI FT232 -->
+    <usb-device vendor-id="1027" product-id="24577" />
+    <!-- Silicon Labs CP210x -->
+    <usb-device vendor-id="4292" product-id="60000" />
+    <!-- CH340/CH341 -->
+    <usb-device vendor-id="6790" product-id="29987" />
+    <!-- QinHeng CH9102 -->
+    <usb-device vendor-id="6790" product-id="21795" />
+    <!-- Baofeng/Radioddity cable (CH340 variant) -->
+    <usb-device vendor-id="6790" product-id="29987" />
+</resources>

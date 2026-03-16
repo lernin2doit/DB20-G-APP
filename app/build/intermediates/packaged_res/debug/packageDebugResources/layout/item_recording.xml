@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="4dp"
+    app:cardElevation="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="12dp"
+        android:gravity="center_vertical">
+
+        <!-- Type indicator -->
+        <TextView
+            android:id="@+id/tvRecType"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:text="RX"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="#1B5E20"
+            android:gravity="center" />
+
+        <!-- Info -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="8dp">
+
+            <TextView
+                android:id="@+id/tvRecChannel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ch 1"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvRecTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2025-03-13 14:30"
+                android:textSize="11sp"
+                android:textColor="?android:textColorSecondary" />
+        </LinearLayout>
+
+        <!-- Duration / Size -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="end"
+            android:layout_marginEnd="8dp">
+
+            <TextView
+                android:id="@+id/tvRecDuration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0:12"
+                android:textSize="12sp"
+                android:fontFamily="monospace" />
+
+            <TextView
+                android:id="@+id/tvRecSize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="45 KB"
+                android:textSize="10sp"
+                android:textColor="?android:textColorSecondary" />
+        </LinearLayout>
+
+        <!-- Play button -->
+        <ImageButton
+            android:id="@+id/btnPlay"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@android:drawable/ic_media_play"
+            android:background="?selectableItemBackgroundBorderless"
+            android:contentDescription="Play recording" />
+
+        <!-- Delete button -->
+        <ImageButton
+            android:id="@+id/btnDelete"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@android:drawable/ic_menu_delete"
+            android:background="?selectableItemBackgroundBorderless"
+            android:contentDescription="Delete recording" />
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:padding="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:background="#CC1B1B1B"
+        android:gravity="center_vertical"
+        android:padding="8dp">
+
+        <!-- PTT indicator -->
+        <FrameLayout
+            android:id="@+id/pttButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="#FF4CAF50"
+            android:layout_marginEnd="8dp">
+
+            <TextView
+                android:id="@+id/tvPtt"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="PTT"
+                android:textColor="@android:color/white"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:gravity="center" />
+        </FrameLayout>
+
+        <!-- Channel info -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvChannel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CH 19"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:singleLine="true" />
+
+            <TextView
+                android:id="@+id/tvFrequency"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="462.6500 MHz"
+                android:textColor="#AAAAAA"
+                android:textSize="10sp"
+                android:singleLine="true" />
+        </LinearLayout>
+
+        <!-- Channel nav -->
+        <TextView
+            android:id="@+id/btnChDown"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:text="◀"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:background="?android:attr/selectableItemBackground" />
+
+        <TextView
+            android:id="@+id/btnChUp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:text="▶"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:background="?android:attr/selectableItemBackground" />
+    </LinearLayout>
+</RelativeLayout>

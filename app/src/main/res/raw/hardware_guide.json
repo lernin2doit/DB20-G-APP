@@ -1,0 +1,267 @@
+{
+  "version": "1.0",
+  "title": "DB20-G Interface Box — Hardware Build Guide",
+  "sections": [
+    {
+      "id": "overview",
+      "title": "Overview",
+      "icon": "info",
+      "content": "The DB20-G Interface Box connects your Android phone to the Radioddity DB20-G GMRS radio via a single USB-C cable. It provides serial control (programming, channel management) and audio I/O (transmit/receive voice) through a custom PCB.",
+      "items": [
+        "USB-C phone connection via FE1.1s USB hub",
+        "CP2102N USB-to-UART for serial programming at 9600 baud",
+        "CM108AH USB audio codec for voice TX/RX",
+        "PTT control via 2N2222A transistor (RTS) or G5V-1 relay (DTR)",
+        "RJ-45 handset pass-through (use radio with hand mic AND phone simultaneously)",
+        "3.5mm TRS jack for rear data/programming port",
+        "4 status LEDs: Power (green), PTT (red), Audio (yellow), Serial (blue)"
+      ]
+    },
+    {
+      "id": "tools",
+      "title": "Required Tools",
+      "icon": "build",
+      "items": [
+        "Soldering iron (temperature-controlled, fine tip recommended)",
+        "Solder (0.5mm–0.8mm rosin-core, lead-free or 63/37)",
+        "Flux pen (for SMD work)",
+        "Tweezers (ESD-safe, fine tip)",
+        "Multimeter (continuity, voltage measurement)",
+        "Wire strippers",
+        "Hot air station (optional, for QFN rework)",
+        "Magnifying glass or loupe (for SMD inspection)",
+        "Isopropyl alcohol and brush (for flux cleanup)",
+        "3D printer (for enclosure) or order from service"
+      ]
+    },
+    {
+      "id": "connectors",
+      "title": "Connector Pinouts",
+      "icon": "cable",
+      "subsections": [
+        {
+          "title": "3.5mm TRS — Data/Programming Port (J4)",
+          "table": [
+            ["Pin", "Signal", "Direction"],
+            ["Tip", "TX Data (to radio)", "CP2102N → Radio"],
+            ["Ring", "RX Data (from radio)", "Radio → CP2102N"],
+            ["Sleeve", "Ground", "Common"]
+          ]
+        },
+        {
+          "title": "RJ-45 — Radio Handset Port (J2/J3)",
+          "table": [
+            ["Pin", "Signal", "Notes"],
+            ["1", "+V Supply", "Pass-through to handset"],
+            ["2", "Microphone", "Tapped for CM108AH TX audio output"],
+            ["3", "Ground", "Common ground"],
+            ["4", "PTT", "Active LOW — tapped for Q1 collector / K1 relay NO"],
+            ["5", "Speaker+", "Tapped for CM108AH RX audio input"],
+            ["6", "Speaker−", "Pass-through"],
+            ["7", "UP Button", "Pass-through"],
+            ["8", "DOWN Button", "Pass-through"]
+          ]
+        },
+        {
+          "title": "USB-C — Phone Connection (J1)",
+          "table": [
+            ["Pin", "Signal", "Notes"],
+            ["VBUS", "+5V Power", "500mA polyfuse protected"],
+            ["D+", "USB Data+", "To FE1.1s hub upstream"],
+            ["D−", "USB Data−", "To FE1.1s hub upstream"],
+            ["CC1/CC2", "Config Channel", "5.1kΩ pull-down (UFP sink)"],
+            ["GND", "Ground", "Common"]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "assembly",
+      "title": "Assembly Checklist",
+      "icon": "checklist",
+      "phases": [
+        {
+          "title": "Phase 1: Power Supply",
+          "steps": [
+            {"id": "p1s1", "text": "Solder U4 (AMS1117-3.3) — orient dot to pin 1"},
+            {"id": "p1s2", "text": "Solder C7 (10µF) input cap near U4 IN pin"},
+            {"id": "p1s3", "text": "Solder C8 (22µF) output cap near U4 OUT pin"},
+            {"id": "p1s4", "text": "Solder F1 (500mA polyfuse) in VBUS path"},
+            {"id": "p1s5", "text": "Solder D2 (1N5819 Schottky) for reverse polarity protection"},
+            {"id": "p1s6", "text": "TEST: Apply 5V to F1 input. Verify 3.3V on U4 OUT pin."}
+          ]
+        },
+        {
+          "title": "Phase 2: USB Hub",
+          "steps": [
+            {"id": "p2s1", "text": "Solder U1 (FE1.1s) — align pin 1 dot carefully"},
+            {"id": "p2s2", "text": "Solder Y1 (12MHz crystal) to XI/XO pins"},
+            {"id": "p2s3", "text": "Solder C11, C12 (22pF) crystal load caps"},
+            {"id": "p2s4", "text": "Solder C1 (100nF) and C2 (10µF) bypass caps"},
+            {"id": "p2s5", "text": "Solder R11 (4.7kΩ) and R12 (1.5kΩ) USB pull-ups"},
+            {"id": "p2s6", "text": "Solder J1 (USB-C receptacle) — inspect all pins under magnification"},
+            {"id": "p2s7", "text": "Connect GANGED (pin 9) and SELF_PWR (pin 10) to GND"},
+            {"id": "p2s8", "text": "TEST: Connect to phone. USB hub should enumerate (check dmesg/logcat)."}
+          ]
+        },
+        {
+          "title": "Phase 3: Serial (CP2102N)",
+          "steps": [
+            {"id": "p3s1", "text": "Solder U2 (CP2102N QFN-28) — use flux, inspect bridges carefully"},
+            {"id": "p3s2", "text": "Solder C3 (100nF) and C4 (10µF) bypass caps"},
+            {"id": "p3s3", "text": "Connect U2 RST pin to 3V3 with 10kΩ pull-up"},
+            {"id": "p3s4", "text": "Solder J4 (3.5mm TRS jack)"},
+            {"id": "p3s5", "text": "TEST: Connect to phone. CP2102 should appear as /dev/ttyUSB0 in app."}
+          ]
+        },
+        {
+          "title": "Phase 4: Audio (CM108AH)",
+          "steps": [
+            {"id": "p4s1", "text": "Solder U3 (CM108AH SSOP-28)"},
+            {"id": "p4s2", "text": "Solder C5 (100nF) and C6 (10µF) bypass caps"},
+            {"id": "p4s3", "text": "Solder RX audio path: C9 (1µF) → R3 (10kΩ) → R4 (1kΩ) divider"},
+            {"id": "p4s4", "text": "Solder TX audio path: C10 (1µF) → R5 (10kΩ) → R6 (1kΩ) divider"},
+            {"id": "p4s5", "text": "TEST: CM108 should appear as USB audio device. Play a tone through the app."}
+          ]
+        },
+        {
+          "title": "Phase 5: PTT Drivers",
+          "steps": [
+            {"id": "p5s1", "text": "Solder R1 (10kΩ) base resistor for Q1"},
+            {"id": "p5s2", "text": "Solder Q1 (2N2222A) — flat side faces silkscreen outline"},
+            {"id": "p5s3", "text": "Solder R2 (10kΩ) base resistor for Q2"},
+            {"id": "p5s4", "text": "Solder Q2 (2N2222A) — flat side faces silkscreen outline"},
+            {"id": "p5s5", "text": "Solder K1 (G5V-1-DC5 relay)"},
+            {"id": "p5s6", "text": "Solder D1 (1N4148) flyback diode across K1 coil — cathode band to +5V"},
+            {"id": "p5s7", "text": "TEST: Toggle RTS in app. Q1 collector should pull PTT low. Verify with multimeter."}
+          ]
+        },
+        {
+          "title": "Phase 6: LEDs & RJ-45",
+          "steps": [
+            {"id": "p6s1", "text": "Solder R7 (330Ω) and LED1 (Green — Power)"},
+            {"id": "p6s2", "text": "Solder R8 (330Ω) and LED2 (Red — PTT)"},
+            {"id": "p6s3", "text": "Solder R9 (330Ω) and LED3 (Yellow — Audio)"},
+            {"id": "p6s4", "text": "Solder R10 (330Ω) and LED4 (Blue — Serial)"},
+            {"id": "p6s5", "text": "Solder J2 (RJ-45 — Radio side)"},
+            {"id": "p6s6", "text": "Solder J3 (RJ-45 — Handset pass-through)"},
+            {"id": "p6s7", "text": "Wire pass-through: J2 pins 1,3,6,7,8 → corresponding J3 pins"},
+            {"id": "p6s8", "text": "Wire tapped lines: J2 pin 2→TX audio, pin 4→PTT, pin 5→RX audio"},
+            {"id": "p6s9", "text": "TEST: Power LED should light. Connect radio handset to verify pass-through."}
+          ]
+        },
+        {
+          "title": "Phase 7: Final Assembly",
+          "steps": [
+            {"id": "p7s1", "text": "Clean flux residue with isopropyl alcohol"},
+            {"id": "p7s2", "text": "Inspect all solder joints under magnification"},
+            {"id": "p7s3", "text": "Mount PCB in 3D-printed enclosure with M3 screws"},
+            {"id": "p7s4", "text": "Verify LED alignment through enclosure light pipes"},
+            {"id": "p7s5", "text": "Full system test: connect phone, radio, and handset simultaneously"},
+            {"id": "p7s6", "text": "Test serial download/upload from this app"},
+            {"id": "p7s7", "text": "Test PTT key/unkey from this app"},
+            {"id": "p7s8", "text": "Test audio receive (radio → phone)"},
+            {"id": "p7s9", "text": "Test audio transmit (phone → radio)"},
+            {"id": "p7s10", "text": "Test handset pass-through (mic, PTT, UP, DOWN buttons)"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "troubleshooting",
+      "title": "Troubleshooting",
+      "icon": "warning",
+      "issues": [
+        {
+          "problem": "Phone doesn't detect USB devices",
+          "solutions": [
+            "Verify USB-C cable supports data (not charge-only)",
+            "Check F1 polyfuse — measure continuity",
+            "Verify 5V present on VBUS pin of J1",
+            "Check FE1.1s crystal oscillation — probe XO with scope",
+            "Ensure phone supports USB OTG (check in Settings → About → USB)"
+          ]
+        },
+        {
+          "problem": "Serial port not found in app",
+          "solutions": [
+            "Check CP2102N solder joints (especially QFN ground pad)",
+            "Verify 3.3V on U2 VDD pin",
+            "Check USB D+/D− connections from hub port 1 to CP2102N",
+            "Try different baud rate in app settings (should be 9600)",
+            "Verify J4 TRS jack connections (Tip=TX, Ring=RX, Sleeve=GND)"
+          ]
+        },
+        {
+          "problem": "No audio from radio",
+          "solutions": [
+            "Check CM108AH solder joints",
+            "Verify RX path: J2 pin 5 → C9 → R3/R4 divider → U3 MIC_IN",
+            "Measure voltage at R3/R4 junction — should be ~0.1× speaker voltage",
+            "Check coupling cap C9 — must not be shorted",
+            "Verify CM108AH appears as USB audio device in Android settings"
+          ]
+        },
+        {
+          "problem": "PTT not activating",
+          "solutions": [
+            "Verify RTS signal: measure U2 pin 23 — should toggle 0V/3.3V",
+            "Check R1→Q1 base — should see ~0.33mA when RTS high",
+            "Measure Q1 collector to emitter — should be <0.2V when active",
+            "Verify J2 pin 4 is connected to Q1 collector",
+            "Check that radio PTT is active-LOW (most GMRS radios are)",
+            "Try DTR/relay mode: toggle PTT mode in app Settings"
+          ]
+        },
+        {
+          "problem": "Audio hum or noise",
+          "solutions": [
+            "Add ferrite bead on AVCC power line to CM108AH",
+            "Check ground connections — ensure single-point grounding",
+            "Separate audio ground pour from digital ground on PCB",
+            "Add 100pF caps across R3 and R5 (audio filter)",
+            "Move audio traces away from switching/digital lines"
+          ]
+        },
+        {
+          "problem": "Handset not working through pass-through",
+          "solutions": [
+            "Check all 8 RJ-45 pin connections J2 ↔ J3",
+            "Verify continuity on each pass-through wire",
+            "Ensure PTT tap doesn't load the handset PTT line excessively",
+            "Check that Q1 collector is high-impedance when not keyed"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bom_summary",
+      "title": "Bill of Materials Summary",
+      "icon": "list",
+      "content": "Estimated cost: $17–$20 (excluding cables). Full BOM with LCSC part numbers is in the hardware/BOM.csv file for direct JLCPCB ordering.",
+      "items": [
+        "U1: FE1.1s USB Hub Controller (SSOP-28)",
+        "U2: CP2102N-A01-GQFN28 USB-to-UART",
+        "U3: CM108AH USB Audio Codec (SSOP-28)",
+        "U4: AMS1117-3.3 LDO Regulator (SOT-223)",
+        "Q1, Q2: 2N2222A NPN Transistor (TO-92)",
+        "K1: G5V-1-DC5 5V SPDT Relay",
+        "D1: 1N4148 Switching Diode, D2: 1N5819 Schottky",
+        "Y1: 12MHz Crystal (HC-49U)",
+        "J1: USB-C Receptacle (USB 2.0)",
+        "J2, J3: RJ-45 Through-Hole Connectors",
+        "J4: 3.5mm TRS Audio Jack",
+        "R1–R12: Assorted Resistors (0805 SMD)",
+        "C1–C12: Assorted Capacitors (0805 SMD)",
+        "LED1–LED4: Green, Red, Yellow, Blue (0805 SMD)",
+        "F1: 500mA Polyfuse (1206)"
+      ]
+    },
+    {
+      "id": "wiring_diagram",
+      "title": "Circuit Block Diagram",
+      "icon": "schema",
+      "diagram": "Phone ──USB-C──► [F1 Fuse] ──► [FE1.1s Hub]\n                                    │\n                       ┌────────────┴────────────┐\n                       ▼                         ▼\n                  [CP2102N]                 [CM108AH]\n                   Serial                    Audio\n                       │                         │\n              ┌────────┴────┐          ┌─────────┴────────┐\n              ▼             ▼          ▼                  ▼\n          [J4 TRS]    [PTT Drive]  [RX Atten]       [TX Atten]\n          Data Port    Q1/Q2/K1    10:1 divider     10:1 divider\n              │             │          │                  │\n              ▼             ▼          ▼                  ▼\n          Radio Rear    Radio PTT   Radio SPK→Phone   Phone→Radio MIC\n          Data Port     (J2 pin4)   (J2 pin5)        (J2 pin2)\n\n              ◄──── RJ-45 Pass-through (J2 ↔ J3) ────►\n              Radio                              Handset"
+    }
+  ]
+}

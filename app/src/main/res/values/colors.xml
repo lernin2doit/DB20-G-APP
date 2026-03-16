@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Brand colors -->
+    <color name="primary">#1B5E20</color>
+    <color name="primary_variant">#003300</color>
+    <color name="secondary">#FF6F00</color>
+    <color name="secondary_variant">#C43E00</color>
+    <color name="on_primary">@android:color/white</color>
+    <color name="on_secondary">@android:color/white</color>
+
+    <!-- Dark theme backgrounds -->
+    <color name="dark_background">#121212</color>
+    <color name="dark_surface">#1E1E1E</color>
+
+    <!-- AMOLED true-black backgrounds -->
+    <color name="amoled_background">#000000</color>
+    <color name="amoled_surface">#0A0A0A</color>
+
+    <!-- Red-light mode colors for night vision -->
+    <color name="red_light_background">#0D0000</color>
+    <color name="red_light_surface">#1A0000</color>
+    <color name="red_light_primary">#CC0000</color>
+    <color name="red_light_on_surface">#FF4444</color>
+    <color name="red_light_text_secondary">#993333</color>
+</resources>

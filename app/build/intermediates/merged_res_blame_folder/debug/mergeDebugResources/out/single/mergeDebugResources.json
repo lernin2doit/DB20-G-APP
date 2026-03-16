@@ -1,0 +1,202 @@
+[
+    {
+        "merged": "com.db20g.controller.app-debug-4:/drawable_circle_indicator.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/drawable/circle_indicator.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/layout_activity_setup_wizard.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/layout/activity_setup_wizard.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/layout_activity_accessibility_settings.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/layout/activity_accessibility_settings.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/drawable_circle_indicator_connected.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/drawable/circle_indicator_connected.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/layout_fragment_bluetooth_ptt.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/layout/fragment_bluetooth_ptt.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/layout_item_translation_history.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/layout/item_translation_history.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/layout_item_violation.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/layout/item_violation.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/xml_automotive_app_desc.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/xml/automotive_app_desc.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/layout_item_channel.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/layout/item_channel.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/layout_activity_translation.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/layout/activity_translation.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/xml_usb_device_filter.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/xml/usb_device_filter.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/layout_fragment_tools.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/layout/fragment_tools.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/layout_activity_spectrum.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/layout/activity_spectrum.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/layout_item_message_incoming.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/layout/item_message_incoming.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/layout_item_saved_route.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/layout/item_saved_route.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/layout_item_part95_rule.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/layout/item_part95_rule.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/layout_fragment_emergency.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/layout/fragment_emergency.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/xml_widget_info_large.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/xml/widget_info_large.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/layout_widget_radio_large.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/layout/widget_radio_large.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/layout_item_sstv_thumbnail.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/layout/item_sstv_thumbnail.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/layout_activity_main.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/layout_item_language_model.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/layout/item_language_model.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/layout_item_emergency_contact.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/layout/item_emergency_contact.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/layout_fragment_channels.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/layout/fragment_channels.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/layout_fragment_route_planner.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/layout/fragment_route_planner.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/layout_activity_weather.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/layout/activity_weather.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/layout_item_route_repeater.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/layout/item_route_repeater.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/layout_fragment_settings.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/layout/fragment_settings.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/layout_item_message_outgoing.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/layout/item_message_outgoing.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/layout_fragment_live.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/layout/fragment_live.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/layout_dialog_edit_channel.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/layout/dialog_edit_channel.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/layout_item_family_member.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/layout/item_family_member.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/drawable/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/layout_fragment_repeaters.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/layout/fragment_repeaters.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/layout_item_recording.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/layout/item_recording.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/layout_widget_radio_small.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/layout/widget_radio_small.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/layout_activity_sstv.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/layout/activity_sstv.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/layout_activity_text_messaging.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/layout/activity_text_messaging.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/raw_hardware_guide.json.flat",
+        "source": "com.db20g.controller.app-main-6:/raw/hardware_guide.json"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/drawable_info_panel_background.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/drawable/info_panel_background.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/layout_item_bt_device.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/layout/item_bt_device.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/drawable_circle_indicator_busy.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/drawable/circle_indicator_busy.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/layout_activity_compliance.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/layout/activity_compliance.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/layout_activity_hardware_guide.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/layout/activity_hardware_guide.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/layout_item_weather_alert.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/layout/item_weather_alert.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/layout_item_repeater_result.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/layout/item_repeater_result.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/xml_widget_info_small.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/xml/widget_info_small.xml"
+    },
+    {
+        "merged": "com.db20g.controller.app-debug-4:/layout_item_button_mapping.xml.flat",
+        "source": "com.db20g.controller.app-main-6:/layout/item_button_mapping.xml"
+    }
+]

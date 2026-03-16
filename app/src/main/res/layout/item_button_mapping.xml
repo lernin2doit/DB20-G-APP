@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="8dp"
+    android:gravity="center_vertical">
+
+    <TextView
+        android:id="@+id/tvKeyName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="MEDIA_PLAY"
+        android:textSize="13sp"
+        android:fontFamily="monospace"
+        android:textColor="?android:attr/textColorPrimary" />
+
+    <TextView
+        android:id="@+id/tvMappedAction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PTT"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:textColor="#FF6F00"
+        android:minWidth="80dp"
+        android:gravity="end"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp" />
+</LinearLayout>
