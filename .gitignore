@@ -1,0 +1,75 @@
+# Built application files
+*.apk
+*.ap_
+*.aab
+
+# Files for the ART/Dalvik VM
+*.dex
+
+# Java class files
+*.class
+
+# Generated files
+bin/
+gen/
+out/
+
+# Gradle files
+.gradle/
+build/
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Android Studio
+*.iml
+.idea/
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/gradle.xml
+.idea/assetWizardSettings.xml
+.idea/dictionaries
+.idea/libraries
+.idea/caches
+.idea/modules.xml
+.idea/misc.xml
+.idea/deploymentTargetSelector.xml
+.idea/render.experimental.xml
+.idea/appInsightsSettings.xml
+.idea/dbnavigator.xml
+.idea/kotlinc.xml
+
+# Captures (screenshots, memory dumps)
+captures/
+
+# Keystore files
+*.jks
+*.keystore
+
+# External native build
+.cxx/
+
+# Google Services (contains API keys)
+google-services.json
+
+# Signing config
+signing.properties
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# Crash logs
+crash-reports/
+
+# Lint
+lint/intermediates/
+lint/generated/
+lint/outputs/
+lint/tmp/
