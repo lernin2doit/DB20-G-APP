@@ -43,7 +43,7 @@ class FccComplianceManager(private val context: Context) {
     )
 
     val gmrsChannels: List<GmrsChannel> = listOf(
-        // Channels 1-7: FRS/GMRS shared, 2W max on GMRS (462 MHz simplex)
+        // Channels 1-7: FRS/GMRS shared, 5W ERP max for GMRS licensees (462 MHz simplex)
         GmrsChannel(1, 462.5625, 5.0, 20.0, false, "FRS/GMRS shared"),
         GmrsChannel(2, 462.5875, 5.0, 20.0, false, "FRS/GMRS shared"),
         GmrsChannel(3, 462.6125, 5.0, 20.0, false, "FRS/GMRS shared"),

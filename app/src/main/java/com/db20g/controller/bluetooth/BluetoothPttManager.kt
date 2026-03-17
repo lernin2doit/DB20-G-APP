@@ -289,24 +289,31 @@ class BluetoothPttManager(private val context: Context) {
         try {
             @Suppress("DEPRECATION")
             bluetoothManager?.getConnectedDevices(4 /* BluetoothProfile.INPUT_DEVICE / HID Host */)?.forEach { device ->
-                result.add(mapToDeviceInfo(device, DeviceType.PTT_BUTTON))
+                result.add(mapToDeviceInfo(device, DeviceType.PTT_BUTTON, isConnected = true))
             }
-        } catch (_: SecurityException) {
-            Log.w(TAG, "Missing BLUETOOTH_CONNECT permission for HID devices")
+        } catch (_: Exception) {
+            Log.w(TAG, "HID profile not supported or permission missing")
         }
 
         // Check headset/A2DP devices — audio
         try {
             bluetoothManager?.getConnectedDevices(BluetoothProfile.HEADSET)?.forEach { device ->
-                result.add(mapToDeviceInfo(device, DeviceType.AUDIO_HEADSET))
+                result.add(mapToDeviceInfo(device, DeviceType.AUDIO_HEADSET, isConnected = true))
             }
-        } catch (_: SecurityException) {
-            Log.w(TAG, "Missing BLUETOOTH_CONNECT permission for headset devices")
+        } catch (_: Exception) {
+            Log.w(TAG, "Headset profile not supported or permission missing")
         }
 
+        // Merge: keep existing entries, add new, remove stale
+        val resultMap = connectedDevices.associateBy { it.address }.toMutableMap()
+        for (info in result) {
+            resultMap[info.address] = info
+        }
+        val currentAddresses = result.map { it.address }.toSet()
+        resultMap.keys.retainAll(currentAddresses)
         connectedDevices.clear()
-        connectedDevices.addAll(result)
-        return result.toList()
+        connectedDevices.addAll(resultMap.values)
+        return resultMap.values.toList()
     }
 
     @SuppressLint("MissingPermission")
@@ -315,7 +322,7 @@ class BluetoothPttManager(private val context: Context) {
 
         return try {
             bluetoothAdapter.bondedDevices
-                ?.map { mapToDeviceInfo(it, classifyDevice(it)) }
+                ?.map { mapToDeviceInfo(it, classifyDevice(it), isConnected = false) }
                 ?: emptyList()
         } catch (_: SecurityException) {
             Log.w(TAG, "Missing BLUETOOTH_CONNECT permission")
@@ -324,7 +331,7 @@ class BluetoothPttManager(private val context: Context) {
     }
 
     @SuppressLint("MissingPermission")
-    private fun mapToDeviceInfo(device: BluetoothDevice, type: DeviceType): BluetoothDeviceInfo {
+    private fun mapToDeviceInfo(device: BluetoothDevice, type: DeviceType, isConnected: Boolean): BluetoothDeviceInfo {
         val name = try {
             device.name ?: "Unknown"
         } catch (_: SecurityException) {
@@ -334,7 +341,7 @@ class BluetoothPttManager(private val context: Context) {
             address = device.address,
             name = name,
             type = type,
-            isConnected = true,
+            isConnected = isConnected,
             isPttDevice = type == DeviceType.PTT_BUTTON,
             isAudioDevice = type == DeviceType.AUDIO_HEADSET || type == DeviceType.SPEAKER
         )
@@ -392,7 +399,7 @@ class BluetoothPttManager(private val context: Context) {
     @SuppressLint("MissingPermission")
     private fun handleDeviceConnected(device: BluetoothDevice) {
         val type = classifyDevice(device)
-        val info = mapToDeviceInfo(device, type)
+        val info = mapToDeviceInfo(device, type, isConnected = true)
         connectedDevices.removeAll { it.address == device.address }
         connectedDevices.add(info)
         saveKnownDevices()

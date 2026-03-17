@@ -38,6 +38,7 @@ class EmergencyFragment : Fragment() {
 
     private var lastLocation: Location? = null
     private var locationManager: LocationManager? = null
+    private var locationListener: LocationListener? = null
 
     private val requestLocationLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
@@ -96,18 +97,19 @@ class EmergencyFragment : Fragment() {
         ) return
 
         locationManager = requireContext().getSystemService(LocationManager::class.java)
+        locationListener = object : LocationListener {
+            override fun onLocationChanged(location: Location) {
+                lastLocation = location
+                if (_binding != null) {
+                    binding.tvGpsPosition.text = emergencyManager.formatGpsForDisplay(location)
+                }
+            }
+        }
         locationManager?.requestLocationUpdates(
             LocationManager.GPS_PROVIDER,
             5000L,
             10f,
-            object : LocationListener {
-                override fun onLocationChanged(location: Location) {
-                    lastLocation = location
-                    if (_binding != null) {
-                        binding.tvGpsPosition.text = emergencyManager.formatGpsForDisplay(location)
-                    }
-                }
-            }
+            locationListener!!
         )
         // Try to get last known location immediately
         val lastKnown = locationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)
@@ -297,6 +299,7 @@ class EmergencyFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        locationListener?.let { locationManager?.removeUpdates(it) }
         emergencyManager.shutdown()
         _binding = null
     }

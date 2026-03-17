@@ -15,7 +15,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.db20g.controller.R
@@ -81,13 +80,14 @@ class LiveFragment : Fragment() {
         setupChannelControls()
         setupDtmfKeypad()
         setupVoxControls()
-        setupPttConfig()
         setupModeSelector()
         setupRepeaterControls()
         setupCallsignControls()
         setupScanControls()
         setupSignalMonitor()
         setupMultiRadio()
+        setupSecondaryPanel()
+        setupDtmfModal()
         setupObservers()
 
         // Load repeater database
@@ -217,6 +217,7 @@ class LiveFragment : Fragment() {
             audioEngine.voxEnabled = checked
             binding.sliderVoxSensitivity.isEnabled = checked
 
+
             if (checked) {
                 // Start continuous audio monitoring for VOX
                 checkAudioPermission()
@@ -246,30 +247,6 @@ class LiveFragment : Fragment() {
                 val level = (rms / 150f * 100f).coerceIn(0f, 100f).toInt()
                 binding.audioLevelBar.progress = level
             }
-        }
-    }
-
-    private fun setupPttConfig() {
-        binding.chipGroupPttLine.setOnCheckedStateChangeListener { _, checkedIds ->
-            val line = if (checkedIds.contains(R.id.chipPttDtr)) {
-                UsbSerialManager.PttLine.DTR
-            } else {
-                UsbSerialManager.PttLine.RTS
-            }
-            viewModel.configurePtt(line, binding.switchPttInverted.isChecked)
-        }
-
-        binding.switchPttInverted.setOnCheckedChangeListener { _, checked ->
-            val line = if (binding.chipPttDtr.isChecked) {
-                UsbSerialManager.PttLine.DTR
-            } else {
-                UsbSerialManager.PttLine.RTS
-            }
-            viewModel.configurePtt(line, checked)
-        }
-
-        binding.switchSpeakerphone.setOnCheckedChangeListener { _, checked ->
-            audioEngine.setSpeakerphone(checked)
         }
     }
 
@@ -326,21 +303,12 @@ class LiveFragment : Fragment() {
     private fun setupCallsignControls() {
         val csm = viewModel.callsignManager
 
-        // Load saved callsign
-        binding.etCallsign.setText(csm.callsign)
-        binding.switchAutoId.isChecked = csm.autoIdEnabled
-
-        binding.etCallsign.doAfterTextChanged { text ->
-            csm.callsign = text?.toString() ?: ""
-        }
-
-        binding.switchAutoId.setOnCheckedChangeListener { _, checked ->
-            csm.autoIdEnabled = checked
-        }
+        // Display callsign from settings (read-only on dashboard)
+        binding.tvCallsignDisplay.text = if (csm.isCallsignSet) csm.callsign else "No callsign set"
 
         binding.btnManualId.setOnClickListener {
             if (!csm.isCallsignSet) {
-                Snackbar.make(binding.root, "Enter your callsign first", Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(binding.root, "Set your callsign in Settings", Snackbar.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             csm.transmitId()
@@ -349,13 +317,16 @@ class LiveFragment : Fragment() {
         // ID timer display update
         idTimerHandler.post(object : Runnable {
             override fun run() {
+                // Refresh callsign display in case it changed in settings
+                binding.tvCallsignDisplay.text = if (csm.isCallsignSet) csm.callsign else "No callsign set"
+
                 val remaining = csm.timeUntilNextIdMs
                 binding.tvIdTimer.text = if (remaining >= 0) {
                     val min = remaining / 60_000
                     val sec = (remaining % 60_000) / 1000
                     "Next ID: %d:%02d".format(min, sec)
                 } else {
-                    "ID timer: idle"
+                    "ID: --:--"
                 }
                 idTimerHandler.postDelayed(this, 1000)
             }
@@ -365,6 +336,24 @@ class LiveFragment : Fragment() {
             activity?.runOnUiThread {
                 Snackbar.make(binding.root, "Transmitting ID: $callsign", Snackbar.LENGTH_SHORT).show()
             }
+        }
+    }
+
+    private fun setupSecondaryPanel() {
+        binding.btnShowSecondary.setOnClickListener {
+            binding.secondaryPanel.visibility = View.VISIBLE
+        }
+        binding.btnCloseSecondary.setOnClickListener {
+            binding.secondaryPanel.visibility = View.GONE
+        }
+    }
+
+    private fun setupDtmfModal() {
+        binding.btnDtmfOpen.setOnClickListener {
+            binding.dtmfModal.visibility = View.VISIBLE
+        }
+        binding.btnDtmfClose.setOnClickListener {
+            binding.dtmfModal.visibility = View.GONE
         }
     }
 
@@ -632,7 +621,8 @@ class LiveFragment : Fragment() {
     }
 
     private fun startAudioEngine() {
-        audioEngine.setSpeakerphone(binding.switchSpeakerphone.isChecked)
+        val prefs = requireContext().getSharedPreferences("ptt_config", android.content.Context.MODE_PRIVATE)
+        audioEngine.setSpeakerphone(prefs.getBoolean("speakerphone", true))
     }
 
     private fun checkLocationPermission() {

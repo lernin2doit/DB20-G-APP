@@ -15,8 +15,8 @@
         app:title="Spectrum Analyzer"
         app:subtitle="Audio Waterfall Display"
         app:navigationIcon="?attr/homeAsUpIndicator"
-        app:titleTextColor="@android:color/white"
-        app:subtitleTextColor="@android:color/darker_gray" />
+        app:titleTextColor="?android:attr/textColorPrimary"
+        app:subtitleTextColor="?android:attr/textColorSecondary" />
 
     <!-- Info bar -->
     <LinearLayout
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="6dp"
-        android:background="?attr/colorSurfaceVariant"
+        android:background="?attr/colorSurface"
         android:gravity="center_vertical">
 
         <TextView

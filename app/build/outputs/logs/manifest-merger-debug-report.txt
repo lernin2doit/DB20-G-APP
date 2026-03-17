@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:2:1-147:12
-INJECTED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:2:1-147:12
-INJECTED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:2:1-147:12
-INJECTED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:2:1-147:12
+ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:2:1-172:12
+INJECTED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:2:1-172:12
+INJECTED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:2:1-172:12
+INJECTED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:2:1-172:12
 MERGED from [androidx.databinding:viewbinding:8.7.3] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\f49c61f85ed934ba210a1f7dad1e414e\transformed\viewbinding-8.7.3\AndroidManifest.xml:2:1-7:12
 MERGED from [com.google.android.material:material:1.11.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\7a8aed03ff8a04e691ad5883490fe2f1\transformed\material-1.11.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\a0a2ffd931522713ee6df246db083c47\transformed\constraintlayout-2.1.4\AndroidManifest.xml:2:1-11:12
@@ -163,8 +163,8 @@ ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:21:5-81
 	android:name
 		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:21:22-78
 application
-ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:23:5-145:19
-INJECTED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:23:5-145:19
+ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:23:5-170:19
+INJECTED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:23:5-170:19
 MERGED from [com.google.android.material:material:1.11.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\7a8aed03ff8a04e691ad5883490fe2f1\transformed\material-1.11.0\AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.11.0] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\7a8aed03ff8a04e691ad5883490fe2f1\transformed\material-1.11.0\AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\JohnOrr\.gradle\caches\8.11.1\transforms\a0a2ffd931522713ee6df246db083c47\transformed\constraintlayout-2.1.4\AndroidManifest.xml:9:5-20
@@ -291,106 +291,146 @@ ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:71:9-74:60
 		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:74:13-57
 	android:name
 		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:72:13-61
-activity#com.db20g.controller.ui.MainActivity
-ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:76:9-89:20
+activity#com.db20g.controller.ui.BluetoothPttActivity
+ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:76:9-79:60
 	android:exported
-		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:78:13-36
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:78:13-37
+	android:theme
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:79:13-57
 	android:name
-		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:77:13-44
-intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:79:13-82:29
-action#android.intent.action.MAIN
-ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:80:17-69
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:77:13-52
+activity#com.db20g.controller.ui.ToolsActivity
+ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:81:9-84:60
+	android:exported
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:83:13-37
+	android:theme
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:84:13-57
 	android:name
-		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:80:25-66
-category#android.intent.category.LAUNCHER
-ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:81:17-77
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:82:13-45
+activity#com.db20g.controller.ui.RadioSettingsActivity
+ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:86:9-89:60
+	android:exported
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:88:13-37
+	android:theme
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:89:13-57
 	android:name
-		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:81:27-74
-intent-filter#action:name:android.hardware.usb.action.USB_DEVICE_ATTACHED
-ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:83:13-85:29
-action#android.hardware.usb.action.USB_DEVICE_ATTACHED
-ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:84:17-90
-	android:name
-		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:84:25-87
-meta-data#android.hardware.usb.action.USB_DEVICE_ATTACHED
-ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:86:13-88:61
-	android:resource
-		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:88:17-58
-	android:name
-		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:87:17-79
-service#com.db20g.controller.service.RadioService
-ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:91:9-94:63
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:87:13-53
+activity#com.db20g.controller.ui.AppearanceActivity
+ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:91:9-94:60
 	android:exported
 		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:93:13-37
+	android:theme
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:94:13-57
+	android:name
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:92:13-50
+activity#com.db20g.controller.ui.DataToolsActivity
+ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:96:9-99:60
+	android:exported
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:98:13-37
+	android:theme
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:99:13-57
+	android:name
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:97:13-49
+activity#com.db20g.controller.ui.MainActivity
+ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:101:9-114:20
+	android:exported
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:103:13-36
+	android:name
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:102:13-44
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:104:13-107:29
+action#android.intent.action.MAIN
+ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:105:17-69
+	android:name
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:105:25-66
+category#android.intent.category.LAUNCHER
+ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:106:17-77
+	android:name
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:106:27-74
+intent-filter#action:name:android.hardware.usb.action.USB_DEVICE_ATTACHED
+ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:108:13-110:29
+action#android.hardware.usb.action.USB_DEVICE_ATTACHED
+ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:109:17-90
+	android:name
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:109:25-87
+meta-data#android.hardware.usb.action.USB_DEVICE_ATTACHED
+ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:111:13-113:61
+	android:resource
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:113:17-58
+	android:name
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:112:17-79
+service#com.db20g.controller.service.RadioService
+ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:116:9-119:63
+	android:exported
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:118:13-37
 	android:foregroundServiceType
-		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:94:13-60
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:119:13-60
 	android:name
-		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:92:13-49
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:117:13-49
 service#com.db20g.controller.auto.RadioCarAppService
-ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:97:9-104:19
+ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:122:9-129:19
 	android:exported
-		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:99:13-36
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:124:13-36
 	android:name
-		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:98:13-52
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:123:13-52
 intent-filter#action:name:androidx.car.app.CarAppService+category:name:androidx.car.app.category.IOT
-ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:100:13-103:29
+ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:125:13-128:29
 action#androidx.car.app.CarAppService
-ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:101:17-73
+ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:126:17-73
 	android:name
-		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:101:25-70
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:126:25-70
 category#androidx.car.app.category.IOT
-ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:102:17-74
+ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:127:17-74
 	android:name
-		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:102:27-71
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:127:27-71
 meta-data#com.google.android.gms.car.application
-ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:106:9-108:59
+ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:131:9-133:59
 	android:resource
-		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:108:13-56
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:133:13-56
 	android:name
-		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:107:13-66
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:132:13-66
 receiver#com.db20g.controller.ui.RadioWidgetProvider
-ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:111:9-120:20
+ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:136:9-145:20
 	android:exported
-		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:113:13-37
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:138:13-37
 	android:name
-		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:112:13-51
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:137:13-51
 intent-filter#action:name:android.appwidget.action.APPWIDGET_UPDATE
-ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:114:13-116:29
+ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:139:13-141:29
 action#android.appwidget.action.APPWIDGET_UPDATE
-ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:115:17-84
+ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:140:17-84
 	android:name
-		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:115:25-81
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:140:25-81
 meta-data#android.appwidget.provider
-ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:117:13-119:61
+ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:142:13-144:61
 	android:resource
-		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:119:17-58
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:144:17-58
 	android:name
-		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:118:17-58
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:143:17-58
 receiver#com.db20g.controller.ui.RadioWidgetLargeProvider
-ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:123:9-132:20
+ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:148:9-157:20
 	android:exported
-		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:125:13-37
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:150:13-37
 	android:name
-		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:124:13-56
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:149:13-56
 service#com.db20g.controller.ui.RadioTileService
-ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:135:9-144:19
+ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:160:9-169:19
 	android:label
-		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:139:13-39
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:164:13-39
 	android:exported
-		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:137:13-36
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:162:13-36
 	android:permission
-		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:140:13-77
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:165:13-77
 	android:icon
-		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:138:13-60
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:163:13-60
 	android:name
-		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:136:13-48
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:161:13-48
 intent-filter#action:name:android.service.quicksettings.action.QS_TILE
-ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:141:13-143:29
+ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:166:13-168:29
 action#android.service.quicksettings.action.QS_TILE
-ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:142:17-87
+ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:167:17-87
 	android:name
-		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:142:25-84
+		ADDED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml:167:25-84
 uses-sdk
 INJECTED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Code\Radio\DB20-G-APP\app\src\main\AndroidManifest.xml

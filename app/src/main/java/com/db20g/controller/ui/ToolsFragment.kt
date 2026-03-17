@@ -24,6 +24,12 @@ import java.io.File
 
 class ToolsFragment : Fragment() {
 
+    companion object {
+        const val ARG_MODE = "mode"
+        const val MODE_RECORDING = "recording"
+        const val MODE_DATA_TOOLS = "data_tools"
+    }
+
     private var _binding: FragmentToolsBinding? = null
     private val binding get() = _binding!!
     private val viewModel: RadioViewModel by activityViewModels()
@@ -289,18 +295,6 @@ class ToolsFragment : Fragment() {
             startActivity(Intent(requireContext(), WeatherActivity::class.java))
         }
 
-        binding.btnCompliance.setOnClickListener {
-            startActivity(Intent(requireContext(), ComplianceActivity::class.java))
-        }
-
-        binding.btnTranslation.setOnClickListener {
-            startActivity(Intent(requireContext(), TranslationActivity::class.java))
-        }
-
-        binding.btnAccessibility.setOnClickListener {
-            startActivity(Intent(requireContext(), AccessibilitySettingsActivity::class.java))
-        }
-
         // --- Social & Community Features ---
         qsoLogger = QsoLogger(requireContext())
         setupCommunityFeatures()
@@ -327,6 +321,25 @@ class ToolsFragment : Fragment() {
             val connected = state == ConnectionState.CONNECTED || state == ConnectionState.BUSY
             binding.btnDownload.isEnabled = connected && state != ConnectionState.BUSY
             binding.btnUpload.isEnabled = connected && state != ConnectionState.BUSY
+        }
+
+        // Apply mode-based section visibility
+        applyModeFilter()
+    }
+
+    private fun applyModeFilter() {
+        val mode = arguments?.getString(ARG_MODE)
+        when (mode) {
+            MODE_RECORDING -> {
+                binding.groupDataTools.visibility = View.GONE
+                binding.groupExtras.visibility = View.GONE
+                binding.groupRecording.visibility = View.VISIBLE
+            }
+            MODE_DATA_TOOLS -> {
+                binding.groupDataTools.visibility = View.VISIBLE
+                binding.groupExtras.visibility = View.VISIBLE
+                binding.groupRecording.visibility = View.GONE
+            }
         }
     }
 
@@ -358,7 +371,7 @@ class ToolsFragment : Fragment() {
                     wideband = true,
                     scan = true,
                     name = "GMRS${gmrs.number}R",
-                    txTone = ToneValue.CTCSS(141.3),
+                    txTone = ToneValue.None,
                     isEmpty = false
                 )
                 viewModel.addChannel(rptChannel)

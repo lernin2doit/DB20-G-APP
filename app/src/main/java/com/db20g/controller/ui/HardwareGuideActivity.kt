@@ -335,8 +335,9 @@ class HardwareGuideActivity : AppCompatActivity() {
     }
 
     private fun getThemeColor(attr: Int): Int {
-        val typedValue = TypedValue()
-        theme.resolveAttribute(attr, typedValue, true)
-        return typedValue.data
+        val ta = obtainStyledAttributes(intArrayOf(attr))
+        val color = ta.getColor(0, 0)
+        ta.recycle()
+        return color
     }
 }

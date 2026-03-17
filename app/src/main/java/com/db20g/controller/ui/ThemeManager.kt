@@ -43,6 +43,7 @@ class ThemeManager(context: Context) {
         return when (currentTheme) {
             THEME_AMOLED -> R.style.Theme_DB20GController_AMOLED
             THEME_RED_LIGHT -> R.style.Theme_DB20GController_RedLight
+            THEME_SYSTEM -> R.style.Theme_DB20GController_System
             else -> R.style.Theme_DB20GController
         }
     }

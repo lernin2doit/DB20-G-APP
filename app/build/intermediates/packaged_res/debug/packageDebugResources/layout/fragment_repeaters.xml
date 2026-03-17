@@ -75,7 +75,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Search"
-                    style="@style/Widget.Material3.Button" />
+                    style="@style/Widget.MaterialComponents.Button" />
             </LinearLayout>
 
             <!-- State search controls -->
@@ -109,7 +109,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Search"
-                    style="@style/Widget.Material3.Button" />
+                    style="@style/Widget.MaterialComponents.Button" />
             </LinearLayout>
 
             <!-- Frequency search controls -->
@@ -142,7 +142,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Search"
-                    style="@style/Widget.Material3.Button" />
+                    style="@style/Widget.MaterialComponents.Button" />
             </LinearLayout>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

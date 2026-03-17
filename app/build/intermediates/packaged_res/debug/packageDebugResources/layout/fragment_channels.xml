@@ -108,7 +108,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:background="#1B5E20"
+        android:background="?attr/colorPrimary"
         android:padding="8dp"
         android:visibility="gone">
 
@@ -118,7 +118,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="0 selected"
-            android:textColor="@android:color/white"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="14sp" />
 
         <ImageButton
@@ -206,7 +206,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Diff"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnManageGroups"
@@ -214,7 +214,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Groups"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnBackupRestore"
@@ -222,7 +222,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Backup"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
     </LinearLayout>
 
     <!-- Empty state -->

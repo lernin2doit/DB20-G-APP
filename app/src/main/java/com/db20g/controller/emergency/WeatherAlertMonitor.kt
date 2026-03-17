@@ -56,13 +56,14 @@ class WeatherAlertMonitor(private val context: Context) {
     }
 
     private val prefs: SharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-    private val scope = CoroutineScope(Dispatchers.IO + Job())
+    private val scopeJob = Job()
+    private val scope = CoroutineScope(Dispatchers.IO + scopeJob)
     private var monitorJob: Job? = null
 
     @Volatile
     private var monitoring = false
     private var lastLocation: Location? = null
-    private val activeAlerts = mutableListOf<WeatherAlert>()
+    private val activeAlerts = java.util.Collections.synchronizedList(mutableListOf<WeatherAlert>())
     private val seenAlertIds = mutableSetOf<String>()
 
     var listener: WeatherAlertListener? = null
@@ -140,7 +141,7 @@ class WeatherAlertMonitor(private val context: Context) {
         scope.launch { fetchAlerts() }
     }
 
-    fun getActiveAlerts(): List<WeatherAlert> = activeAlerts.toList()
+    fun getActiveAlerts(): List<WeatherAlert> = synchronized(activeAlerts) { activeAlerts.toList() }
 
     private suspend fun fetchAlerts() {
         val location = lastLocation
@@ -277,6 +278,7 @@ class WeatherAlertMonitor(private val context: Context) {
 
     fun release() {
         stopMonitoring()
+        scopeJob.cancel()
     }
 
     // ======================== Data Classes ========================

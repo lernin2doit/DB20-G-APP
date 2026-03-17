@@ -4,6 +4,7 @@ package com.db20g.controller.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -24,16 +25,10 @@ public final class FragmentToolsBinding implements ViewBinding {
   private final ScrollView rootView;
 
   @NonNull
-  public final MaterialButton btnAccessibility;
-
-  @NonNull
   public final MaterialButton btnClearActivityLog;
 
   @NonNull
   public final MaterialButton btnClearAll;
-
-  @NonNull
-  public final MaterialButton btnCompliance;
 
   @NonNull
   public final MaterialButton btnDeleteAllRecordings;
@@ -87,9 +82,6 @@ public final class FragmentToolsBinding implements ViewBinding {
   public final MaterialButton btnTextMessaging;
 
   @NonNull
-  public final MaterialButton btnTranslation;
-
-  @NonNull
   public final MaterialButton btnUpload;
 
   @NonNull
@@ -112,6 +104,15 @@ public final class FragmentToolsBinding implements ViewBinding {
 
   @NonNull
   public final TextInputEditText etRetentionDays;
+
+  @NonNull
+  public final LinearLayout groupDataTools;
+
+  @NonNull
+  public final LinearLayout groupExtras;
+
+  @NonNull
+  public final LinearLayout groupRecording;
 
   @NonNull
   public final RecyclerView rvRecordings;
@@ -150,8 +151,7 @@ public final class FragmentToolsBinding implements ViewBinding {
   public final TextView tvValidationResult;
 
   private FragmentToolsBinding(@NonNull ScrollView rootView,
-      @NonNull MaterialButton btnAccessibility, @NonNull MaterialButton btnClearActivityLog,
-      @NonNull MaterialButton btnClearAll, @NonNull MaterialButton btnCompliance,
+      @NonNull MaterialButton btnClearActivityLog, @NonNull MaterialButton btnClearAll,
       @NonNull MaterialButton btnDeleteAllRecordings, @NonNull MaterialButton btnDownload,
       @NonNull MaterialButton btnExportAdif, @NonNull MaterialButton btnExportChirpCsv,
       @NonNull MaterialButton btnExportQsoCsv, @NonNull MaterialButton btnHardwareGuide,
@@ -160,11 +160,12 @@ public final class FragmentToolsBinding implements ViewBinding {
       @NonNull MaterialButton btnLogQso, @NonNull MaterialButton btnSaveFile,
       @NonNull MaterialButton btnSearchContacts, @NonNull MaterialButton btnShareChannels,
       @NonNull MaterialButton btnSpectrum, @NonNull MaterialButton btnSstv,
-      @NonNull MaterialButton btnTextMessaging, @NonNull MaterialButton btnTranslation,
-      @NonNull MaterialButton btnUpload, @NonNull MaterialButton btnValidateAll,
-      @NonNull MaterialButton btnWeather, @NonNull TextInputEditText etContactSearch,
-      @NonNull TextInputEditText etMaxStorageMb, @NonNull TextInputEditText etQsoCallsign,
-      @NonNull TextInputEditText etQsoNotes, @NonNull TextInputEditText etRetentionDays,
+      @NonNull MaterialButton btnTextMessaging, @NonNull MaterialButton btnUpload,
+      @NonNull MaterialButton btnValidateAll, @NonNull MaterialButton btnWeather,
+      @NonNull TextInputEditText etContactSearch, @NonNull TextInputEditText etMaxStorageMb,
+      @NonNull TextInputEditText etQsoCallsign, @NonNull TextInputEditText etQsoNotes,
+      @NonNull TextInputEditText etRetentionDays, @NonNull LinearLayout groupDataTools,
+      @NonNull LinearLayout groupExtras, @NonNull LinearLayout groupRecording,
       @NonNull RecyclerView rvRecordings, @NonNull SwitchMaterial switchRecordRx,
       @NonNull SwitchMaterial switchRecordTx, @NonNull SwitchMaterial switchRecordingEnabled,
       @NonNull TextView tvActivityLog, @NonNull TextView tvContactResults, @NonNull TextView tvLog,
@@ -172,10 +173,8 @@ public final class FragmentToolsBinding implements ViewBinding {
       @NonNull TextView tvRecentQsos, @NonNull TextView tvRecordingStats,
       @NonNull TextView tvValidationResult) {
     this.rootView = rootView;
-    this.btnAccessibility = btnAccessibility;
     this.btnClearActivityLog = btnClearActivityLog;
     this.btnClearAll = btnClearAll;
-    this.btnCompliance = btnCompliance;
     this.btnDeleteAllRecordings = btnDeleteAllRecordings;
     this.btnDownload = btnDownload;
     this.btnExportAdif = btnExportAdif;
@@ -193,7 +192,6 @@ public final class FragmentToolsBinding implements ViewBinding {
     this.btnSpectrum = btnSpectrum;
     this.btnSstv = btnSstv;
     this.btnTextMessaging = btnTextMessaging;
-    this.btnTranslation = btnTranslation;
     this.btnUpload = btnUpload;
     this.btnValidateAll = btnValidateAll;
     this.btnWeather = btnWeather;
@@ -202,6 +200,9 @@ public final class FragmentToolsBinding implements ViewBinding {
     this.etQsoCallsign = etQsoCallsign;
     this.etQsoNotes = etQsoNotes;
     this.etRetentionDays = etRetentionDays;
+    this.groupDataTools = groupDataTools;
+    this.groupExtras = groupExtras;
+    this.groupRecording = groupRecording;
     this.rvRecordings = rvRecordings;
     this.switchRecordRx = switchRecordRx;
     this.switchRecordTx = switchRecordTx;
@@ -243,12 +244,6 @@ public final class FragmentToolsBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
-      id = R.id.btnAccessibility;
-      MaterialButton btnAccessibility = ViewBindings.findChildViewById(rootView, id);
-      if (btnAccessibility == null) {
-        break missingId;
-      }
-
       id = R.id.btnClearActivityLog;
       MaterialButton btnClearActivityLog = ViewBindings.findChildViewById(rootView, id);
       if (btnClearActivityLog == null) {
@@ -258,12 +253,6 @@ public final class FragmentToolsBinding implements ViewBinding {
       id = R.id.btnClearAll;
       MaterialButton btnClearAll = ViewBindings.findChildViewById(rootView, id);
       if (btnClearAll == null) {
-        break missingId;
-      }
-
-      id = R.id.btnCompliance;
-      MaterialButton btnCompliance = ViewBindings.findChildViewById(rootView, id);
-      if (btnCompliance == null) {
         break missingId;
       }
 
@@ -369,12 +358,6 @@ public final class FragmentToolsBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.btnTranslation;
-      MaterialButton btnTranslation = ViewBindings.findChildViewById(rootView, id);
-      if (btnTranslation == null) {
-        break missingId;
-      }
-
       id = R.id.btnUpload;
       MaterialButton btnUpload = ViewBindings.findChildViewById(rootView, id);
       if (btnUpload == null) {
@@ -420,6 +403,24 @@ public final class FragmentToolsBinding implements ViewBinding {
       id = R.id.etRetentionDays;
       TextInputEditText etRetentionDays = ViewBindings.findChildViewById(rootView, id);
       if (etRetentionDays == null) {
+        break missingId;
+      }
+
+      id = R.id.groupDataTools;
+      LinearLayout groupDataTools = ViewBindings.findChildViewById(rootView, id);
+      if (groupDataTools == null) {
+        break missingId;
+      }
+
+      id = R.id.groupExtras;
+      LinearLayout groupExtras = ViewBindings.findChildViewById(rootView, id);
+      if (groupExtras == null) {
+        break missingId;
+      }
+
+      id = R.id.groupRecording;
+      LinearLayout groupRecording = ViewBindings.findChildViewById(rootView, id);
+      if (groupRecording == null) {
         break missingId;
       }
 
@@ -495,15 +496,15 @@ public final class FragmentToolsBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FragmentToolsBinding((ScrollView) rootView, btnAccessibility, btnClearActivityLog,
-          btnClearAll, btnCompliance, btnDeleteAllRecordings, btnDownload, btnExportAdif,
-          btnExportChirpCsv, btnExportQsoCsv, btnHardwareGuide, btnImportChirpFile, btnLoadFile,
-          btnLoadGmrsChannels, btnLoadGmrsRepeaters, btnLogQso, btnSaveFile, btnSearchContacts,
-          btnShareChannels, btnSpectrum, btnSstv, btnTextMessaging, btnTranslation, btnUpload,
-          btnValidateAll, btnWeather, etContactSearch, etMaxStorageMb, etQsoCallsign, etQsoNotes,
-          etRetentionDays, rvRecordings, switchRecordRx, switchRecordTx, switchRecordingEnabled,
-          tvActivityLog, tvContactResults, tvLog, tvNoRecordings, tvQsoStats, tvRecentQsos,
-          tvRecordingStats, tvValidationResult);
+      return new FragmentToolsBinding((ScrollView) rootView, btnClearActivityLog, btnClearAll,
+          btnDeleteAllRecordings, btnDownload, btnExportAdif, btnExportChirpCsv, btnExportQsoCsv,
+          btnHardwareGuide, btnImportChirpFile, btnLoadFile, btnLoadGmrsChannels,
+          btnLoadGmrsRepeaters, btnLogQso, btnSaveFile, btnSearchContacts, btnShareChannels,
+          btnSpectrum, btnSstv, btnTextMessaging, btnUpload, btnValidateAll, btnWeather,
+          etContactSearch, etMaxStorageMb, etQsoCallsign, etQsoNotes, etRetentionDays,
+          groupDataTools, groupExtras, groupRecording, rvRecordings, switchRecordRx, switchRecordTx,
+          switchRecordingEnabled, tvActivityLog, tvContactResults, tvLog, tvNoRecordings,
+          tvQsoStats, tvRecentQsos, tvRecordingStats, tvValidationResult);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

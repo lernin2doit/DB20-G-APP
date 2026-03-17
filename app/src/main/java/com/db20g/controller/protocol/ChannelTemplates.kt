@@ -28,7 +28,7 @@ object ChannelTemplates {
             id = "emergency_kit",
             name = "Emergency Kit",
             description = "Channel 20 (unofficial emergency), FRS interop channels 1-7, and channels 15-22 for repeater access.",
-            channelCount = 30,
+            channelCount = 24,
             builder = ::buildEmergencyKit
         ),
         Template(

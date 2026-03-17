@@ -14,8 +14,8 @@
         app:title="Weather Alerts"
         app:subtitle="NOAA/NWS Monitor"
         app:navigationIcon="?attr/homeAsUpIndicator"
-        app:titleTextColor="@android:color/white"
-        app:subtitleTextColor="@android:color/darker_gray" />
+        app:titleTextColor="?android:attr/textColorPrimary"
+        app:subtitleTextColor="?android:attr/textColorSecondary" />
 
     <!-- Status bar -->
     <LinearLayout
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="8dp"
-        android:background="?attr/colorSurfaceVariant"
+        android:background="?attr/colorSurface"
         android:gravity="center_vertical">
 
         <View
@@ -157,7 +157,7 @@
                     android:layout_weight="1"
                     android:layout_marginEnd="4dp"
                     android:text="START MONITORING"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
                     android:textStyle="bold"
                     app:backgroundTint="#2E7D32" />
 
@@ -169,7 +169,7 @@
                     android:layout_weight="1"
                     android:layout_marginStart="4dp"
                     android:text="Check Now"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

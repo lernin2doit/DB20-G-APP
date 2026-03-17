@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="8dp"
-    android:background="#1A1A1A"
+    android:background="?android:attr/colorBackground"
     android:layout_marginBottom="4dp">
 
     <LinearLayout
@@ -28,7 +28,7 @@
             android:id="@+id/tvHistoryTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#666666"
+            android:textColor="?android:attr/textColorSecondary"
             android:textSize="11sp" />
     </LinearLayout>
 
@@ -36,7 +36,7 @@
         android:id="@+id/tvHistoryOriginal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#AAAAAA"
+        android:textColor="?android:attr/textColorSecondary"
         android:textSize="13sp"
         android:layout_marginTop="2dp" />
 
@@ -44,7 +44,7 @@
         android:id="@+id/tvHistoryTranslated"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#4CAF50"
+        android:textColor="?attr/colorPrimary"
         android:textSize="14sp"
         android:textStyle="bold"
         android:layout_marginTop="2dp" />

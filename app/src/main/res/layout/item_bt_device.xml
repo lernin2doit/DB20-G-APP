@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:text="Connected"
             android:textSize="12sp"
-            android:textColor="#4CAF50"
+            android:textColor="?attr/colorPrimary"
             android:textStyle="bold" />
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

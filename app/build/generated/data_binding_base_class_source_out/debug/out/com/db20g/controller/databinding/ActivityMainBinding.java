@@ -4,7 +4,6 @@ package com.db20g.controller.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -15,8 +14,9 @@ import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import androidx.viewpager2.widget.ViewPager2;
 import com.db20g.controller.R;
-import com.google.android.material.appbar.MaterialToolbar;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.navigationrail.NavigationRailView;
 import com.google.android.material.tabs.TabLayout;
 import java.lang.NullPointerException;
 import java.lang.Override;
@@ -26,47 +26,100 @@ public final class ActivityMainBinding implements ViewBinding {
   @NonNull
   private final CoordinatorLayout rootView;
 
-  @NonNull
-  public final Button btnConnect;
+  /**
+   * This binding is not available in all configurations.
+   * <p>
+   * Present:
+   * <ul>
+   *   <li>layout-land/</li>
+   * </ul>
+   *
+   * Absent:
+   * <ul>
+   *   <li>layout/</li>
+   * </ul>
+   */
+  @Nullable
+  public final LinearLayout navContainer;
+
+  /**
+   * This binding is not available in all configurations.
+   * <p>
+   * Present:
+   * <ul>
+   *   <li>layout-land/</li>
+   * </ul>
+   *
+   * Absent:
+   * <ul>
+   *   <li>layout/</li>
+   * </ul>
+   */
+  @Nullable
+  public final NavigationRailView navRail;
 
   @NonNull
-  public final LinearLayout connectionBar;
+  public final MaterialButton pillActionBtn;
 
   @NonNull
-  public final FloatingActionButton fabAction;
+  public final LinearLayout pillContentLayout;
+
+  @NonNull
+  public final MaterialButton pillDisconnectBtn;
+
+  @NonNull
+  public final LinearLayout pillExpandedContent;
+
+  @NonNull
+  public final View pillStatusIndicator;
+
+  @NonNull
+  public final TextView pillStatusText;
 
   @NonNull
   public final ProgressBar progressBar;
 
   @NonNull
-  public final View statusIndicator;
+  public final MaterialCardView statusPill;
 
-  @NonNull
+  /**
+   * This binding is not available in all configurations.
+   * <p>
+   * Present:
+   * <ul>
+   *   <li>layout/</li>
+   * </ul>
+   *
+   * Absent:
+   * <ul>
+   *   <li>layout-land/</li>
+   * </ul>
+   */
+  @Nullable
   public final TabLayout tabLayout;
-
-  @NonNull
-  public final MaterialToolbar toolbar;
-
-  @NonNull
-  public final TextView tvConnectionStatus;
 
   @NonNull
   public final ViewPager2 viewPager;
 
-  private ActivityMainBinding(@NonNull CoordinatorLayout rootView, @NonNull Button btnConnect,
-      @NonNull LinearLayout connectionBar, @NonNull FloatingActionButton fabAction,
-      @NonNull ProgressBar progressBar, @NonNull View statusIndicator, @NonNull TabLayout tabLayout,
-      @NonNull MaterialToolbar toolbar, @NonNull TextView tvConnectionStatus,
-      @NonNull ViewPager2 viewPager) {
+  private ActivityMainBinding(@NonNull CoordinatorLayout rootView,
+      @Nullable LinearLayout navContainer, @Nullable NavigationRailView navRail,
+      @NonNull MaterialButton pillActionBtn, @NonNull LinearLayout pillContentLayout,
+      @NonNull MaterialButton pillDisconnectBtn, @NonNull LinearLayout pillExpandedContent,
+      @NonNull View pillStatusIndicator, @NonNull TextView pillStatusText,
+      @NonNull ProgressBar progressBar, @NonNull MaterialCardView statusPill,
+      @Nullable TabLayout tabLayout, @NonNull ViewPager2 viewPager) {
     this.rootView = rootView;
-    this.btnConnect = btnConnect;
-    this.connectionBar = connectionBar;
-    this.fabAction = fabAction;
+    this.navContainer = navContainer;
+    this.navRail = navRail;
+    this.pillActionBtn = pillActionBtn;
+    this.pillContentLayout = pillContentLayout;
+    this.pillDisconnectBtn = pillDisconnectBtn;
+    this.pillExpandedContent = pillExpandedContent;
+    this.pillStatusIndicator = pillStatusIndicator;
+    this.pillStatusText = pillStatusText;
     this.progressBar = progressBar;
-    this.statusIndicator = statusIndicator;
+    this.statusPill = statusPill;
     this.tabLayout = tabLayout;
-    this.toolbar = toolbar;
-    this.tvConnectionStatus = tvConnectionStatus;
     this.viewPager = viewPager;
   }
 
@@ -97,21 +150,45 @@ public final class ActivityMainBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
-      id = R.id.btnConnect;
-      Button btnConnect = ViewBindings.findChildViewById(rootView, id);
-      if (btnConnect == null) {
+      id = R.id.navContainer;
+      LinearLayout navContainer = ViewBindings.findChildViewById(rootView, id);
+
+      id = R.id.navRail;
+      NavigationRailView navRail = ViewBindings.findChildViewById(rootView, id);
+
+      id = R.id.pillActionBtn;
+      MaterialButton pillActionBtn = ViewBindings.findChildViewById(rootView, id);
+      if (pillActionBtn == null) {
         break missingId;
       }
 
-      id = R.id.connectionBar;
-      LinearLayout connectionBar = ViewBindings.findChildViewById(rootView, id);
-      if (connectionBar == null) {
+      id = R.id.pillContentLayout;
+      LinearLayout pillContentLayout = ViewBindings.findChildViewById(rootView, id);
+      if (pillContentLayout == null) {
         break missingId;
       }
 
-      id = R.id.fabAction;
-      FloatingActionButton fabAction = ViewBindings.findChildViewById(rootView, id);
-      if (fabAction == null) {
+      id = R.id.pillDisconnectBtn;
+      MaterialButton pillDisconnectBtn = ViewBindings.findChildViewById(rootView, id);
+      if (pillDisconnectBtn == null) {
+        break missingId;
+      }
+
+      id = R.id.pillExpandedContent;
+      LinearLayout pillExpandedContent = ViewBindings.findChildViewById(rootView, id);
+      if (pillExpandedContent == null) {
+        break missingId;
+      }
+
+      id = R.id.pillStatusIndicator;
+      View pillStatusIndicator = ViewBindings.findChildViewById(rootView, id);
+      if (pillStatusIndicator == null) {
+        break missingId;
+      }
+
+      id = R.id.pillStatusText;
+      TextView pillStatusText = ViewBindings.findChildViewById(rootView, id);
+      if (pillStatusText == null) {
         break missingId;
       }
 
@@ -121,29 +198,14 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.statusIndicator;
-      View statusIndicator = ViewBindings.findChildViewById(rootView, id);
-      if (statusIndicator == null) {
+      id = R.id.statusPill;
+      MaterialCardView statusPill = ViewBindings.findChildViewById(rootView, id);
+      if (statusPill == null) {
         break missingId;
       }
 
       id = R.id.tabLayout;
       TabLayout tabLayout = ViewBindings.findChildViewById(rootView, id);
-      if (tabLayout == null) {
-        break missingId;
-      }
-
-      id = R.id.toolbar;
-      MaterialToolbar toolbar = ViewBindings.findChildViewById(rootView, id);
-      if (toolbar == null) {
-        break missingId;
-      }
-
-      id = R.id.tvConnectionStatus;
-      TextView tvConnectionStatus = ViewBindings.findChildViewById(rootView, id);
-      if (tvConnectionStatus == null) {
-        break missingId;
-      }
 
       id = R.id.viewPager;
       ViewPager2 viewPager = ViewBindings.findChildViewById(rootView, id);
@@ -151,9 +213,9 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ActivityMainBinding((CoordinatorLayout) rootView, btnConnect, connectionBar,
-          fabAction, progressBar, statusIndicator, tabLayout, toolbar, tvConnectionStatus,
-          viewPager);
+      return new ActivityMainBinding((CoordinatorLayout) rootView, navContainer, navRail,
+          pillActionBtn, pillContentLayout, pillDisconnectBtn, pillExpandedContent,
+          pillStatusIndicator, pillStatusText, progressBar, statusPill, tabLayout, viewPager);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

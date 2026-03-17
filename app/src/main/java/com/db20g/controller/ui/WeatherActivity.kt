@@ -39,11 +39,9 @@ class WeatherActivity : AppCompatActivity(), WeatherAlertMonitor.WeatherAlertLis
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val themeId = getSharedPreferences("app_settings", MODE_PRIVATE).getInt("theme_id", 0)
-        when (themeId) {
-            1 -> setTheme(R.style.Theme_DB20GController_AMOLED)
-            2 -> setTheme(R.style.Theme_DB20GController_RedLight)
-        }
+        val themeManager = ThemeManager(this)
+        setTheme(themeManager.getThemeResId())
+        themeManager.applyNightMode()
 
         super.onCreate(savedInstanceState)
         binding = ActivityWeatherBinding.inflate(layoutInflater)

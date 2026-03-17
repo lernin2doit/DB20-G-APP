@@ -33,7 +33,7 @@ class AfskModem {
         const val BAUD_RATE = 1200
         const val MARK_FREQ = 1200  // 1 bit
         const val SPACE_FREQ = 2200 // 0 bit
-        const val SAMPLES_PER_BIT = SAMPLE_RATE / BAUD_RATE // 36.75 → 37
+        const val SAMPLES_PER_BIT = SAMPLE_RATE / BAUD_RATE // 36 (integer division; actual is 36.75)
 
         // Framing
         const val PREAMBLE_FLAGS = 32  // Send 32 flag bytes (0x7E) as preamble
@@ -190,13 +190,15 @@ class AfskModem {
         track.write(samples, 0, samples.size)
         track.play()
 
-        // Wait for playback to complete
         val durationMs = (samples.size * 1000L) / SAMPLE_RATE
-        Thread.sleep(durationMs + 100)
-
-        track.stop()
-        track.release()
-        audioTrack = null
+        try {
+            // Wait for playback to complete
+            Thread.sleep(durationMs + 100)
+        } finally {
+            track.stop()
+            track.release()
+            audioTrack = null
+        }
 
         Log.d(TAG, "Transmitted ${data.size} bytes as ${samples.size} samples (${durationMs}ms)")
     }
@@ -231,22 +233,22 @@ class AfskModem {
         Thread {
             val readBuffer = ShortArray(bufferSize / 2)
             val demodBuffer = ShortArray(SAMPLE_RATE * 5) // 5 second circular buffer
-            var writePos = 0
+            var writePos = 0L
 
             while (receiving) {
                 val read = record.read(readBuffer, 0, readBuffer.size)
                 if (read > 0) {
                     // Add to circular demod buffer
                     for (i in 0 until read) {
-                        demodBuffer[writePos % demodBuffer.size] = readBuffer[i]
+                        demodBuffer[(writePos % demodBuffer.size).toInt()] = readBuffer[i]
                         writePos++
                     }
 
                     // Try to demodulate — linearize the circular buffer first
-                    val length = minOf(writePos, demodBuffer.size)
+                    val length = minOf(writePos.toInt(), demodBuffer.size)
                     val linearBuffer = if (writePos > demodBuffer.size) {
                         // Buffer wrapped: copy tail + head into contiguous array
-                        val wrapPos = writePos % demodBuffer.size
+                        val wrapPos = (writePos % demodBuffer.size).toInt()
                         ShortArray(demodBuffer.size).also { buf ->
                             System.arraycopy(demodBuffer, wrapPos, buf, 0, demodBuffer.size - wrapPos)
                             System.arraycopy(demodBuffer, 0, buf, demodBuffer.size - wrapPos, wrapPos)
@@ -258,7 +260,7 @@ class AfskModem {
                     if (result != null) {
                         Log.d(TAG, "Demodulated ${result.size} bytes")
                         demodCallback?.invoke(result)
-                        writePos = 0 // Reset buffer after successful decode
+                        writePos = 0L // Reset buffer after successful decode
                     }
                 }
             }

@@ -189,9 +189,9 @@ class RadioAudioEngine(private val context: Context) {
             .setTransferMode(AudioTrack.MODE_STREAM)
             .build()
 
-        audioTrack?.play()
         // Route to USB audio device if configured
         preferredOutputDevice?.let { audioTrack?.preferredDevice = it }
+        audioTrack?.play()
         playing = true
         Log.i(TAG, "Audio playback started")
     }

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_live"
+        android:icon="@drawable/ic_tab_live"
+        android:title="Live" />
+    <item
+        android:id="@+id/nav_channels"
+        android:icon="@drawable/ic_tab_channels"
+        android:title="Channels" />
+    <item
+        android:id="@+id/nav_repeaters"
+        android:icon="@drawable/ic_tab_repeaters"
+        android:title="Repeaters" />
+    <item
+        android:id="@+id/nav_routes"
+        android:icon="@drawable/ic_tab_routes"
+        android:title="Routes" />
+    <item
+        android:id="@+id/nav_settings"
+        android:icon="@drawable/ic_tab_settings"
+        android:title="Settings" />
+    <item
+        android:id="@+id/nav_emergency"
+        android:icon="@drawable/ic_tab_emergency"
+        android:title="Emergency" />
+</menu>

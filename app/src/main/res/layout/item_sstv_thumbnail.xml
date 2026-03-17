@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:background="#222222"
+        android:background="?attr/colorSurface"
         android:contentDescription="SSTV thumbnail" />
 
     <TextView
@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="#88000000"
-        android:textColor="@android:color/white"
+        android:textColor="?android:attr/textColorPrimary"
         android:textSize="8sp"
         android:gravity="center"
         android:padding="2dp"

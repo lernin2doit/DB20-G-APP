@@ -6,8 +6,10 @@ import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
+import android.util.TypedValue
 import android.view.View
 import android.widget.TextView
+import com.db20g.controller.R
 
 /**
  * Manages accessibility features:
@@ -71,7 +73,9 @@ class AccessibilityManager(private val context: Context) {
         if (scale == 1.0f) return
 
         if (root is TextView) {
-            root.textSize = root.textSize / context.resources.displayMetrics.scaledDensity * scale
+            if (root.getTag(R.id.tag_font_scaled) == true) return
+            root.setTextSize(TypedValue.COMPLEX_UNIT_PX, root.textSize * scale)
+            root.setTag(R.id.tag_font_scaled, true)
         }
 
         if (root is android.view.ViewGroup) {

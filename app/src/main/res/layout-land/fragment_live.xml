@@ -1,0 +1,924 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Landscape: scrollable left controls + PTT right -->
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Layer 1: Dashboard -->
+    <LinearLayout
+        android:id="@+id/dashboardContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:padding="6dp">
+
+        <!-- Left panel: scrollable controls -->
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingEnd="6dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Channel info -->
+                <LinearLayout
+                    android:id="@+id/channelBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:background="?attr/colorSurface"
+                    android:padding="4dp">
+
+                    <ImageButton
+                        android:id="@+id/btnChannelDown"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@android:drawable/arrow_down_float"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="Channel down"
+                        app:tint="@android:color/white" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/tvChannelNumber"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="CH 01"
+                            android:textColor="?android:attr/textColorPrimary"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:fontFamily="monospace" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:id="@+id/tvChannelName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="GMRS 1"
+                                android:textColor="?attr/colorPrimary"
+                                android:textSize="11sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="    "
+                                android:textColor="?android:attr/textColorHint"
+                                android:textSize="11sp" />
+
+                            <TextView
+                                android:id="@+id/tvFrequency"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="462.5625 MHz"
+                                android:textColor="?android:attr/textColorSecondary"
+                                android:textSize="10sp"
+                                android:fontFamily="monospace" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <ImageButton
+                        android:id="@+id/btnChannelUp"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@android:drawable/arrow_up_float"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="Channel up"
+                        app:tint="@android:color/white" />
+                </LinearLayout>
+
+                <!-- Callsign + ID -->
+                <LinearLayout
+                    android:id="@+id/callsignRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="6dp"
+                    android:paddingVertical="2dp">
+
+                    <TextView
+                        android:id="@+id/tvCallsignDisplay"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="No callsign set"
+                        android:textColor="?attr/colorPrimary"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:fontFamily="monospace" />
+
+                    <TextView
+                        android:id="@+id/tvIdTimer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ID: --:--"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:textSize="10sp"
+                        android:layout_marginEnd="4dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnManualId"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:text="ID"
+                        android:textSize="12sp"
+                        android:minWidth="40dp"
+                        android:paddingHorizontal="10dp" />
+                </LinearLayout>
+
+                <!-- TX/RX + audio level -->
+                <LinearLayout
+                    android:id="@+id/statusRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="6dp"
+                    android:paddingVertical="2dp">
+
+                    <TextView
+                        android:id="@+id/tvTxIndicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" TX "
+                        android:textColor="?android:attr/textColorHint"
+                        android:textSize="10sp"
+                        android:textStyle="bold"
+                        android:background="?attr/colorSurface"
+                        android:paddingHorizontal="6dp"
+                        android:paddingVertical="1dp" />
+
+                    <ProgressBar
+                        android:id="@+id/audioLevelBar"
+                        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                        android:layout_width="0dp"
+                        android:layout_height="6dp"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="4dp"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressTint="?attr/colorPrimary"
+                        android:progressBackgroundTint="?android:attr/textColorHint" />
+
+                    <TextView
+                        android:id="@+id/tvRxIndicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" RX "
+                        android:textColor="?android:attr/textColorHint"
+                        android:textSize="10sp"
+                        android:textStyle="bold"
+                        android:background="?attr/colorSurface"
+                        android:paddingHorizontal="6dp"
+                        android:paddingVertical="1dp" />
+                </LinearLayout>
+
+                <!-- VOX + Sensitivity -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="6dp"
+                    android:paddingVertical="1dp">
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/switchVox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="VOX"
+                        android:textColor="?android:attr/textColorPrimary"
+                        android:textSize="11sp" />
+
+                    <com.google.android.material.slider.Slider
+                        android:id="@+id/sliderVoxSensitivity"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="4dp"
+                        android:valueFrom="500"
+                        android:valueTo="8000"
+                        android:stepSize="500"
+                        android:value="1500"
+                        android:enabled="false" />
+                </LinearLayout>
+
+                <!-- Operating Mode -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="6dp"
+                    android:paddingVertical="1dp">
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/chipGroupMode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:singleSelection="true"
+                        app:selectionRequired="true"
+                        app:chipSpacingHorizontal="2dp">
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipModePhone"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Phone"
+                            android:textSize="11sp"
+                            android:checked="true" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipModeHandset"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Handset"
+                            android:textSize="11sp" />
+                    </com.google.android.material.chip.ChipGroup>
+
+                    <TextView
+                        android:id="@+id/tvUsbAudioStatus"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="USB: not detected"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:textSize="10sp"
+                        android:gravity="end"
+                        android:layout_marginStart="2dp" />
+                </LinearLayout>
+
+                <!-- Scanner Controls -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="6dp"
+                    android:paddingVertical="1dp">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnScanToggle"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:text="Scan"
+                        android:textSize="11sp"
+                        android:minWidth="0dp"
+                        android:paddingHorizontal="8dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnNuisanceDelete"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:text="Skip"
+                        android:textSize="11sp"
+                        android:minWidth="0dp"
+                        android:paddingHorizontal="8dp"
+                        android:layout_marginStart="2dp"
+                        android:enabled="false" />
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/chipGroupScanSpeed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        app:singleSelection="true"
+                        app:selectionRequired="true"
+                        app:chipSpacingHorizontal="0dp">
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipScanSlow"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="S"
+                            android:textSize="10sp" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipScanMedium"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="M"
+                            android:textSize="10sp"
+                            android:checked="true" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipScanFast"
+                            style="@style/Widget.MaterialComponents.Chip.Choice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="F"
+                            android:textSize="10sp" />
+                    </com.google.android.material.chip.ChipGroup>
+
+                    <TextView
+                        android:id="@+id/tvScanState"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="IDLE"
+                        android:textColor="?android:attr/textColorHint"
+                        android:textSize="10sp"
+                        android:textStyle="bold"
+                        android:layout_marginStart="4dp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvScanChannel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="10sp"
+                    android:fontFamily="monospace"
+                    android:gravity="center"
+                    android:paddingVertical="1dp" />
+
+                <!-- Bottom Actions -->
+                <LinearLayout
+                    android:id="@+id/actionBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:paddingVertical="4dp"
+                    android:layout_marginTop="4dp">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnDtmfOpen"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:text="DTMF"
+                        android:textSize="11sp"
+                        android:minWidth="0dp"
+                        android:paddingHorizontal="12dp"
+                        android:layout_marginEnd="6dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnShowSecondary"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:text="More "
+                        android:textSize="11sp"
+                        android:minWidth="0dp"
+                        android:paddingHorizontal="12dp" />
+                </LinearLayout>
+
+                <View android:layout_width="match_parent" android:layout_height="8dp" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <!-- Right panel: Signal + Repeater + PTT -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingStart="6dp">
+
+            <!-- Signal Monitor compact -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardSignalMonitor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="?attr/colorSurface"
+                app:cardCornerRadius="6dp"
+                app:cardElevation="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="6dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                            android:text="SIGNAL" android:textColor="?android:attr/textColorSecondary"
+                            android:textSize="9sp" android:letterSpacing="0.15" />
+                        <TextView android:id="@+id/tvSignalQuality" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Q: " android:textColor="?android:attr/textColorHint"
+                            android:textSize="10sp" android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="2dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="R" android:textColor="?android:attr/textColorSecondary"
+                            android:textSize="9sp" android:layout_marginEnd="2dp" />
+                        <ProgressBar android:id="@+id/signalLevelBar"
+                            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                            android:layout_width="0dp" android:layout_height="6dp" android:layout_weight="1"
+                            android:max="100" android:progress="0"
+                            android:progressTint="#2196F3" android:progressBackgroundTint="?android:attr/textColorHint" />
+                        <TextView android:id="@+id/tvSignalRms" android:layout_width="32dp" android:layout_height="wrap_content"
+                            android:text="0" android:textColor="?android:attr/textColorSecondary" android:textSize="9sp"
+                            android:fontFamily="monospace" android:gravity="end" android:layout_marginStart="2dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="1dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="P" android:textColor="?android:attr/textColorSecondary"
+                            android:textSize="9sp" android:layout_marginEnd="2dp" />
+                        <ProgressBar android:id="@+id/peakLevelBar"
+                            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                            android:layout_width="0dp" android:layout_height="6dp" android:layout_weight="1"
+                            android:max="100" android:progress="0"
+                            android:progressTint="#FF6F00" android:progressBackgroundTint="?android:attr/textColorHint" />
+                        <TextView android:id="@+id/tvSignalPeak" android:layout_width="32dp" android:layout_height="wrap_content"
+                            android:text="0" android:textColor="?android:attr/textColorSecondary" android:textSize="9sp"
+                            android:fontFamily="monospace" android:gravity="end" android:layout_marginStart="2dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="2dp">
+                        <TextView android:id="@+id/tvSnr" android:layout_width="0dp" android:layout_height="wrap_content"
+                            android:layout_weight="1" android:text="SNR:  dB"
+                            android:textColor="?android:attr/textColorSecondary" android:textSize="9sp" android:fontFamily="monospace" />
+                        <TextView android:id="@+id/tvNoiseFloor" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="Noise: " android:textColor="?android:attr/textColorSecondary"
+                            android:textSize="9sp" android:fontFamily="monospace" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Nearest Repeater compact 2-line -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="?attr/colorSurface"
+                android:paddingHorizontal="6dp"
+                android:paddingVertical="3dp"
+                android:layout_marginTop="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="RPT" android:textColor="?android:attr/textColorSecondary"
+                        android:textSize="9sp" android:letterSpacing="0.1" android:layout_marginEnd="4dp" />
+                    <TextView android:id="@+id/tvRepeaterCallsign" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="--" android:textColor="?android:attr/textColorPrimary" android:textSize="11sp"
+                        android:textStyle="bold" android:fontFamily="monospace" android:layout_marginEnd="4dp" />
+                    <TextView android:id="@+id/tvRepeaterInfo" android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:text="No location" android:textColor="?android:attr/textColorSecondary"
+                        android:textSize="9sp" android:singleLine="true" android:ellipsize="end" />
+                    <TextView android:id="@+id/tvRepeaterFreq" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="" android:textColor="?attr/colorPrimary" android:textSize="9sp"
+                        android:fontFamily="monospace" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="2dp">
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnRefreshRepeater"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp" android:layout_height="28dp"
+                        android:layout_weight="1"
+                        android:text="Refresh" android:textSize="10sp"
+                        android:minWidth="0dp" android:paddingHorizontal="4dp"
+                        android:layout_marginEnd="4dp" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnConnectRepeater"
+                        style="@style/Widget.MaterialComponents.Button"
+                        android:layout_width="0dp" android:layout_height="28dp"
+                        android:layout_weight="1"
+                        android:text="Connect" android:textSize="10sp"
+                        android:minWidth="0dp" android:paddingHorizontal="4dp"
+                        android:enabled="false" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- PTT Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnPtt"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="PTT"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:textColor="?android:attr/textColorPrimary"
+                app:backgroundTint="#2E7D32"
+                app:cornerRadius="16dp"
+                app:elevation="8dp"
+                app:rippleColor="#66FF6600"
+                android:layout_marginTop="4dp"
+                android:layout_marginHorizontal="8dp" />
+
+            <TextView
+                android:id="@+id/tvPttHint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Hold to talk"
+                android:textColor="?android:attr/textColorSecondary"
+                android:textSize="10sp"
+                android:paddingBottom="4dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Layer 2: Advanced Controls Panel -->
+    <LinearLayout
+        android:id="@+id/secondaryPanel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="?android:attr/colorBackground"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="6dp"
+            android:background="?attr/colorSurface">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCloseSecondary"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:text=" Dashboard"
+                android:textSize="13sp"
+                android:minWidth="0dp"
+                android:paddingHorizontal="10dp" />
+
+            <View android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="1" />
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Advanced" android:textColor="?android:attr/textColorSecondary"
+                android:textSize="13sp" android:layout_marginEnd="6dp" />
+        </LinearLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <!-- Scanner Details -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    app:cardBackgroundColor="?attr/colorSurface"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="2dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="SCANNER DETAILS" android:textColor="?android:attr/textColorSecondary"
+                            android:textSize="10sp" android:letterSpacing="0.15" android:layout_marginBottom="4dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:text="Priority CH:" android:textColor="?android:attr/textColorSecondary"
+                                android:textSize="11sp" android:layout_marginEnd="4dp" />
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etPriorityChannel"
+                                android:layout_width="44dp" android:layout_height="32dp"
+                                android:inputType="number" android:textSize="11sp"
+                                android:textColor="?android:attr/textColorPrimary"
+                                android:background="?attr/colorSurface" android:padding="4dp"
+                                android:hint="" android:textColorHint="?android:attr/textColorHint"
+                                android:gravity="center" android:importantForAutofill="no" />
+                            <View android:layout_width="12dp" android:layout_height="0dp" />
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:text="Dual Watch:" android:textColor="?android:attr/textColorSecondary"
+                                android:textSize="11sp" android:layout_marginEnd="4dp" />
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etDualWatchChannel"
+                                android:layout_width="44dp" android:layout_height="32dp"
+                                android:inputType="number" android:textSize="11sp"
+                                android:textColor="?android:attr/textColorPrimary"
+                                android:background="?attr/colorSurface" android:padding="4dp"
+                                android:hint="" android:textColorHint="?android:attr/textColorHint"
+                                android:gravity="center" android:importantForAutofill="no" />
+                        </LinearLayout>
+
+                        <ScrollView
+                            android:layout_width="match_parent" android:layout_height="60dp"
+                            android:layout_marginTop="6dp" android:background="?android:attr/colorBackground">
+                            <TextView android:id="@+id/tvScanLog" android:layout_width="match_parent" android:layout_height="wrap_content"
+                                android:padding="4dp" android:fontFamily="monospace" android:textSize="9sp"
+                                android:textColor="?android:attr/textColorSecondary" android:text="No scan activity." />
+                        </ScrollView>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Signal Advanced -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    app:cardBackgroundColor="?attr/colorSurface"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="2dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:text="SIGNAL ADVANCED" android:textColor="?android:attr/textColorSecondary"
+                            android:textSize="10sp" android:letterSpacing="0.15" android:layout_marginBottom="4dp" />
+
+                        <com.db20g.controller.ui.SpectrumView
+                            android:id="@+id/spectrumView"
+                            android:layout_width="match_parent" android:layout_height="100dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginTop="4dp">
+                            <com.google.android.material.switchmaterial.SwitchMaterial
+                                android:id="@+id/switchEq" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:text="EQ" android:textColor="?android:attr/textColorPrimary" android:textSize="10sp" />
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:text="Bass" android:textColor="?android:attr/textColorSecondary"
+                                android:textSize="9sp" android:layout_marginStart="6dp" />
+                            <com.google.android.material.slider.Slider
+                                android:id="@+id/sliderBass" android:layout_width="0dp" android:layout_height="wrap_content"
+                                android:layout_weight="1" android:valueFrom="-12" android:valueTo="12"
+                                android:stepSize="1" android:value="0" android:enabled="false" />
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:text="Treble" android:textColor="?android:attr/textColorSecondary" android:textSize="9sp" />
+                            <com.google.android.material.slider.Slider
+                                android:id="@+id/sliderTreble" android:layout_width="0dp" android:layout_height="wrap_content"
+                                android:layout_weight="1" android:valueFrom="-12" android:valueTo="12"
+                                android:stepSize="1" android:value="0" android:enabled="false" />
+                        </LinearLayout>
+
+                        <ScrollView
+                            android:layout_width="match_parent" android:layout_height="50dp"
+                            android:layout_marginTop="4dp" android:background="?android:attr/colorBackground">
+                            <TextView android:id="@+id/tvSignalHistory" android:layout_width="match_parent" android:layout_height="wrap_content"
+                                android:padding="4dp" android:fontFamily="monospace" android:textSize="9sp"
+                                android:textColor="?android:attr/textColorSecondary" android:text="No signal events." />
+                        </ScrollView>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Multi-Radio -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardMultiRadio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    app:cardBackgroundColor="?attr/colorSurface"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="2dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+                            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                                android:text="MULTI-RADIO" android:textColor="?android:attr/textColorSecondary"
+                                android:textSize="10sp" android:letterSpacing="0.15" />
+                            <TextView android:id="@+id/tvRadioCount" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:text="0 radios" android:textColor="?android:attr/textColorHint"
+                                android:textSize="10sp" android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <TextView android:id="@+id/tvActiveRadio" android:layout_width="match_parent" android:layout_height="wrap_content"
+                            android:text="No radios connected" android:textColor="?android:attr/textColorPrimary"
+                            android:textSize="12sp" android:fontFamily="monospace" android:gravity="center"
+                            android:layout_marginVertical="4dp" />
+
+                        <com.google.android.material.chip.ChipGroup
+                            android:id="@+id/chipGroupRadios" android:layout_width="match_parent" android:layout_height="wrap_content"
+                            app:singleSelection="true" app:selectionRequired="false" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            android:layout_marginTop="4dp">
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnScanRadios"
+                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                                android:layout_width="0dp" android:layout_height="36dp" android:layout_weight="1"
+                                android:layout_marginEnd="4dp" android:text="Scan USB" android:textSize="12sp" />
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnRadioInventory"
+                                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                                android:layout_width="0dp" android:layout_height="36dp" android:layout_weight="1"
+                                android:layout_marginStart="4dp" android:text="Inventory" android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <ScrollView android:id="@+id/scrollRadioInventory"
+                            android:layout_width="match_parent" android:layout_height="60dp"
+                            android:background="?android:attr/colorBackground" android:layout_marginTop="4dp" android:visibility="gone">
+                            <TextView android:id="@+id/tvRadioInventory" android:layout_width="match_parent" android:layout_height="wrap_content"
+                                android:padding="4dp" android:fontFamily="monospace" android:textSize="9sp"
+                                android:textColor="?android:attr/textColorSecondary" android:text="" />
+                        </ScrollView>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <View android:layout_width="match_parent" android:layout_height="60dp" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+
+    <!-- Layer 3: DTMF Modal -->
+    <FrameLayout
+        android:id="@+id/dtmfModal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#88000000"
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:minWidth="320dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="?attr/colorSurface">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="6dp">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                        android:text="DTMF KEYPAD" android:textColor="?android:attr/textColorSecondary"
+                        android:textSize="11sp" android:letterSpacing="0.15" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnDtmfClose"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="32dp" android:layout_height="32dp"
+                        android:text="" android:textSize="16sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:minWidth="0dp" android:paddingHorizontal="0dp" />
+                </LinearLayout>
+
+                <EditText android:id="@+id/etDtmfDisplay" android:layout_width="match_parent" android:layout_height="36dp"
+                    android:background="?android:attr/colorBackground" android:textColor="?attr/colorPrimary"
+                    android:textSize="16sp" android:fontFamily="monospace" android:gravity="center_vertical|end"
+                    android:paddingHorizontal="10dp" android:layout_marginBottom="6dp"
+                    android:inputType="none" android:focusable="false" android:importantForAutofill="no" />
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                    <Button android:id="@+id/btnDtmf1" style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp" android:layout_height="42dp" android:layout_weight="1"
+                        android:text="1" android:textSize="16sp" android:layout_margin="1dp" />
+                    <Button android:id="@+id/btnDtmf2" style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp" android:layout_height="42dp" android:layout_weight="1"
+                        android:text="2" android:textSize="16sp" android:layout_margin="1dp" />
+                    <Button android:id="@+id/btnDtmf3" style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp" android:layout_height="42dp" android:layout_weight="1"
+                        android:text="3" android:textSize="16sp" android:layout_margin="1dp" />
+                    <Button android:id="@+id/btnDtmfA" style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp" android:layout_height="42dp" android:layout_weight="1"
+                        android:text="A" android:textSize="16sp" android:layout_margin="1dp"
+                        android:textColor="?attr/colorSecondary" />
+                </LinearLayout>
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                    <Button android:id="@+id/btnDtmf4" style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp" android:layout_height="42dp" android:layout_weight="1"
+                        android:text="4" android:textSize="16sp" android:layout_margin="1dp" />
+                    <Button android:id="@+id/btnDtmf5" style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp" android:layout_height="42dp" android:layout_weight="1"
+                        android:text="5" android:textSize="16sp" android:layout_margin="1dp" />
+                    <Button android:id="@+id/btnDtmf6" style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp" android:layout_height="42dp" android:layout_weight="1"
+                        android:text="6" android:textSize="16sp" android:layout_margin="1dp" />
+                    <Button android:id="@+id/btnDtmfB" style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp" android:layout_height="42dp" android:layout_weight="1"
+                        android:text="B" android:textSize="16sp" android:layout_margin="1dp"
+                        android:textColor="?attr/colorSecondary" />
+                </LinearLayout>
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                    <Button android:id="@+id/btnDtmf7" style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp" android:layout_height="42dp" android:layout_weight="1"
+                        android:text="7" android:textSize="16sp" android:layout_margin="1dp" />
+                    <Button android:id="@+id/btnDtmf8" style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp" android:layout_height="42dp" android:layout_weight="1"
+                        android:text="8" android:textSize="16sp" android:layout_margin="1dp" />
+                    <Button android:id="@+id/btnDtmf9" style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp" android:layout_height="42dp" android:layout_weight="1"
+                        android:text="9" android:textSize="16sp" android:layout_margin="1dp" />
+                    <Button android:id="@+id/btnDtmfC" style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp" android:layout_height="42dp" android:layout_weight="1"
+                        android:text="C" android:textSize="16sp" android:layout_margin="1dp"
+                        android:textColor="?attr/colorSecondary" />
+                </LinearLayout>
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                    <Button android:id="@+id/btnDtmfStar" style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp" android:layout_height="42dp" android:layout_weight="1"
+                        android:text="*" android:textSize="16sp" android:layout_margin="1dp" />
+                    <Button android:id="@+id/btnDtmf0" style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp" android:layout_height="42dp" android:layout_weight="1"
+                        android:text="0" android:textSize="16sp" android:layout_margin="1dp" />
+                    <Button android:id="@+id/btnDtmfHash" style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp" android:layout_height="42dp" android:layout_weight="1"
+                        android:text="#" android:textSize="16sp" android:layout_margin="1dp" />
+                    <Button android:id="@+id/btnDtmfD" style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="0dp" android:layout_height="42dp" android:layout_weight="1"
+                        android:text="D" android:textSize="16sp" android:layout_margin="1dp"
+                        android:textColor="?attr/colorSecondary" />
+                </LinearLayout>
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:orientation="horizontal" android:layout_marginTop="4dp">
+                    <Button android:id="@+id/btnDtmfClear" style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                        android:text="Clear" />
+                    <Button android:id="@+id/btnDtmfSend" style="@style/Widget.MaterialComponents.Button"
+                        android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                        android:text="Send DTMF" android:layout_marginStart="6dp" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </FrameLayout>
+
+</FrameLayout>

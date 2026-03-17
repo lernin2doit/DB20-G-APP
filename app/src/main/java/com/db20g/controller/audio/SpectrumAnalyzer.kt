@@ -123,6 +123,12 @@ class SpectrumAnalyzer(private val context: Context) {
             AudioFormat.ENCODING_PCM_16BIT, maxOf(bufSize, fftSize * 2) * 2
         )
 
+        if (record.state != AudioRecord.STATE_INITIALIZED) {
+            record.release()
+            running = false
+            return
+        }
+
         audioRecord = record
         record.startRecording()
 

@@ -25,6 +25,8 @@ class CallsignManager(private val context: Context) {
         private const val KEY_INTERVAL_MIN = "id_interval_minutes"
         private const val KEY_CW_SPEED = "cw_speed_wpm"
         private const val KEY_ID_METHOD = "id_method"
+        private const val KEY_MORSE_ENABLED = "morse_enabled"
+        private const val KEY_TTS_ENABLED = "tts_enabled"
         const val DEFAULT_INTERVAL_MINUTES = 15
         const val DEFAULT_CW_SPEED = 20
     }
@@ -73,6 +75,14 @@ class CallsignManager(private val context: Context) {
         set(value) = prefs.edit().putString(KEY_ID_METHOD, value.name).apply()
 
     val isCallsignSet: Boolean get() = callsign.isNotEmpty()
+
+    var morseEnabled: Boolean
+        get() = prefs.getBoolean(KEY_MORSE_ENABLED, false)
+        set(value) = prefs.edit().putBoolean(KEY_MORSE_ENABLED, value).apply()
+
+    var ttsEnabled: Boolean
+        get() = prefs.getBoolean(KEY_TTS_ENABLED, false)
+        set(value) = prefs.edit().putBoolean(KEY_TTS_ENABLED, value).apply()
 
     val intervalMs: Long get() = intervalMinutes * 60_000L
 

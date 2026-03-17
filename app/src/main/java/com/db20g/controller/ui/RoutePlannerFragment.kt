@@ -148,11 +148,11 @@ class RoutePlannerFragment : Fragment() {
             return
         }
 
-        // Find the next available empty channel slot
+        // Find all empty channel slots
         val channels = viewModel.channels.value ?: emptyList()
-        var nextSlot = channels.indexOfFirst { it.isEmpty }
-        if (nextSlot < 0) nextSlot = channels.size
-        val available = 128 - nextSlot
+        val emptySlots = channels.withIndex().filter { it.value.isEmpty }.map { it.index }
+        val nextSlot = emptySlots.firstOrNull() ?: channels.size
+        val available = emptySlots.size.coerceAtLeast(128 - channels.size)
         val needed = plan.repeaters.size
 
         val message = buildString {

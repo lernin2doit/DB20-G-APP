@@ -6,13 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.widget.NestedScrollView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.db20g.controller.R;
@@ -30,7 +31,10 @@ import java.lang.String;
 
 public final class FragmentLiveBinding implements ViewBinding {
   @NonNull
-  private final NestedScrollView rootView;
+  private final FrameLayout rootView;
+
+  @NonNull
+  public final LinearLayout actionBar;
 
   @NonNull
   public final ProgressBar audioLevelBar;
@@ -40,6 +44,9 @@ public final class FragmentLiveBinding implements ViewBinding {
 
   @NonNull
   public final ImageButton btnChannelUp;
+
+  @NonNull
+  public final MaterialButton btnCloseSecondary;
 
   @NonNull
   public final MaterialButton btnConnectRepeater;
@@ -87,10 +94,16 @@ public final class FragmentLiveBinding implements ViewBinding {
   public final Button btnDtmfClear;
 
   @NonNull
+  public final MaterialButton btnDtmfClose;
+
+  @NonNull
   public final Button btnDtmfD;
 
   @NonNull
   public final Button btnDtmfHash;
+
+  @NonNull
+  public final MaterialButton btnDtmfOpen;
 
   @NonNull
   public final Button btnDtmfSend;
@@ -120,19 +133,22 @@ public final class FragmentLiveBinding implements ViewBinding {
   public final MaterialButton btnScanToggle;
 
   @NonNull
-  public final MaterialCardView cardMultiRadio;
+  public final MaterialButton btnShowSecondary;
 
   @NonNull
-  public final MaterialCardView cardScanner;
+  public final LinearLayout callsignRow;
+
+  @NonNull
+  public final MaterialCardView cardMultiRadio;
 
   @NonNull
   public final MaterialCardView cardSignalMonitor;
 
   @NonNull
-  public final ChipGroup chipGroupMode;
+  public final LinearLayout channelBar;
 
   @NonNull
-  public final ChipGroup chipGroupPttLine;
+  public final ChipGroup chipGroupMode;
 
   @NonNull
   public final ChipGroup chipGroupRadios;
@@ -147,12 +163,6 @@ public final class FragmentLiveBinding implements ViewBinding {
   public final Chip chipModePhone;
 
   @NonNull
-  public final Chip chipPttDtr;
-
-  @NonNull
-  public final Chip chipPttRts;
-
-  @NonNull
   public final Chip chipScanFast;
 
   @NonNull
@@ -162,7 +172,10 @@ public final class FragmentLiveBinding implements ViewBinding {
   public final Chip chipScanSlow;
 
   @NonNull
-  public final TextInputEditText etCallsign;
+  public final View dashboardContainer;
+
+  @NonNull
+  public final FrameLayout dtmfModal;
 
   @NonNull
   public final EditText etDtmfDisplay;
@@ -180,6 +193,9 @@ public final class FragmentLiveBinding implements ViewBinding {
   public final ScrollView scrollRadioInventory;
 
   @NonNull
+  public final LinearLayout secondaryPanel;
+
+  @NonNull
   public final ProgressBar signalLevelBar;
 
   @NonNull
@@ -195,22 +211,19 @@ public final class FragmentLiveBinding implements ViewBinding {
   public final SpectrumView spectrumView;
 
   @NonNull
-  public final SwitchMaterial switchAutoId;
+  public final LinearLayout statusRow;
 
   @NonNull
   public final SwitchMaterial switchEq;
-
-  @NonNull
-  public final SwitchMaterial switchPttInverted;
-
-  @NonNull
-  public final SwitchMaterial switchSpeakerphone;
 
   @NonNull
   public final SwitchMaterial switchVox;
 
   @NonNull
   public final TextView tvActiveRadio;
+
+  @NonNull
+  public final TextView tvCallsignDisplay;
 
   @NonNull
   public final TextView tvChannelName;
@@ -278,36 +291,37 @@ public final class FragmentLiveBinding implements ViewBinding {
   @NonNull
   public final TextView tvUsbAudioStatus;
 
-  private FragmentLiveBinding(@NonNull NestedScrollView rootView,
+  private FragmentLiveBinding(@NonNull FrameLayout rootView, @NonNull LinearLayout actionBar,
       @NonNull ProgressBar audioLevelBar, @NonNull ImageButton btnChannelDown,
-      @NonNull ImageButton btnChannelUp, @NonNull MaterialButton btnConnectRepeater,
-      @NonNull Button btnDtmf0, @NonNull Button btnDtmf1, @NonNull Button btnDtmf2,
-      @NonNull Button btnDtmf3, @NonNull Button btnDtmf4, @NonNull Button btnDtmf5,
-      @NonNull Button btnDtmf6, @NonNull Button btnDtmf7, @NonNull Button btnDtmf8,
-      @NonNull Button btnDtmf9, @NonNull Button btnDtmfA, @NonNull Button btnDtmfB,
-      @NonNull Button btnDtmfC, @NonNull Button btnDtmfClear, @NonNull Button btnDtmfD,
-      @NonNull Button btnDtmfHash, @NonNull Button btnDtmfSend, @NonNull Button btnDtmfStar,
-      @NonNull MaterialButton btnManualId, @NonNull MaterialButton btnNuisanceDelete,
-      @NonNull MaterialButton btnPtt, @NonNull MaterialButton btnRadioInventory,
-      @NonNull MaterialButton btnRefreshRepeater, @NonNull MaterialButton btnScanRadios,
-      @NonNull MaterialButton btnScanToggle, @NonNull MaterialCardView cardMultiRadio,
-      @NonNull MaterialCardView cardScanner, @NonNull MaterialCardView cardSignalMonitor,
-      @NonNull ChipGroup chipGroupMode, @NonNull ChipGroup chipGroupPttLine,
+      @NonNull ImageButton btnChannelUp, @NonNull MaterialButton btnCloseSecondary,
+      @NonNull MaterialButton btnConnectRepeater, @NonNull Button btnDtmf0,
+      @NonNull Button btnDtmf1, @NonNull Button btnDtmf2, @NonNull Button btnDtmf3,
+      @NonNull Button btnDtmf4, @NonNull Button btnDtmf5, @NonNull Button btnDtmf6,
+      @NonNull Button btnDtmf7, @NonNull Button btnDtmf8, @NonNull Button btnDtmf9,
+      @NonNull Button btnDtmfA, @NonNull Button btnDtmfB, @NonNull Button btnDtmfC,
+      @NonNull Button btnDtmfClear, @NonNull MaterialButton btnDtmfClose, @NonNull Button btnDtmfD,
+      @NonNull Button btnDtmfHash, @NonNull MaterialButton btnDtmfOpen, @NonNull Button btnDtmfSend,
+      @NonNull Button btnDtmfStar, @NonNull MaterialButton btnManualId,
+      @NonNull MaterialButton btnNuisanceDelete, @NonNull MaterialButton btnPtt,
+      @NonNull MaterialButton btnRadioInventory, @NonNull MaterialButton btnRefreshRepeater,
+      @NonNull MaterialButton btnScanRadios, @NonNull MaterialButton btnScanToggle,
+      @NonNull MaterialButton btnShowSecondary, @NonNull LinearLayout callsignRow,
+      @NonNull MaterialCardView cardMultiRadio, @NonNull MaterialCardView cardSignalMonitor,
+      @NonNull LinearLayout channelBar, @NonNull ChipGroup chipGroupMode,
       @NonNull ChipGroup chipGroupRadios, @NonNull ChipGroup chipGroupScanSpeed,
-      @NonNull Chip chipModeHandset, @NonNull Chip chipModePhone, @NonNull Chip chipPttDtr,
-      @NonNull Chip chipPttRts, @NonNull Chip chipScanFast, @NonNull Chip chipScanMedium,
-      @NonNull Chip chipScanSlow, @NonNull TextInputEditText etCallsign,
-      @NonNull EditText etDtmfDisplay, @NonNull TextInputEditText etDualWatchChannel,
-      @NonNull TextInputEditText etPriorityChannel, @NonNull ProgressBar peakLevelBar,
-      @NonNull ScrollView scrollRadioInventory, @NonNull ProgressBar signalLevelBar,
+      @NonNull Chip chipModeHandset, @NonNull Chip chipModePhone, @NonNull Chip chipScanFast,
+      @NonNull Chip chipScanMedium, @NonNull Chip chipScanSlow, @NonNull View dashboardContainer,
+      @NonNull FrameLayout dtmfModal, @NonNull EditText etDtmfDisplay,
+      @NonNull TextInputEditText etDualWatchChannel, @NonNull TextInputEditText etPriorityChannel,
+      @NonNull ProgressBar peakLevelBar, @NonNull ScrollView scrollRadioInventory,
+      @NonNull LinearLayout secondaryPanel, @NonNull ProgressBar signalLevelBar,
       @NonNull Slider sliderBass, @NonNull Slider sliderTreble,
       @NonNull Slider sliderVoxSensitivity, @NonNull SpectrumView spectrumView,
-      @NonNull SwitchMaterial switchAutoId, @NonNull SwitchMaterial switchEq,
-      @NonNull SwitchMaterial switchPttInverted, @NonNull SwitchMaterial switchSpeakerphone,
+      @NonNull LinearLayout statusRow, @NonNull SwitchMaterial switchEq,
       @NonNull SwitchMaterial switchVox, @NonNull TextView tvActiveRadio,
-      @NonNull TextView tvChannelName, @NonNull TextView tvChannelNumber,
-      @NonNull TextView tvFrequency, @NonNull TextView tvIdTimer, @NonNull TextView tvNoiseFloor,
-      @NonNull TextView tvPttHint, @NonNull TextView tvRadioCount,
+      @NonNull TextView tvCallsignDisplay, @NonNull TextView tvChannelName,
+      @NonNull TextView tvChannelNumber, @NonNull TextView tvFrequency, @NonNull TextView tvIdTimer,
+      @NonNull TextView tvNoiseFloor, @NonNull TextView tvPttHint, @NonNull TextView tvRadioCount,
       @NonNull TextView tvRadioInventory, @NonNull TextView tvRepeaterCallsign,
       @NonNull TextView tvRepeaterFreq, @NonNull TextView tvRepeaterInfo,
       @NonNull TextView tvRxIndicator, @NonNull TextView tvScanChannel, @NonNull TextView tvScanLog,
@@ -316,9 +330,11 @@ public final class FragmentLiveBinding implements ViewBinding {
       @NonNull TextView tvSignalRms, @NonNull TextView tvSnr, @NonNull TextView tvTxIndicator,
       @NonNull TextView tvUsbAudioStatus) {
     this.rootView = rootView;
+    this.actionBar = actionBar;
     this.audioLevelBar = audioLevelBar;
     this.btnChannelDown = btnChannelDown;
     this.btnChannelUp = btnChannelUp;
+    this.btnCloseSecondary = btnCloseSecondary;
     this.btnConnectRepeater = btnConnectRepeater;
     this.btnDtmf0 = btnDtmf0;
     this.btnDtmf1 = btnDtmf1;
@@ -334,8 +350,10 @@ public final class FragmentLiveBinding implements ViewBinding {
     this.btnDtmfB = btnDtmfB;
     this.btnDtmfC = btnDtmfC;
     this.btnDtmfClear = btnDtmfClear;
+    this.btnDtmfClose = btnDtmfClose;
     this.btnDtmfD = btnDtmfD;
     this.btnDtmfHash = btnDtmfHash;
+    this.btnDtmfOpen = btnDtmfOpen;
     this.btnDtmfSend = btnDtmfSend;
     this.btnDtmfStar = btnDtmfStar;
     this.btnManualId = btnManualId;
@@ -345,37 +363,37 @@ public final class FragmentLiveBinding implements ViewBinding {
     this.btnRefreshRepeater = btnRefreshRepeater;
     this.btnScanRadios = btnScanRadios;
     this.btnScanToggle = btnScanToggle;
+    this.btnShowSecondary = btnShowSecondary;
+    this.callsignRow = callsignRow;
     this.cardMultiRadio = cardMultiRadio;
-    this.cardScanner = cardScanner;
     this.cardSignalMonitor = cardSignalMonitor;
+    this.channelBar = channelBar;
     this.chipGroupMode = chipGroupMode;
-    this.chipGroupPttLine = chipGroupPttLine;
     this.chipGroupRadios = chipGroupRadios;
     this.chipGroupScanSpeed = chipGroupScanSpeed;
     this.chipModeHandset = chipModeHandset;
     this.chipModePhone = chipModePhone;
-    this.chipPttDtr = chipPttDtr;
-    this.chipPttRts = chipPttRts;
     this.chipScanFast = chipScanFast;
     this.chipScanMedium = chipScanMedium;
     this.chipScanSlow = chipScanSlow;
-    this.etCallsign = etCallsign;
+    this.dashboardContainer = dashboardContainer;
+    this.dtmfModal = dtmfModal;
     this.etDtmfDisplay = etDtmfDisplay;
     this.etDualWatchChannel = etDualWatchChannel;
     this.etPriorityChannel = etPriorityChannel;
     this.peakLevelBar = peakLevelBar;
     this.scrollRadioInventory = scrollRadioInventory;
+    this.secondaryPanel = secondaryPanel;
     this.signalLevelBar = signalLevelBar;
     this.sliderBass = sliderBass;
     this.sliderTreble = sliderTreble;
     this.sliderVoxSensitivity = sliderVoxSensitivity;
     this.spectrumView = spectrumView;
-    this.switchAutoId = switchAutoId;
+    this.statusRow = statusRow;
     this.switchEq = switchEq;
-    this.switchPttInverted = switchPttInverted;
-    this.switchSpeakerphone = switchSpeakerphone;
     this.switchVox = switchVox;
     this.tvActiveRadio = tvActiveRadio;
+    this.tvCallsignDisplay = tvCallsignDisplay;
     this.tvChannelName = tvChannelName;
     this.tvChannelNumber = tvChannelNumber;
     this.tvFrequency = tvFrequency;
@@ -402,7 +420,7 @@ public final class FragmentLiveBinding implements ViewBinding {
 
   @Override
   @NonNull
-  public NestedScrollView getRoot() {
+  public FrameLayout getRoot() {
     return rootView;
   }
 
@@ -427,6 +445,12 @@ public final class FragmentLiveBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.actionBar;
+      LinearLayout actionBar = ViewBindings.findChildViewById(rootView, id);
+      if (actionBar == null) {
+        break missingId;
+      }
+
       id = R.id.audioLevelBar;
       ProgressBar audioLevelBar = ViewBindings.findChildViewById(rootView, id);
       if (audioLevelBar == null) {
@@ -442,6 +466,12 @@ public final class FragmentLiveBinding implements ViewBinding {
       id = R.id.btnChannelUp;
       ImageButton btnChannelUp = ViewBindings.findChildViewById(rootView, id);
       if (btnChannelUp == null) {
+        break missingId;
+      }
+
+      id = R.id.btnCloseSecondary;
+      MaterialButton btnCloseSecondary = ViewBindings.findChildViewById(rootView, id);
+      if (btnCloseSecondary == null) {
         break missingId;
       }
 
@@ -535,6 +565,12 @@ public final class FragmentLiveBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.btnDtmfClose;
+      MaterialButton btnDtmfClose = ViewBindings.findChildViewById(rootView, id);
+      if (btnDtmfClose == null) {
+        break missingId;
+      }
+
       id = R.id.btnDtmfD;
       Button btnDtmfD = ViewBindings.findChildViewById(rootView, id);
       if (btnDtmfD == null) {
@@ -544,6 +580,12 @@ public final class FragmentLiveBinding implements ViewBinding {
       id = R.id.btnDtmfHash;
       Button btnDtmfHash = ViewBindings.findChildViewById(rootView, id);
       if (btnDtmfHash == null) {
+        break missingId;
+      }
+
+      id = R.id.btnDtmfOpen;
+      MaterialButton btnDtmfOpen = ViewBindings.findChildViewById(rootView, id);
+      if (btnDtmfOpen == null) {
         break missingId;
       }
 
@@ -601,15 +643,21 @@ public final class FragmentLiveBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.cardMultiRadio;
-      MaterialCardView cardMultiRadio = ViewBindings.findChildViewById(rootView, id);
-      if (cardMultiRadio == null) {
+      id = R.id.btnShowSecondary;
+      MaterialButton btnShowSecondary = ViewBindings.findChildViewById(rootView, id);
+      if (btnShowSecondary == null) {
         break missingId;
       }
 
-      id = R.id.cardScanner;
-      MaterialCardView cardScanner = ViewBindings.findChildViewById(rootView, id);
-      if (cardScanner == null) {
+      id = R.id.callsignRow;
+      LinearLayout callsignRow = ViewBindings.findChildViewById(rootView, id);
+      if (callsignRow == null) {
+        break missingId;
+      }
+
+      id = R.id.cardMultiRadio;
+      MaterialCardView cardMultiRadio = ViewBindings.findChildViewById(rootView, id);
+      if (cardMultiRadio == null) {
         break missingId;
       }
 
@@ -619,15 +667,15 @@ public final class FragmentLiveBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.chipGroupMode;
-      ChipGroup chipGroupMode = ViewBindings.findChildViewById(rootView, id);
-      if (chipGroupMode == null) {
+      id = R.id.channelBar;
+      LinearLayout channelBar = ViewBindings.findChildViewById(rootView, id);
+      if (channelBar == null) {
         break missingId;
       }
 
-      id = R.id.chipGroupPttLine;
-      ChipGroup chipGroupPttLine = ViewBindings.findChildViewById(rootView, id);
-      if (chipGroupPttLine == null) {
+      id = R.id.chipGroupMode;
+      ChipGroup chipGroupMode = ViewBindings.findChildViewById(rootView, id);
+      if (chipGroupMode == null) {
         break missingId;
       }
 
@@ -655,18 +703,6 @@ public final class FragmentLiveBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.chipPttDtr;
-      Chip chipPttDtr = ViewBindings.findChildViewById(rootView, id);
-      if (chipPttDtr == null) {
-        break missingId;
-      }
-
-      id = R.id.chipPttRts;
-      Chip chipPttRts = ViewBindings.findChildViewById(rootView, id);
-      if (chipPttRts == null) {
-        break missingId;
-      }
-
       id = R.id.chipScanFast;
       Chip chipScanFast = ViewBindings.findChildViewById(rootView, id);
       if (chipScanFast == null) {
@@ -685,9 +721,15 @@ public final class FragmentLiveBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.etCallsign;
-      TextInputEditText etCallsign = ViewBindings.findChildViewById(rootView, id);
-      if (etCallsign == null) {
+      id = R.id.dashboardContainer;
+      View dashboardContainer = ViewBindings.findChildViewById(rootView, id);
+      if (dashboardContainer == null) {
+        break missingId;
+      }
+
+      id = R.id.dtmfModal;
+      FrameLayout dtmfModal = ViewBindings.findChildViewById(rootView, id);
+      if (dtmfModal == null) {
         break missingId;
       }
 
@@ -721,6 +763,12 @@ public final class FragmentLiveBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.secondaryPanel;
+      LinearLayout secondaryPanel = ViewBindings.findChildViewById(rootView, id);
+      if (secondaryPanel == null) {
+        break missingId;
+      }
+
       id = R.id.signalLevelBar;
       ProgressBar signalLevelBar = ViewBindings.findChildViewById(rootView, id);
       if (signalLevelBar == null) {
@@ -751,27 +799,15 @@ public final class FragmentLiveBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.switchAutoId;
-      SwitchMaterial switchAutoId = ViewBindings.findChildViewById(rootView, id);
-      if (switchAutoId == null) {
+      id = R.id.statusRow;
+      LinearLayout statusRow = ViewBindings.findChildViewById(rootView, id);
+      if (statusRow == null) {
         break missingId;
       }
 
       id = R.id.switchEq;
       SwitchMaterial switchEq = ViewBindings.findChildViewById(rootView, id);
       if (switchEq == null) {
-        break missingId;
-      }
-
-      id = R.id.switchPttInverted;
-      SwitchMaterial switchPttInverted = ViewBindings.findChildViewById(rootView, id);
-      if (switchPttInverted == null) {
-        break missingId;
-      }
-
-      id = R.id.switchSpeakerphone;
-      SwitchMaterial switchSpeakerphone = ViewBindings.findChildViewById(rootView, id);
-      if (switchSpeakerphone == null) {
         break missingId;
       }
 
@@ -784,6 +820,12 @@ public final class FragmentLiveBinding implements ViewBinding {
       id = R.id.tvActiveRadio;
       TextView tvActiveRadio = ViewBindings.findChildViewById(rootView, id);
       if (tvActiveRadio == null) {
+        break missingId;
+      }
+
+      id = R.id.tvCallsignDisplay;
+      TextView tvCallsignDisplay = ViewBindings.findChildViewById(rootView, id);
+      if (tvCallsignDisplay == null) {
         break missingId;
       }
 
@@ -919,21 +961,22 @@ public final class FragmentLiveBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FragmentLiveBinding((NestedScrollView) rootView, audioLevelBar, btnChannelDown,
-          btnChannelUp, btnConnectRepeater, btnDtmf0, btnDtmf1, btnDtmf2, btnDtmf3, btnDtmf4,
-          btnDtmf5, btnDtmf6, btnDtmf7, btnDtmf8, btnDtmf9, btnDtmfA, btnDtmfB, btnDtmfC,
-          btnDtmfClear, btnDtmfD, btnDtmfHash, btnDtmfSend, btnDtmfStar, btnManualId,
-          btnNuisanceDelete, btnPtt, btnRadioInventory, btnRefreshRepeater, btnScanRadios,
-          btnScanToggle, cardMultiRadio, cardScanner, cardSignalMonitor, chipGroupMode,
-          chipGroupPttLine, chipGroupRadios, chipGroupScanSpeed, chipModeHandset, chipModePhone,
-          chipPttDtr, chipPttRts, chipScanFast, chipScanMedium, chipScanSlow, etCallsign,
-          etDtmfDisplay, etDualWatchChannel, etPriorityChannel, peakLevelBar, scrollRadioInventory,
-          signalLevelBar, sliderBass, sliderTreble, sliderVoxSensitivity, spectrumView,
-          switchAutoId, switchEq, switchPttInverted, switchSpeakerphone, switchVox, tvActiveRadio,
-          tvChannelName, tvChannelNumber, tvFrequency, tvIdTimer, tvNoiseFloor, tvPttHint,
-          tvRadioCount, tvRadioInventory, tvRepeaterCallsign, tvRepeaterFreq, tvRepeaterInfo,
-          tvRxIndicator, tvScanChannel, tvScanLog, tvScanState, tvSignalHistory, tvSignalPeak,
-          tvSignalQuality, tvSignalRms, tvSnr, tvTxIndicator, tvUsbAudioStatus);
+      return new FragmentLiveBinding((FrameLayout) rootView, actionBar, audioLevelBar,
+          btnChannelDown, btnChannelUp, btnCloseSecondary, btnConnectRepeater, btnDtmf0, btnDtmf1,
+          btnDtmf2, btnDtmf3, btnDtmf4, btnDtmf5, btnDtmf6, btnDtmf7, btnDtmf8, btnDtmf9, btnDtmfA,
+          btnDtmfB, btnDtmfC, btnDtmfClear, btnDtmfClose, btnDtmfD, btnDtmfHash, btnDtmfOpen,
+          btnDtmfSend, btnDtmfStar, btnManualId, btnNuisanceDelete, btnPtt, btnRadioInventory,
+          btnRefreshRepeater, btnScanRadios, btnScanToggle, btnShowSecondary, callsignRow,
+          cardMultiRadio, cardSignalMonitor, channelBar, chipGroupMode, chipGroupRadios,
+          chipGroupScanSpeed, chipModeHandset, chipModePhone, chipScanFast, chipScanMedium,
+          chipScanSlow, dashboardContainer, dtmfModal, etDtmfDisplay, etDualWatchChannel,
+          etPriorityChannel, peakLevelBar, scrollRadioInventory, secondaryPanel, signalLevelBar,
+          sliderBass, sliderTreble, sliderVoxSensitivity, spectrumView, statusRow, switchEq,
+          switchVox, tvActiveRadio, tvCallsignDisplay, tvChannelName, tvChannelNumber, tvFrequency,
+          tvIdTimer, tvNoiseFloor, tvPttHint, tvRadioCount, tvRadioInventory, tvRepeaterCallsign,
+          tvRepeaterFreq, tvRepeaterInfo, tvRxIndicator, tvScanChannel, tvScanLog, tvScanState,
+          tvSignalHistory, tvSignalPeak, tvSignalQuality, tvSignalRms, tvSnr, tvTxIndicator,
+          tvUsbAudioStatus);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

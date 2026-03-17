@@ -24,7 +24,7 @@
         android:text="PTT"
         android:textSize="13sp"
         android:textStyle="bold"
-        android:textColor="#FF6F00"
+        android:textColor="?attr/colorSecondary"
         android:minWidth="80dp"
         android:gravity="end"
         android:paddingEnd="8dp"

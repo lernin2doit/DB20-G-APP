@@ -4,8 +4,6 @@ package com.db20g.controller.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -13,8 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.db20g.controller.R;
-import com.google.android.material.slider.Slider;
-import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.google.android.material.card.MaterialCardView;
 import java.lang.NullPointerException;
 import java.lang.Override;
 import java.lang.String;
@@ -24,58 +21,28 @@ public final class FragmentSettingsBinding implements ViewBinding {
   private final ScrollView rootView;
 
   @NonNull
-  public final RadioButton rbScanCarrier;
+  public final MaterialCardView cardAccessibilitySettings;
 
   @NonNull
-  public final RadioButton rbScanSearch;
+  public final MaterialCardView cardAppearance;
 
   @NonNull
-  public final RadioButton rbScanTime;
+  public final MaterialCardView cardBluetoothSettings;
 
   @NonNull
-  public final RadioButton rbThemeAmoled;
+  public final MaterialCardView cardComplianceSettings;
 
   @NonNull
-  public final RadioButton rbThemeDefault;
+  public final MaterialCardView cardDataTools;
 
   @NonNull
-  public final RadioButton rbThemeRedLight;
+  public final MaterialCardView cardRadioSettings;
 
   @NonNull
-  public final RadioButton rbThemeSystem;
+  public final MaterialCardView cardRecordingSettings;
 
   @NonNull
-  public final RadioGroup rgScanMode;
-
-  @NonNull
-  public final RadioGroup rgTheme;
-
-  @NonNull
-  public final Slider sliderBacklight;
-
-  @NonNull
-  public final Slider sliderSquelch;
-
-  @NonNull
-  public final Slider sliderTot;
-
-  @NonNull
-  public final Slider sliderVox;
-
-  @NonNull
-  public final SwitchMaterial switchAutoLock;
-
-  @NonNull
-  public final SwitchMaterial switchBeep;
-
-  @NonNull
-  public final SwitchMaterial switchRoger;
-
-  @NonNull
-  public final TextView tvBacklightValue;
-
-  @NonNull
-  public final TextView tvCurrentTheme;
+  public final MaterialCardView cardTranslationSettings;
 
   @NonNull
   public final TextView tvRadioIdent;
@@ -83,50 +50,24 @@ public final class FragmentSettingsBinding implements ViewBinding {
   @NonNull
   public final TextView tvRadioModel;
 
-  @NonNull
-  public final TextView tvSquelchValue;
-
-  @NonNull
-  public final TextView tvTotValue;
-
-  @NonNull
-  public final TextView tvVoxValue;
-
-  private FragmentSettingsBinding(@NonNull ScrollView rootView, @NonNull RadioButton rbScanCarrier,
-      @NonNull RadioButton rbScanSearch, @NonNull RadioButton rbScanTime,
-      @NonNull RadioButton rbThemeAmoled, @NonNull RadioButton rbThemeDefault,
-      @NonNull RadioButton rbThemeRedLight, @NonNull RadioButton rbThemeSystem,
-      @NonNull RadioGroup rgScanMode, @NonNull RadioGroup rgTheme, @NonNull Slider sliderBacklight,
-      @NonNull Slider sliderSquelch, @NonNull Slider sliderTot, @NonNull Slider sliderVox,
-      @NonNull SwitchMaterial switchAutoLock, @NonNull SwitchMaterial switchBeep,
-      @NonNull SwitchMaterial switchRoger, @NonNull TextView tvBacklightValue,
-      @NonNull TextView tvCurrentTheme, @NonNull TextView tvRadioIdent,
-      @NonNull TextView tvRadioModel, @NonNull TextView tvSquelchValue,
-      @NonNull TextView tvTotValue, @NonNull TextView tvVoxValue) {
+  private FragmentSettingsBinding(@NonNull ScrollView rootView,
+      @NonNull MaterialCardView cardAccessibilitySettings, @NonNull MaterialCardView cardAppearance,
+      @NonNull MaterialCardView cardBluetoothSettings,
+      @NonNull MaterialCardView cardComplianceSettings, @NonNull MaterialCardView cardDataTools,
+      @NonNull MaterialCardView cardRadioSettings, @NonNull MaterialCardView cardRecordingSettings,
+      @NonNull MaterialCardView cardTranslationSettings, @NonNull TextView tvRadioIdent,
+      @NonNull TextView tvRadioModel) {
     this.rootView = rootView;
-    this.rbScanCarrier = rbScanCarrier;
-    this.rbScanSearch = rbScanSearch;
-    this.rbScanTime = rbScanTime;
-    this.rbThemeAmoled = rbThemeAmoled;
-    this.rbThemeDefault = rbThemeDefault;
-    this.rbThemeRedLight = rbThemeRedLight;
-    this.rbThemeSystem = rbThemeSystem;
-    this.rgScanMode = rgScanMode;
-    this.rgTheme = rgTheme;
-    this.sliderBacklight = sliderBacklight;
-    this.sliderSquelch = sliderSquelch;
-    this.sliderTot = sliderTot;
-    this.sliderVox = sliderVox;
-    this.switchAutoLock = switchAutoLock;
-    this.switchBeep = switchBeep;
-    this.switchRoger = switchRoger;
-    this.tvBacklightValue = tvBacklightValue;
-    this.tvCurrentTheme = tvCurrentTheme;
+    this.cardAccessibilitySettings = cardAccessibilitySettings;
+    this.cardAppearance = cardAppearance;
+    this.cardBluetoothSettings = cardBluetoothSettings;
+    this.cardComplianceSettings = cardComplianceSettings;
+    this.cardDataTools = cardDataTools;
+    this.cardRadioSettings = cardRadioSettings;
+    this.cardRecordingSettings = cardRecordingSettings;
+    this.cardTranslationSettings = cardTranslationSettings;
     this.tvRadioIdent = tvRadioIdent;
     this.tvRadioModel = tvRadioModel;
-    this.tvSquelchValue = tvSquelchValue;
-    this.tvTotValue = tvTotValue;
-    this.tvVoxValue = tvVoxValue;
   }
 
   @Override
@@ -156,111 +97,51 @@ public final class FragmentSettingsBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
-      id = R.id.rbScanCarrier;
-      RadioButton rbScanCarrier = ViewBindings.findChildViewById(rootView, id);
-      if (rbScanCarrier == null) {
+      id = R.id.cardAccessibilitySettings;
+      MaterialCardView cardAccessibilitySettings = ViewBindings.findChildViewById(rootView, id);
+      if (cardAccessibilitySettings == null) {
         break missingId;
       }
 
-      id = R.id.rbScanSearch;
-      RadioButton rbScanSearch = ViewBindings.findChildViewById(rootView, id);
-      if (rbScanSearch == null) {
+      id = R.id.cardAppearance;
+      MaterialCardView cardAppearance = ViewBindings.findChildViewById(rootView, id);
+      if (cardAppearance == null) {
         break missingId;
       }
 
-      id = R.id.rbScanTime;
-      RadioButton rbScanTime = ViewBindings.findChildViewById(rootView, id);
-      if (rbScanTime == null) {
+      id = R.id.cardBluetoothSettings;
+      MaterialCardView cardBluetoothSettings = ViewBindings.findChildViewById(rootView, id);
+      if (cardBluetoothSettings == null) {
         break missingId;
       }
 
-      id = R.id.rbThemeAmoled;
-      RadioButton rbThemeAmoled = ViewBindings.findChildViewById(rootView, id);
-      if (rbThemeAmoled == null) {
+      id = R.id.cardComplianceSettings;
+      MaterialCardView cardComplianceSettings = ViewBindings.findChildViewById(rootView, id);
+      if (cardComplianceSettings == null) {
         break missingId;
       }
 
-      id = R.id.rbThemeDefault;
-      RadioButton rbThemeDefault = ViewBindings.findChildViewById(rootView, id);
-      if (rbThemeDefault == null) {
+      id = R.id.cardDataTools;
+      MaterialCardView cardDataTools = ViewBindings.findChildViewById(rootView, id);
+      if (cardDataTools == null) {
         break missingId;
       }
 
-      id = R.id.rbThemeRedLight;
-      RadioButton rbThemeRedLight = ViewBindings.findChildViewById(rootView, id);
-      if (rbThemeRedLight == null) {
+      id = R.id.cardRadioSettings;
+      MaterialCardView cardRadioSettings = ViewBindings.findChildViewById(rootView, id);
+      if (cardRadioSettings == null) {
         break missingId;
       }
 
-      id = R.id.rbThemeSystem;
-      RadioButton rbThemeSystem = ViewBindings.findChildViewById(rootView, id);
-      if (rbThemeSystem == null) {
+      id = R.id.cardRecordingSettings;
+      MaterialCardView cardRecordingSettings = ViewBindings.findChildViewById(rootView, id);
+      if (cardRecordingSettings == null) {
         break missingId;
       }
 
-      id = R.id.rgScanMode;
-      RadioGroup rgScanMode = ViewBindings.findChildViewById(rootView, id);
-      if (rgScanMode == null) {
-        break missingId;
-      }
-
-      id = R.id.rgTheme;
-      RadioGroup rgTheme = ViewBindings.findChildViewById(rootView, id);
-      if (rgTheme == null) {
-        break missingId;
-      }
-
-      id = R.id.sliderBacklight;
-      Slider sliderBacklight = ViewBindings.findChildViewById(rootView, id);
-      if (sliderBacklight == null) {
-        break missingId;
-      }
-
-      id = R.id.sliderSquelch;
-      Slider sliderSquelch = ViewBindings.findChildViewById(rootView, id);
-      if (sliderSquelch == null) {
-        break missingId;
-      }
-
-      id = R.id.sliderTot;
-      Slider sliderTot = ViewBindings.findChildViewById(rootView, id);
-      if (sliderTot == null) {
-        break missingId;
-      }
-
-      id = R.id.sliderVox;
-      Slider sliderVox = ViewBindings.findChildViewById(rootView, id);
-      if (sliderVox == null) {
-        break missingId;
-      }
-
-      id = R.id.switchAutoLock;
-      SwitchMaterial switchAutoLock = ViewBindings.findChildViewById(rootView, id);
-      if (switchAutoLock == null) {
-        break missingId;
-      }
-
-      id = R.id.switchBeep;
-      SwitchMaterial switchBeep = ViewBindings.findChildViewById(rootView, id);
-      if (switchBeep == null) {
-        break missingId;
-      }
-
-      id = R.id.switchRoger;
-      SwitchMaterial switchRoger = ViewBindings.findChildViewById(rootView, id);
-      if (switchRoger == null) {
-        break missingId;
-      }
-
-      id = R.id.tvBacklightValue;
-      TextView tvBacklightValue = ViewBindings.findChildViewById(rootView, id);
-      if (tvBacklightValue == null) {
-        break missingId;
-      }
-
-      id = R.id.tvCurrentTheme;
-      TextView tvCurrentTheme = ViewBindings.findChildViewById(rootView, id);
-      if (tvCurrentTheme == null) {
+      id = R.id.cardTranslationSettings;
+      MaterialCardView cardTranslationSettings = ViewBindings.findChildViewById(rootView, id);
+      if (cardTranslationSettings == null) {
         break missingId;
       }
 
@@ -276,29 +157,10 @@ public final class FragmentSettingsBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.tvSquelchValue;
-      TextView tvSquelchValue = ViewBindings.findChildViewById(rootView, id);
-      if (tvSquelchValue == null) {
-        break missingId;
-      }
-
-      id = R.id.tvTotValue;
-      TextView tvTotValue = ViewBindings.findChildViewById(rootView, id);
-      if (tvTotValue == null) {
-        break missingId;
-      }
-
-      id = R.id.tvVoxValue;
-      TextView tvVoxValue = ViewBindings.findChildViewById(rootView, id);
-      if (tvVoxValue == null) {
-        break missingId;
-      }
-
-      return new FragmentSettingsBinding((ScrollView) rootView, rbScanCarrier, rbScanSearch,
-          rbScanTime, rbThemeAmoled, rbThemeDefault, rbThemeRedLight, rbThemeSystem, rgScanMode,
-          rgTheme, sliderBacklight, sliderSquelch, sliderTot, sliderVox, switchAutoLock, switchBeep,
-          switchRoger, tvBacklightValue, tvCurrentTheme, tvRadioIdent, tvRadioModel, tvSquelchValue,
-          tvTotValue, tvVoxValue);
+      return new FragmentSettingsBinding((ScrollView) rootView, cardAccessibilitySettings,
+          cardAppearance, cardBluetoothSettings, cardComplianceSettings, cardDataTools,
+          cardRadioSettings, cardRecordingSettings, cardTranslationSettings, tvRadioIdent,
+          tvRadioModel);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

@@ -35,11 +35,9 @@ class TextMessagingActivity : AppCompatActivity() {
     private var lastLocation: Location? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Apply theme
-        val prefs = getSharedPreferences("app_settings", MODE_PRIVATE)
-        val themeId = prefs.getInt("theme_id", 0)
-        if (themeId == 1) setTheme(R.style.Theme_DB20GController_AMOLED)
-        else if (themeId == 2) setTheme(R.style.Theme_DB20GController_RedLight)
+        val themeManager = ThemeManager(this)
+        setTheme(themeManager.getThemeResId())
+        themeManager.applyNightMode()
 
         super.onCreate(savedInstanceState)
         binding = ActivityTextMessagingBinding.inflate(layoutInflater)

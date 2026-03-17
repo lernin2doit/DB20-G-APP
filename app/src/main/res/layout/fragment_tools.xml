@@ -11,6 +11,13 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <!-- ===== DATA TOOLS GROUP ===== -->
+        <LinearLayout
+            android:id="@+id/groupDataTools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
         <!-- Radio Operations -->
         <TextView
             android:layout_width="wrap_content"
@@ -54,7 +61,7 @@
                     android:layout_marginTop="8dp"
                     android:text="⚠️ Upload will overwrite ALL channels and settings in the radio."
                     android:textSize="12sp"
-                    android:textColor="#FF6F00" />
+                    android:textColor="?attr/colorSecondary" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -275,6 +282,15 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
+        </LinearLayout> <!-- end groupDataTools -->
+
+        <!-- ===== RECORDING GROUP ===== -->
+        <LinearLayout
+            android:id="@+id/groupRecording"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
         <!-- Audio Recording -->
         <TextView
             android:layout_width="wrap_content"
@@ -408,7 +424,7 @@
                         android:layout_height="wrap_content"
                         android:text="Delete All"
                         android:textColor="#F44336"
-                        android:textSize="12sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -462,7 +478,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Clear"
-                        android:textSize="12sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <ScrollView
@@ -512,6 +528,15 @@
                     android:text="Ready." />
             </ScrollView>
         </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout> <!-- end groupRecording -->
+
+        <!-- ===== EXTRAS GROUP (Social, Hardware, Data Modes) ===== -->
+        <LinearLayout
+            android:id="@+id/groupExtras"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
         <!-- Social & Community Features -->
         <TextView
@@ -602,7 +627,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:layout_marginTop="6dp"
-                    android:background="#111111">
+                    android:background="?android:attr/colorBackground">
 
                     <TextView
                         android:id="@+id/tvRecentQsos"
@@ -611,7 +636,7 @@
                         android:padding="6dp"
                         android:fontFamily="monospace"
                         android:textSize="10sp"
-                        android:textColor="#AAAAAA"
+                        android:textColor="?android:attr/textColorSecondary"
                         android:text="No QSOs logged." />
                 </ScrollView>
 
@@ -631,7 +656,7 @@
                         android:layout_weight="1"
                         android:layout_marginEnd="4dp"
                         android:text="Export ADIF"
-                        android:textSize="11sp" />
+                        android:textSize="14sp" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnExportQsoCsv"
@@ -641,7 +666,7 @@
                         android:layout_weight="1"
                         android:layout_marginStart="4dp"
                         android:text="Export CSV"
-                        android:textSize="11sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <com.google.android.material.button.MaterialButton
@@ -651,7 +676,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="Share Channel Config"
-                    android:textSize="11sp"
+                    android:textSize="14sp"
                     app:icon="@android:drawable/ic_menu_share" />
 
                 <!-- Contact Search -->
@@ -687,7 +712,7 @@
                 <ScrollView
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
-                    android:background="#111111"
+                    android:background="?android:attr/colorBackground"
                     android:layout_marginTop="6dp">
 
                     <TextView
@@ -697,7 +722,7 @@
                         android:padding="6dp"
                         android:fontFamily="monospace"
                         android:textSize="10sp"
-                        android:textColor="#AAAAAA"
+                        android:textColor="?android:attr/textColorSecondary"
                         android:text="" />
                 </ScrollView>
             </LinearLayout>
@@ -840,62 +865,10 @@
                     app:icon="@android:drawable/ic_dialog_alert"
                     app:iconGravity="textStart" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:text="FCC ULS license lookup, family authorization tracker, power limits chart, Part 95 reference, callsign ID timer, and compliance auditing."
-                    android:textSize="13sp"
-                    android:textColor="?android:textColorSecondary" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnCompliance"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_marginTop="12dp"
-                    android:text="FCC Compliance Tools"
-                    app:icon="@android:drawable/ic_menu_agenda"
-                    app:iconGravity="textStart" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="Real-time on-device speech translation with ML Kit. Supports English, Spanish, French, German, and Portuguese with privacy-focused offline processing."
-                    android:textSize="13sp"
-                    android:textColor="?android:textColorSecondary" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnTranslation"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_marginTop="12dp"
-                    android:text="Real-Time Translation"
-                    app:icon="@android:drawable/ic_menu_mylocation"
-                    app:iconGravity="textStart" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="High-contrast mode, adjustable font sizes, haptic feedback for PTT and channel changes, and TalkBack screen reader support."
-                    android:textSize="13sp"
-                    android:textColor="?android:textColorSecondary" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnAccessibility"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_marginTop="12dp"
-                    android:text="Accessibility Settings"
-                    app:icon="@android:drawable/ic_menu_preferences"
-                    app:iconGravity="textStart" />
-
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout> <!-- end groupExtras -->
 
         <View
             android:layout_width="match_parent"

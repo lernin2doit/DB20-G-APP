@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#121212"
+    android:background="?android:attr/colorBackground"
     android:padding="16dp">
 
     <LinearLayout
@@ -15,7 +15,7 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="#1E1E1E"
+            app:cardBackgroundColor="?attr/colorSurface"
             app:cardCornerRadius="8dp">
 
             <LinearLayout
@@ -35,7 +35,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Real-Time Translation"
-                        android:textColor="#4CAF50"
+                        android:textColor="?attr/colorPrimary"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
@@ -49,7 +49,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Detects incoming speech, translates, and speaks in your language. All processing on-device — no cloud upload."
-                    android:textColor="#888888"
+                    android:textColor="?android:attr/textColorSecondary"
                     android:textSize="12sp"
                     android:layout_marginTop="4dp" />
 
@@ -76,7 +76,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Listening..."
-                        android:textColor="#4CAF50"
+                        android:textColor="?attr/colorPrimary"
                         android:textSize="14sp"
                         android:layout_marginStart="8dp" />
                 </LinearLayout>
@@ -88,7 +88,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            app:cardBackgroundColor="#1E1E1E"
+            app:cardBackgroundColor="?attr/colorSurface"
             app:cardCornerRadius="8dp">
 
             <LinearLayout
@@ -101,7 +101,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Language Settings"
-                    android:textColor="#4CAF50"
+                    android:textColor="?attr/colorPrimary"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -109,7 +109,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Your preferred language:"
-                    android:textColor="#AAAAAA"
+                    android:textColor="?android:attr/textColorSecondary"
                     android:textSize="13sp"
                     android:layout_marginTop="8dp" />
 
@@ -161,7 +161,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Confidence threshold:"
-                    android:textColor="#AAAAAA"
+                    android:textColor="?android:attr/textColorSecondary"
                     android:textSize="13sp"
                     android:layout_marginTop="12dp" />
 
@@ -184,7 +184,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="50%"
-                        android:textColor="@android:color/white"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:textSize="14sp"
                         android:layout_marginStart="8dp" />
                 </LinearLayout>
@@ -202,7 +202,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Speak translation aloud (TTS)"
-                        android:textColor="#CCCCCC"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:textSize="13sp" />
 
                     <com.google.android.material.switchmaterial.SwitchMaterial
@@ -224,7 +224,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Auto-translate outgoing messages"
-                        android:textColor="#CCCCCC"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:textSize="13sp" />
 
                     <com.google.android.material.switchmaterial.SwitchMaterial
@@ -240,7 +240,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            app:cardBackgroundColor="#1A1A2E"
+            app:cardBackgroundColor="?attr/colorSurface"
             app:cardCornerRadius="8dp">
 
             <LinearLayout
@@ -262,7 +262,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Original:"
-                    android:textColor="#888888"
+                    android:textColor="?android:attr/textColorSecondary"
                     android:textSize="11sp"
                     android:layout_marginTop="8dp" />
 
@@ -271,7 +271,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Waiting for speech..."
-                    android:textColor="#CCCCCC"
+                    android:textColor="?android:attr/textColorPrimary"
                     android:textSize="16sp"
                     android:minLines="2" />
 
@@ -280,7 +280,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Translated:"
-                    android:textColor="#888888"
+                    android:textColor="?android:attr/textColorSecondary"
                     android:textSize="11sp"
                     android:layout_marginTop="8dp" />
 
@@ -289,7 +289,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="—"
-                    android:textColor="#4CAF50"
+                    android:textColor="?attr/colorPrimary"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:minLines="2" />
@@ -298,7 +298,7 @@
                     android:id="@+id/tvConfidenceDisplay"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#888888"
+                    android:textColor="?android:attr/textColorSecondary"
                     android:textSize="11sp"
                     android:layout_marginTop="4dp" />
             </LinearLayout>
@@ -309,7 +309,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            app:cardBackgroundColor="#1E1E1E"
+            app:cardBackgroundColor="?attr/colorSurface"
             app:cardCornerRadius="8dp">
 
             <LinearLayout
@@ -322,7 +322,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Language Models"
-                    android:textColor="#4CAF50"
+                    android:textColor="?attr/colorPrimary"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -330,7 +330,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Download models for offline translation (~30MB each)"
-                    android:textColor="#888888"
+                    android:textColor="?android:attr/textColorSecondary"
                     android:textSize="12sp"
                     android:layout_marginTop="4dp" />
 
@@ -347,7 +347,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            app:cardBackgroundColor="#1E1E1E"
+            app:cardBackgroundColor="?attr/colorSurface"
             app:cardCornerRadius="8dp">
 
             <LinearLayout
@@ -367,7 +367,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Translation History"
-                        android:textColor="#4CAF50"
+                        android:textColor="?attr/colorPrimary"
                         android:textSize="16sp"
                         android:textStyle="bold" />
 
@@ -377,7 +377,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Export"
-                        android:textSize="12sp" />
+                        android:textSize="14sp" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnClearHistory"
@@ -386,7 +386,7 @@
                         android:layout_height="wrap_content"
                         android:text="Clear"
                         android:textColor="#FF5252"
-                        android:textSize="12sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView

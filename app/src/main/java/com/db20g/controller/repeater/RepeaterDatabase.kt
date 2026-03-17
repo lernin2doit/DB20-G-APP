@@ -174,8 +174,6 @@ class RepeaterDatabase(private val context: Context) {
             put("description", r.description)
             put("status", r.status.name.lowercase())
             put("gmrs_channel", r.gmrsChannel)
-            put("output_frequency", r.outputFrequency)
-            put("input_frequency", r.inputFrequency)
         }
     }
 }

@@ -15,8 +15,8 @@
         app:title="SSTV Image Transmission"
         app:subtitle="Robot36 / Martin M1"
         app:navigationIcon="?attr/homeAsUpIndicator"
-        app:titleTextColor="@android:color/white"
-        app:subtitleTextColor="@android:color/darker_gray" />
+        app:titleTextColor="?android:attr/textColorPrimary"
+        app:subtitleTextColor="?android:attr/textColorSecondary" />
 
     <!-- Status / Mode Selection -->
     <LinearLayout
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="8dp"
-        android:background="?attr/colorSurfaceVariant"
+        android:background="?attr/colorSurface"
         android:gravity="center_vertical">
 
         <TextView
@@ -110,7 +110,7 @@
                     android:id="@+id/tvProgress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/white"
+                    android:textColor="?android:attr/textColorPrimary"
                     android:textSize="12sp"
                     android:gravity="center"
                     android:text="Transmitting..." />
@@ -123,7 +123,7 @@
                 android:gravity="center"
                 android:text="No image loaded.\nCapture from camera or select from gallery."
                 android:textSize="14sp"
-                android:textColor="#888888"
+                android:textColor="?android:attr/textColorSecondary"
                 android:background="#000000" />
         </FrameLayout>
     </com.google.android.material.card.MaterialCardView>

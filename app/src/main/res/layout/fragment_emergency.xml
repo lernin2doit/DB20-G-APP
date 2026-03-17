@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1A1A1A">
+    android:background="?android:attr/colorBackground">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:cardBackgroundColor="#212121">
+            app:cardBackgroundColor="?attr/colorSurface">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -52,7 +52,7 @@
                     android:text="Acquiring GPS..."
                     android:textSize="18sp"
                     android:fontFamily="monospace"
-                    android:textColor="#FFFFFF"
+                    android:textColor="?android:attr/textColorPrimary"
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButton
@@ -124,7 +124,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            app:cardBackgroundColor="#212121">
+            app:cardBackgroundColor="?attr/colorSurface">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -147,7 +147,7 @@
                     android:layout_height="48dp"
                     android:layout_marginTop="8dp"
                     android:text="Ch 20 Emergency (462.675)"
-                    android:textColor="#FFFFFF"
+                    android:textColor="?android:attr/textColorPrimary"
                     app:strokeColor="#FF6F00" />
 
                 <com.google.android.material.button.MaterialButton
@@ -157,7 +157,7 @@
                     android:layout_height="48dp"
                     android:layout_marginTop="4dp"
                     android:text="Ch 16 Calling (462.5625)"
-                    android:textColor="#FFFFFF"
+                    android:textColor="?android:attr/textColorPrimary"
                     app:strokeColor="#FF6F00" />
 
                 <com.google.android.material.button.MaterialButton
@@ -167,7 +167,7 @@
                     android:layout_height="48dp"
                     android:layout_marginTop="4dp"
                     android:text="Ch 19 Road (462.650)"
-                    android:textColor="#FFFFFF"
+                    android:textColor="?android:attr/textColorPrimary"
                     app:strokeColor="#FF6F00" />
 
                 <com.google.android.material.button.MaterialButton
@@ -177,7 +177,7 @@
                     android:layout_height="48dp"
                     android:layout_marginTop="4dp"
                     android:text="Ch 20R Rpt (462.675 / 141.3)"
-                    android:textColor="#FFFFFF"
+                    android:textColor="?android:attr/textColorPrimary"
                     app:strokeColor="#FF6F00" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -187,7 +187,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            app:cardBackgroundColor="#212121">
+            app:cardBackgroundColor="?attr/colorSurface">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -209,7 +209,7 @@
                     android:layout_marginTop="4dp"
                     android:text="Generate structured status report for emergency nets."
                     android:textSize="12sp"
-                    android:textColor="#9E9E9E" />
+                    android:textColor="?android:attr/textColorSecondary" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
@@ -232,7 +232,7 @@
                     android:layout_marginTop="8dp"
                     android:text="Status:"
                     android:textSize="12sp"
-                    android:textColor="#9E9E9E" />
+                    android:textColor="?android:attr/textColorSecondary" />
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/chipGroupStatus"
@@ -301,7 +301,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            app:cardBackgroundColor="#212121">
+            app:cardBackgroundColor="?attr/colorSurface">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -323,7 +323,7 @@
                     android:layout_marginTop="4dp"
                     android:text="Auto-transmits distress call if no interaction within timeout period."
                     android:textSize="12sp"
-                    android:textColor="#9E9E9E" />
+                    android:textColor="?android:attr/textColorSecondary" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -338,7 +338,7 @@
                         android:layout_weight="1"
                         android:text="Timeout (minutes)"
                         android:textSize="14sp"
-                        android:textColor="#FFFFFF" />
+                        android:textColor="?android:attr/textColorPrimary" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="80dp"
@@ -372,7 +372,7 @@
                     android:layout_marginTop="4dp"
                     android:text="Inactive"
                     android:textSize="12sp"
-                    android:textColor="#9E9E9E"
+                    android:textColor="?android:attr/textColorSecondary"
                     android:gravity="center" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -382,7 +382,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            app:cardBackgroundColor="#212121">
+            app:cardBackgroundColor="?attr/colorSurface">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -426,7 +426,7 @@
                     android:layout_height="wrap_content"
                     android:text="No emergency contacts added."
                     android:textSize="12sp"
-                    android:textColor="#9E9E9E"
+                    android:textColor="?android:attr/textColorSecondary"
                     android:gravity="center"
                     android:padding="8dp" />
             </LinearLayout>

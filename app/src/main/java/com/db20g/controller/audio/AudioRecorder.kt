@@ -96,6 +96,7 @@ class AudioRecorder(private val context: Context) {
     private var currentChannelNumber: Int = 0
     private var currentChannelName: String = ""
     private var bytesWritten: Long = 0
+    @Volatile
     private var isRecording = false
 
     enum class RecordingType { RX, TX }

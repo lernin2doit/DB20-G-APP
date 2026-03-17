@@ -18,12 +18,10 @@ class AccessibilitySettingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         prefs = getSharedPreferences("app_settings", MODE_PRIVATE)
-        val themeId = prefs.getInt("theme_id", 0)
-        when (themeId) {
-            1 -> setTheme(R.style.Theme_DB20GController_AMOLED)
-            2 -> setTheme(R.style.Theme_DB20GController_RedLight)
-            else -> setTheme(R.style.Theme_DB20GController)
-        }
+        val themeManager = ThemeManager(this)
+        setTheme(themeManager.getThemeResId())
+        themeManager.applyNightMode()
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_accessibility_settings)
 

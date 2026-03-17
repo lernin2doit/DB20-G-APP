@@ -299,6 +299,10 @@ class TextMessageProtocol(private val context: Context) {
             }
 
             TYPE_ACK -> {
+                if (payload.size < 4) {
+                    Log.w(TAG, "ACK payload too short: ${payload.size}")
+                    return
+                }
                 val ackedMsgId = ByteBuffer.wrap(payload, 0, 4).int
                 Log.d(TAG, "ACK received for message $ackedMsgId")
                 pendingAcks.remove(ackedMsgId)
@@ -334,6 +338,10 @@ class TextMessageProtocol(private val context: Context) {
             }
 
             TYPE_QUICK_MSG -> {
+                if (payload.isEmpty()) {
+                    Log.w(TAG, "QUICK_MSG payload is empty")
+                    return
+                }
                 val qmIndex = payload[0].toInt() and 0xFF
                 val qm = quickMessages.getOrNull(qmIndex)
                 val text = qm?.let { "[Quick] ${it.label}: ${it.text}" } ?: "[Quick] Unknown #$qmIndex"
@@ -455,21 +463,25 @@ class TextMessageProtocol(private val context: Context) {
 
     // ======================== HISTORY ========================
 
-    fun getMessageHistory(): List<TextMessage> = messageHistory.toList()
+    fun getMessageHistory(): List<TextMessage> = synchronized(messageHistory) { messageHistory.toList() }
 
     fun getConversation(callsign: String): List<TextMessage> {
-        return messageHistory.filter {
-            it.fromCallsign.equals(callsign, ignoreCase = true) ||
-            it.toCallsign.equals(callsign, ignoreCase = true)
+        return synchronized(messageHistory) {
+            messageHistory.filter {
+                it.fromCallsign.equals(callsign, ignoreCase = true) ||
+                it.toCallsign.equals(callsign, ignoreCase = true)
+            }
         }.sortedBy { it.timestamp }
     }
 
     fun getConversationThreads(): List<ConversationThread> {
         val threads = mutableMapOf<String, MutableList<TextMessage>>()
-        for (msg in messageHistory) {
-            val partner = if (msg.direction == MessageDirection.OUTGOING) msg.toCallsign else msg.fromCallsign
-            val key = partner.uppercase(Locale.US).ifEmpty { "BROADCAST" }
-            threads.getOrPut(key) { mutableListOf() }.add(msg)
+        synchronized(messageHistory) {
+            for (msg in messageHistory) {
+                val partner = if (msg.direction == MessageDirection.OUTGOING) msg.toCallsign else msg.fromCallsign
+                val key = partner.uppercase(Locale.US).ifEmpty { "BROADCAST" }
+                threads.getOrPut(key) { mutableListOf() }.add(msg)
+            }
         }
         return threads.map { (callsign, messages) ->
             ConversationThread(
@@ -489,9 +501,11 @@ class TextMessageProtocol(private val context: Context) {
     }
 
     private fun updateMessageStatus(msgId: Int, status: MessageStatus) {
-        messageHistory.find { it.id == msgId }?.let {
-            it.status = status
-            saveHistory()
+        synchronized(messageHistory) {
+            messageHistory.find { it.id == msgId }?.let {
+                it.status = status
+                saveHistory()
+            }
         }
     }
 
@@ -500,18 +514,20 @@ class TextMessageProtocol(private val context: Context) {
     private fun saveHistory() {
         try {
             val arr = JSONArray()
-            for (msg in messageHistory.takeLast(1000)) { // Keep last 1000 messages
-                arr.put(JSONObject().apply {
-                    put("id", msg.id)
-                    put("fromCallsign", msg.fromCallsign)
-                    put("toCallsign", msg.toCallsign)
-                    put("text", msg.text)
-                    put("timestamp", msg.timestamp)
-                    put("direction", msg.direction.name)
-                    put("status", msg.status.name)
-                    put("latitude", msg.latitude)
-                    put("longitude", msg.longitude)
-                })
+            synchronized(messageHistory) {
+                for (msg in messageHistory.takeLast(1000)) { // Keep last 1000 messages
+                    arr.put(JSONObject().apply {
+                        put("id", msg.id)
+                        put("fromCallsign", msg.fromCallsign)
+                        put("toCallsign", msg.toCallsign)
+                        put("text", msg.text)
+                        put("timestamp", msg.timestamp)
+                        put("direction", msg.direction.name)
+                        put("status", msg.status.name)
+                        put("latitude", msg.latitude)
+                        put("longitude", msg.longitude)
+                    })
+                }
             }
             historyFile.writeText(arr.toString())
         } catch (e: Exception) {

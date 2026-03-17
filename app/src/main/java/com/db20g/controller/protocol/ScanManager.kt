@@ -260,7 +260,7 @@ class ScanManager {
         }
     }
 
-    private fun addLogEntry(channel: RadioChannel, durationMs: Long) {
+    private suspend fun addLogEntry(channel: RadioChannel, durationMs: Long) {
         val entry = ScanLogEntry(
             timestamp = System.currentTimeMillis(),
             channelNumber = channel.number,
@@ -274,7 +274,9 @@ class ScanManager {
         }
         val snapshot = logEntries.toList()
         _scanLog.value = snapshot
-        listener?.onScanLogUpdated(snapshot)
+        withContext(Dispatchers.Main) {
+            listener?.onScanLogUpdated(snapshot)
+        }
     }
 
     companion object {

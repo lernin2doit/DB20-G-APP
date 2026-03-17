@@ -22,7 +22,7 @@
             android:text="RX"
             android:textSize="12sp"
             android:textStyle="bold"
-            android:textColor="#1B5E20"
+            android:textColor="?attr/colorPrimary"
             android:gravity="center" />
 
         <!-- Info -->

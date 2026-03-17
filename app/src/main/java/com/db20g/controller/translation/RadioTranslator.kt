@@ -136,12 +136,18 @@ class RadioTranslator(private val context: Context) {
     // --- Speech Recognition ---
 
     fun startListening() {
-        if (!SpeechRecognizer.isRecognitionAvailable(context)) {
+        speechRecognizer?.destroy()
+
+        // On API 31+ use the purely on-device recognizer to avoid server errors
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S
+            && SpeechRecognizer.isOnDeviceRecognitionAvailable(context)) {
+            speechRecognizer = SpeechRecognizer.createOnDeviceSpeechRecognizer(context)
+        } else if (SpeechRecognizer.isRecognitionAvailable(context)) {
+            speechRecognizer = SpeechRecognizer.createSpeechRecognizer(context)
+        } else {
             listener?.onTranslationError("Speech recognition not available on this device")
             return
         }
-
-        speechRecognizer = SpeechRecognizer.createSpeechRecognizer(context)
 
         speechRecognizer?.setRecognitionListener(object : RecognitionListener {
             override fun onReadyForSpeech(params: Bundle?) {
@@ -162,9 +168,16 @@ class RadioTranslator(private val context: Context) {
                 isListening = false
                 listener?.onListeningStateChanged(false)
                 val msg = when (error) {
-                    SpeechRecognizer.ERROR_NO_MATCH -> "No speech detected"
-                    SpeechRecognizer.ERROR_NETWORK -> "Network error (using on-device only)"
+                    SpeechRecognizer.ERROR_NO_MATCH,
+                    SpeechRecognizer.ERROR_SPEECH_TIMEOUT -> "No speech detected"
+                    SpeechRecognizer.ERROR_NETWORK,
+                    SpeechRecognizer.ERROR_NETWORK_TIMEOUT -> "Network error"
                     SpeechRecognizer.ERROR_AUDIO -> "Audio recording error"
+                    SpeechRecognizer.ERROR_SERVER -> "Recognition service unavailable"
+                    SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS -> "Microphone permission required"
+                    SpeechRecognizer.ERROR_RECOGNIZER_BUSY -> "Recognizer busy, retrying..."
+                    11 -> "Recognition service disconnected — retrying" // ERROR_SERVER_DISCONNECTED (API 31)
+                    12 -> "Language not supported for on-device recognition"
                     else -> "Recognition error: $error"
                 }
                 listener?.onTranslationError(msg)
@@ -212,7 +225,7 @@ class RadioTranslator(private val context: Context) {
             putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
             putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true)
             putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 3)
-            // Prefer offline recognition
+            putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale(preferredLanguage).toLanguageTag())
             putExtra(RecognizerIntent.EXTRA_PREFER_OFFLINE, true)
         }
 

@@ -61,6 +61,10 @@ class SetupWizardActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val themeManager = ThemeManager(this)
+        setTheme(themeManager.getThemeResId())
+        themeManager.applyNightMode()
+
         super.onCreate(savedInstanceState)
         binding = ActivitySetupWizardBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -245,44 +249,46 @@ class SetupWizardActivity : AppCompatActivity() {
                 }
 
                 serialManager.connect(devices[0])
-                val protocol = DB20GProtocol(serialManager)
+                try {
+                    val protocol = DB20GProtocol(serialManager)
 
-                withContext(Dispatchers.Main) {
-                    binding.tvProgramStatus.text = "Reading current radio memory..."
-                    binding.progressProgram.isIndeterminate = false
-                    binding.progressProgram.max = 100
-                }
+                    withContext(Dispatchers.Main) {
+                        binding.tvProgramStatus.text = "Reading current radio memory..."
+                        binding.progressProgram.isIndeterminate = false
+                        binding.progressProgram.max = 100
+                    }
 
-                // Download current memory first
-                protocol.download { current, total ->
-                    val pct = (current * 100) / total
-                    binding.progressProgram.progress = pct
-                }
+                    // Download current memory first
+                    protocol.download { current, total ->
+                        val pct = (current * 100) / total
+                        binding.progressProgram.progress = pct
+                    }
 
-                val channels = template.builder()
+                    val channels = template.builder()
 
-                withContext(Dispatchers.Main) {
-                    binding.tvProgramStatus.text = "Programming ${channels.size} channels..."
-                    binding.progressProgram.progress = 0
-                }
+                    withContext(Dispatchers.Main) {
+                        binding.tvProgramStatus.text = "Programming ${channels.size} channels..."
+                        binding.progressProgram.progress = 0
+                    }
 
-                // Encode and upload
-                val memImage = protocol.getMemoryImage()
-                    ?: throw IllegalStateException("Memory download failed")
-                val encoded = protocol.encodeChannels(channels, memImage)
+                    // Encode and upload
+                    val memImage = protocol.getMemoryImage()
+                        ?: throw IllegalStateException("Memory download failed")
+                    val encoded = protocol.encodeChannels(channels, memImage)
 
-                protocol.upload(encoded) { current, total ->
-                    val pct = (current * 100) / total
-                    binding.progressProgram.progress = pct
-                }
+                    protocol.upload(encoded) { current, total ->
+                        val pct = (current * 100) / total
+                        binding.progressProgram.progress = pct
+                    }
 
-                serialManager.disconnect()
-
-                withContext(Dispatchers.Main) {
-                    binding.progressProgram.visibility = View.GONE
-                    binding.tvProgramStatus.text = "Programming complete! ${channels.size} channels loaded."
-                    binding.btnProgram.text = "Done!"
-                    binding.btnProgram.isEnabled = false
+                    withContext(Dispatchers.Main) {
+                        binding.progressProgram.visibility = View.GONE
+                        binding.tvProgramStatus.text = "Programming complete! ${channels.size} channels loaded."
+                        binding.btnProgram.text = "Done!"
+                        binding.btnProgram.isEnabled = false
+                    }
+                } finally {
+                    try { serialManager.disconnect() } catch (_: Exception) {}
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {

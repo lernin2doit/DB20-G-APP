@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -69,6 +71,15 @@ public final class ActivityComplianceBinding implements ViewBinding {
   public final ImageView ivPowerChart;
 
   @NonNull
+  public final RadioButton rbIdCw;
+
+  @NonNull
+  public final RadioButton rbIdTts;
+
+  @NonNull
+  public final RadioGroup rgIdMethod;
+
+  @NonNull
   public final RecyclerView rvFamilyMembers;
 
   @NonNull
@@ -108,6 +119,7 @@ public final class ActivityComplianceBinding implements ViewBinding {
       @NonNull ChipGroup chipGroupCategory, @NonNull Chip chipLicensing,
       @NonNull Chip chipOperations, @NonNull Chip chipRepeaters, @NonNull Chip chipTechnical,
       @NonNull TextInputEditText etCallsign, @NonNull ImageView ivPowerChart,
+      @NonNull RadioButton rbIdCw, @NonNull RadioButton rbIdTts, @NonNull RadioGroup rgIdMethod,
       @NonNull RecyclerView rvFamilyMembers, @NonNull RecyclerView rvRules,
       @NonNull RecyclerView rvViolations, @NonNull TextView tvIdStatus, @NonNull TextView tvIdTimer,
       @NonNull TextView tvLicenseCallsign, @NonNull TextView tvLicenseExpiry,
@@ -128,6 +140,9 @@ public final class ActivityComplianceBinding implements ViewBinding {
     this.chipTechnical = chipTechnical;
     this.etCallsign = etCallsign;
     this.ivPowerChart = ivPowerChart;
+    this.rbIdCw = rbIdCw;
+    this.rbIdTts = rbIdTts;
+    this.rgIdMethod = rgIdMethod;
     this.rvFamilyMembers = rvFamilyMembers;
     this.rvRules = rvRules;
     this.rvViolations = rvViolations;
@@ -252,6 +267,24 @@ public final class ActivityComplianceBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.rbIdCw;
+      RadioButton rbIdCw = ViewBindings.findChildViewById(rootView, id);
+      if (rbIdCw == null) {
+        break missingId;
+      }
+
+      id = R.id.rbIdTts;
+      RadioButton rbIdTts = ViewBindings.findChildViewById(rootView, id);
+      if (rbIdTts == null) {
+        break missingId;
+      }
+
+      id = R.id.rgIdMethod;
+      RadioGroup rgIdMethod = ViewBindings.findChildViewById(rootView, id);
+      if (rgIdMethod == null) {
+        break missingId;
+      }
+
       id = R.id.rvFamilyMembers;
       RecyclerView rvFamilyMembers = ViewBindings.findChildViewById(rootView, id);
       if (rvFamilyMembers == null) {
@@ -320,9 +353,10 @@ public final class ActivityComplianceBinding implements ViewBinding {
 
       return new ActivityComplianceBinding((ScrollView) rootView, btnAddFamily, btnAudit, btnLookup,
           btnMarkId, cardLicense, chipAll, chipGeneral, chipGroupCategory, chipLicensing,
-          chipOperations, chipRepeaters, chipTechnical, etCallsign, ivPowerChart, rvFamilyMembers,
-          rvRules, rvViolations, tvIdStatus, tvIdTimer, tvLicenseCallsign, tvLicenseExpiry,
-          tvLicenseName, tvLicenseStatus, tvNoViolations, tvRenewalWarning);
+          chipOperations, chipRepeaters, chipTechnical, etCallsign, ivPowerChart, rbIdCw, rbIdTts,
+          rgIdMethod, rvFamilyMembers, rvRules, rvViolations, tvIdStatus, tvIdTimer,
+          tvLicenseCallsign, tvLicenseExpiry, tvLicenseName, tvLicenseStatus, tvNoViolations,
+          tvRenewalWarning);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

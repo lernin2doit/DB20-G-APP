@@ -1892,6 +1892,7 @@
     <item name="tag_accessibility_clickable_spans" type="id"/>
     <item name="tag_accessibility_heading" type="id"/>
     <item name="tag_accessibility_pane_title" type="id"/>
+    <item name="tag_font_scaled" type="id"/>
     <item name="tag_on_apply_window_listener" type="id"/>
     <item name="tag_on_receive_content_listener" type="id"/>
     <item name="tag_on_receive_content_mime_types" type="id"/>
@@ -6508,15 +6509,18 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-    <style name="Theme.DB20GController" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.DB20GController" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryVariant">@color/primary_variant</item>
         <item name="colorOnPrimary">@color/on_primary</item>
         <item name="colorSecondary">@color/secondary</item>
         <item name="colorSecondaryVariant">@color/secondary_variant</item>
         <item name="colorOnSecondary">@color/on_secondary</item>
+        <item name="android:colorBackground">@color/dark_background</item>
+        <item name="colorSurface">@color/dark_surface</item>
+        <item name="android:windowBackground">@color/dark_background</item>
     </style>
-    <style name="Theme.DB20GController.AMOLED" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.DB20GController.AMOLED" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryVariant">@color/primary_variant</item>
         <item name="colorOnPrimary">@color/on_primary</item>
@@ -6527,7 +6531,7 @@
         <item name="colorSurface">@color/amoled_surface</item>
         <item name="android:windowBackground">@color/amoled_background</item>
     </style>
-    <style name="Theme.DB20GController.RedLight" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.DB20GController.RedLight" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/red_light_primary</item>
         <item name="colorPrimaryVariant">#800000</item>
         <item name="colorOnPrimary">@color/on_primary</item>
@@ -6539,6 +6543,14 @@
         <item name="android:windowBackground">@color/red_light_background</item>
         <item name="android:textColorPrimary">@color/red_light_on_surface</item>
         <item name="android:textColorSecondary">@color/red_light_text_secondary</item>
+    </style>
+    <style name="Theme.DB20GController.System" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primary_variant</item>
+        <item name="colorOnPrimary">@color/on_primary</item>
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorSecondaryVariant">@color/secondary_variant</item>
+        <item name="colorOnSecondary">@color/on_secondary</item>
     </style>
     <style name="Theme.Design" parent="Theme.AppCompat">
   </style>

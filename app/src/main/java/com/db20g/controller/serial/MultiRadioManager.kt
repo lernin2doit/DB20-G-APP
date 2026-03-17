@@ -6,6 +6,7 @@ import com.db20g.controller.protocol.DB20GProtocol
 import com.hoho.android.usbserial.driver.UsbSerialDriver
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -33,6 +34,7 @@ class MultiRadioManager(private val context: Context) {
 
     private val radios = mutableMapOf<String, RadioProfile>()
     private var activeRadioId: String? = null
+    private var syncJob: Job? = null
     private var listener: RadioEventListener? = null
     private var radioCounter = 0
 
@@ -104,6 +106,8 @@ class MultiRadioManager(private val context: Context) {
     }
 
     fun disconnectAll() {
+        syncJob?.cancel()
+        syncJob = null
         for (profile in radios.values) {
             if (profile.isConnected) {
                 profile.serialManager.disconnect()
@@ -158,7 +162,7 @@ class MultiRadioManager(private val context: Context) {
         }
 
         // Download codeplug from source radio, then upload to target
-        CoroutineScope(Dispatchers.IO).launch {
+        syncJob = CoroutineScope(Dispatchers.IO).launch {
             try {
                 val sourceProtocol = DB20GProtocol(source.serialManager)
                 val targetProtocol = DB20GProtocol(target.serialManager)

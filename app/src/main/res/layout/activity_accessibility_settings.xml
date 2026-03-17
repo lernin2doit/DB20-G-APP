@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#121212"
+    android:background="?android:attr/colorBackground"
     android:padding="16dp">
 
     <LinearLayout
@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Accessibility Settings"
-            android:textColor="#4CAF50"
+            android:textColor="?attr/colorPrimary"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            app:cardBackgroundColor="#1E1E1E"
+            app:cardBackgroundColor="?attr/colorSurface"
             app:cardCornerRadius="8dp">
 
             <LinearLayout
@@ -49,7 +49,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="High Contrast Mode"
-                            android:textColor="@android:color/white"
+                            android:textColor="?android:attr/textColorPrimary"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
@@ -57,7 +57,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Maximum text contrast with bold white text and shadows"
-                            android:textColor="#888888"
+                            android:textColor="?android:attr/textColorSecondary"
                             android:textSize="12sp" />
                     </LinearLayout>
 
@@ -74,7 +74,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            app:cardBackgroundColor="#1E1E1E"
+            app:cardBackgroundColor="?attr/colorSurface"
             app:cardCornerRadius="8dp">
 
             <LinearLayout
@@ -87,7 +87,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Font Size"
-                    android:textColor="@android:color/white"
+                    android:textColor="?android:attr/textColorPrimary"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -132,10 +132,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="The quick brown fox jumps over the lazy dog"
-                    android:textColor="#CCCCCC"
+                    android:textColor="?android:attr/textColorPrimary"
                     android:textSize="14sp"
                     android:layout_marginTop="8dp"
-                    android:background="#151515"
+                    android:background="?android:attr/colorBackground"
                     android:padding="12dp" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -145,7 +145,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            app:cardBackgroundColor="#1E1E1E"
+            app:cardBackgroundColor="?attr/colorSurface"
             app:cardCornerRadius="8dp">
 
             <LinearLayout
@@ -170,7 +170,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Haptic Feedback"
-                            android:textColor="@android:color/white"
+                            android:textColor="?android:attr/textColorPrimary"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
@@ -178,7 +178,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Vibration confirmation for PTT and channel changes"
-                            android:textColor="#888888"
+                            android:textColor="?android:attr/textColorSecondary"
                             android:textSize="12sp" />
                     </LinearLayout>
 
@@ -203,7 +203,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            app:cardBackgroundColor="#1E1E1E"
+            app:cardBackgroundColor="?attr/colorSurface"
             app:cardCornerRadius="8dp">
 
             <LinearLayout
@@ -216,7 +216,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Screen Reader (TalkBack)"
-                    android:textColor="@android:color/white"
+                    android:textColor="?android:attr/textColorPrimary"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -224,7 +224,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="This app provides content descriptions for all interactive elements. TalkBack will announce:\n\n• Channel number, name, and frequency\n• PTT state (transmitting/idle)\n• Signal strength and audio quality\n• Alert severity and details\n\nEnable TalkBack in Android Settings → Accessibility for full screen reader support."
-                    android:textColor="#AAAAAA"
+                    android:textColor="?android:attr/textColorSecondary"
                     android:textSize="13sp"
                     android:layout_marginTop="8dp" />
             </LinearLayout>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -50,324 +51,209 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Settings Section -->
+        <!-- Settings Cards -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Radio Settings"
+            android:text="Settings"
             android:textSize="14sp"
             android:textColor="?colorPrimary"
             android:textStyle="bold" />
 
+        <!-- Radio Settings -->
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardRadioSettings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <!-- Squelch -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Squelch Level"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/tvSquelchValue"
-                        android:layout_width="32dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        tools:text="5" />
+            android:layout_marginTop="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:selectableItemBackground">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:padding="16dp" android:gravity="center_vertical">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Radio Settings" android:textSize="15sp" android:textStyle="bold" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Squelch, VOX, backlight, timeout, scan"
+                        android:textSize="13sp" android:textColor="?android:textColorSecondary" />
                 </LinearLayout>
-
-                <com.google.android.material.slider.Slider
-                    android:id="@+id/sliderSquelch"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:valueFrom="0"
-                    android:valueTo="9"
-                    android:stepSize="1" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginVertical="8dp"
-                    android:background="?android:listDivider" />
-
-                <!-- VOX -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="VOX Level"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/tvVoxValue"
-                        android:layout_width="48dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        tools:text="Off" />
-                </LinearLayout>
-
-                <com.google.android.material.slider.Slider
-                    android:id="@+id/sliderVox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:valueFrom="0"
-                    android:valueTo="10"
-                    android:stepSize="1" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginVertical="8dp"
-                    android:background="?android:listDivider" />
-
-                <!-- Backlight -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Backlight"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/tvBacklightValue"
-                        android:layout_width="48dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:textStyle="bold"
-                        tools:text="5" />
-                </LinearLayout>
-
-                <com.google.android.material.slider.Slider
-                    android:id="@+id/sliderBacklight"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:valueFrom="0"
-                    android:valueTo="9"
-                    android:stepSize="1" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginVertical="8dp"
-                    android:background="?android:listDivider" />
-
-                <!-- Timeout Timer -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="TX Timeout (TOT)"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/tvTotValue"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        tools:text="180s" />
-                </LinearLayout>
-
-                <com.google.android.material.slider.Slider
-                    android:id="@+id/sliderTot"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:valueFrom="0"
-                    android:valueTo="10"
-                    android:stepSize="1" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginVertical="8dp"
-                    android:background="?android:listDivider" />
-
-                <!-- Toggles -->
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/switchBeep"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Key Beep"
-                    android:textSize="15sp"
-                    android:minHeight="48dp" />
-
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/switchRoger"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Roger Beep"
-                    android:textSize="15sp"
-                    android:minHeight="48dp" />
-
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/switchAutoLock"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Auto Key Lock"
-                    android:textSize="15sp"
-                    android:minHeight="48dp" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="&#x203A;" android:textSize="24sp" android:textColor="?android:textColorSecondary" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Scan Settings -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Scan Settings"
-            android:textSize="14sp"
-            android:textColor="?colorPrimary"
-            android:textStyle="bold" />
-
+        <!-- Appearance -->
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardAppearance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Scan Resume Mode"
-                    android:textSize="15sp" />
-
-                <RadioGroup
-                    android:id="@+id/rgScanMode"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp">
-
-                    <RadioButton
-                        android:id="@+id/rbScanTime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Time (resume after delay)" />
-
-                    <RadioButton
-                        android:id="@+id/rbScanCarrier"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Carrier (wait for signal drop)" />
-
-                    <RadioButton
-                        android:id="@+id/rbScanSearch"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Search (stop on signal)" />
-                </RadioGroup>
+            android:layout_marginTop="4dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:selectableItemBackground">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:padding="16dp" android:gravity="center_vertical">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Appearance" android:textSize="15sp" android:textStyle="bold" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Theme, status pill, navigation rail"
+                        android:textSize="13sp" android:textColor="?android:textColorSecondary" />
+                </LinearLayout>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="&#x203A;" android:textSize="24sp" android:textColor="?android:textColorSecondary" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- App Theme Section -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="App Theme"
-            android:textSize="14sp"
-            android:textColor="?colorPrimary"
-            android:textStyle="bold" />
-
+        <!-- Compliance & Callsign -->
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardComplianceSettings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:id="@+id/tvCurrentTheme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="13sp"
-                    android:textColor="?android:textColorSecondary"
-                    tools:text="Current: Dark (Default)" />
-
-                <RadioGroup
-                    android:id="@+id/rgTheme"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp">
-
-                    <RadioButton
-                        android:id="@+id/rbThemeDefault"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Dark (Default)"
-                        android:minHeight="44dp" />
-
-                    <RadioButton
-                        android:id="@+id/rbThemeAmoled"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="AMOLED True-Black"
-                        android:minHeight="44dp" />
-
-                    <RadioButton
-                        android:id="@+id/rbThemeRedLight"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Red-Light (Night Vision)"
-                        android:minHeight="44dp" />
-
-                    <RadioButton
-                        android:id="@+id/rbThemeSystem"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Follow System"
-                        android:minHeight="44dp" />
-                </RadioGroup>
+            android:layout_marginTop="4dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:selectableItemBackground">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:padding="16dp" android:gravity="center_vertical">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Compliance &amp; Callsign" android:textSize="15sp" android:textStyle="bold" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="FCC license, callsign ID, family members"
+                        android:textSize="13sp" android:textColor="?android:textColorSecondary" />
+                </LinearLayout>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="&#x203A;" android:textSize="24sp" android:textColor="?android:textColorSecondary" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Bottom spacer for FAB -->
+        <!-- PTT & Bluetooth -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardBluetoothSettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:selectableItemBackground">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:padding="16dp" android:gravity="center_vertical">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="PTT &amp; Bluetooth" android:textSize="15sp" android:textStyle="bold" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="PTT line, audio routing, Bluetooth button mappings"
+                        android:textSize="13sp" android:textColor="?android:textColorSecondary" />
+                </LinearLayout>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="&#x203A;" android:textSize="24sp" android:textColor="?android:textColorSecondary" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Audio Recording -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardRecordingSettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:selectableItemBackground">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:padding="16dp" android:gravity="center_vertical">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Audio Recording" android:textSize="15sp" android:textStyle="bold" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Recording, retention, storage limits"
+                        android:textSize="13sp" android:textColor="?android:textColorSecondary" />
+                </LinearLayout>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="&#x203A;" android:textSize="24sp" android:textColor="?android:textColorSecondary" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Data & Channel Tools -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardDataTools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:selectableItemBackground">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:padding="16dp" android:gravity="center_vertical">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Data &amp; Channel Tools" android:textSize="15sp" android:textStyle="bold" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Radio transfer, CHIRP, presets, validation, QSO log"
+                        android:textSize="13sp" android:textColor="?android:textColorSecondary" />
+                </LinearLayout>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="&#x203A;" android:textSize="24sp" android:textColor="?android:textColorSecondary" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Accessibility -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardAccessibilitySettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:selectableItemBackground">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:padding="16dp" android:gravity="center_vertical">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Accessibility" android:textSize="15sp" android:textStyle="bold" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="High contrast, font size, haptic feedback"
+                        android:textSize="13sp" android:textColor="?android:textColorSecondary" />
+                </LinearLayout>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="&#x203A;" android:textSize="24sp" android:textColor="?android:textColorSecondary" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Translation -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardTranslationSettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:selectableItemBackground">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:orientation="horizontal" android:padding="16dp" android:gravity="center_vertical">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Translation" android:textSize="15sp" android:textStyle="bold" />
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Language, confidence threshold, TTS"
+                        android:textSize="13sp" android:textColor="?android:textColorSecondary" />
+                </LinearLayout>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="&#x203A;" android:textSize="24sp" android:textColor="?android:textColorSecondary" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Bottom spacer -->
         <View
             android:layout_width="match_parent"
             android:layout_height="80dp" />

@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -21,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.db20g.controller.R
 import com.db20g.controller.compliance.FccComplianceManager
+import com.db20g.controller.repeater.CallsignManager
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.chip.ChipGroup
@@ -34,6 +36,7 @@ import kotlinx.coroutines.launch
 class ComplianceActivity : AppCompatActivity(), FccComplianceManager.ComplianceListener {
 
     private lateinit var compliance: FccComplianceManager
+    private lateinit var callsignManager: CallsignManager
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
     private val handler = Handler(Looper.getMainLooper())
     private lateinit var timerRunnable: Runnable
@@ -60,18 +63,17 @@ class ComplianceActivity : AppCompatActivity(), FccComplianceManager.ComplianceL
     private lateinit var violationAdapter: ViolationAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val themeId = getSharedPreferences("app_settings", MODE_PRIVATE).getInt("theme_id", 0)
-        when (themeId) {
-            1 -> setTheme(R.style.Theme_DB20GController_AMOLED)
-            2 -> setTheme(R.style.Theme_DB20GController_RedLight)
-            else -> setTheme(R.style.Theme_DB20GController)
-        }
+        val themeManager = ThemeManager(this)
+        setTheme(themeManager.getThemeResId())
+        themeManager.applyNightMode()
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_compliance)
 
         compliance = FccComplianceManager(this)
         compliance.setListener(this)
         compliance.loadViolationLog()
+        callsignManager = CallsignManager(this)
 
         initViews()
         setupLicenseLookup()
@@ -81,6 +83,7 @@ class ComplianceActivity : AppCompatActivity(), FccComplianceManager.ComplianceL
         setupPart95Reference()
         setupViolationLog()
         setupAuditButton()
+        setupIdMethodToggle()
 
         // Load cached license if available
         compliance.getCachedLicense()?.let { displayLicense(it) }
@@ -183,6 +186,22 @@ class ComplianceActivity : AppCompatActivity(), FccComplianceManager.ComplianceL
             }
         }
         handler.post(timerRunnable)
+    }
+
+    // --- ID Method Toggle ---
+
+    private fun setupIdMethodToggle() {
+        val rgIdMethod = findViewById<RadioGroup>(R.id.rgIdMethod)
+        when (callsignManager.idMethod) {
+            CallsignManager.IdMethod.CW -> findViewById<android.widget.RadioButton>(R.id.rbIdCw).isChecked = true
+            CallsignManager.IdMethod.VOICE_TTS -> findViewById<android.widget.RadioButton>(R.id.rbIdTts).isChecked = true
+        }
+        rgIdMethod.setOnCheckedChangeListener { _, checkedId ->
+            callsignManager.idMethod = when (checkedId) {
+                R.id.rbIdTts -> CallsignManager.IdMethod.VOICE_TTS
+                else -> CallsignManager.IdMethod.CW
+            }
+        }
     }
 
     // --- Family Members ---

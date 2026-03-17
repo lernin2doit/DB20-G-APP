@@ -2099,6 +2099,8 @@ color mtrl_textinput_disabled_color
 color mtrl_textinput_filled_box_default_background_color
 color mtrl_textinput_focused_box_stroke_color
 color mtrl_textinput_hovered_box_stroke_color
+color nav_rail_ripple_default
+color nav_rail_ripple_red
 color notification_action_color_filter
 color notification_icon_bg_color
 color notification_material_background_media_default_color
@@ -2133,6 +2135,8 @@ color switch_thumb_material_dark
 color switch_thumb_material_light
 color switch_thumb_normal_material_dark
 color switch_thumb_normal_material_light
+color tab_icon_color
+color tab_icon_color_red
 color tooltip_background_dark
 color tooltip_background_light
 dimen abc_action_bar_content_inset_material
@@ -3068,6 +3072,14 @@ drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
 drawable ic_search_black_24
+drawable ic_tab_bluetooth
+drawable ic_tab_channels
+drawable ic_tab_emergency
+drawable ic_tab_live
+drawable ic_tab_repeaters
+drawable ic_tab_routes
+drawable ic_tab_settings
+drawable ic_tab_tools
 drawable info_panel_background
 drawable m3_avd_hide_password
 drawable m3_avd_show_password
@@ -3193,6 +3205,7 @@ id accessibility_custom_action_7
 id accessibility_custom_action_8
 id accessibility_custom_action_9
 id action0
+id actionBar
 id actionDown
 id actionDownUp
 id actionUp
@@ -3248,7 +3261,6 @@ id bounce
 id bounceBoth
 id bounceEnd
 id bounceStart
-id btnAccessibility
 id btnAddContact
 id btnAddFamily
 id btnAudit
@@ -3269,8 +3281,7 @@ id btnCheckNow
 id btnClearActivityLog
 id btnClearAll
 id btnClearHistory
-id btnCompliance
-id btnConnect
+id btnCloseSecondary
 id btnConnectRepeater
 id btnDelete
 id btnDeleteAllRecordings
@@ -3293,8 +3304,10 @@ id btnDtmfA
 id btnDtmfB
 id btnDtmfC
 id btnDtmfClear
+id btnDtmfClose
 id btnDtmfD
 id btnDtmfHash
+id btnDtmfOpen
 id btnDtmfSend
 id btnDtmfStar
 id btnEditChannel
@@ -3349,6 +3362,7 @@ id btnSearchState
 id btnSend
 id btnShareChannels
 id btnShareGps
+id btnShowSecondary
 id btnSkipProgram
 id btnSosToggle
 id btnSpeakCheckIn
@@ -3372,14 +3386,22 @@ id bulkEditToolbar
 id buttonPanel
 id cache_measures
 id callMeasure
+id callsignRow
 id cancel_action
 id cancel_button
+id cardAccessibilitySettings
+id cardAppearance
+id cardBluetoothSettings
+id cardComplianceSettings
 id cardCoverageGaps
+id cardDataTools
 id cardLicense
 id cardMultiRadio
+id cardRadioSettings
+id cardRecordingSettings
 id cardRouteSummary
-id cardScanner
 id cardSignalMonitor
+id cardTranslationSettings
 id carryVelocity
 id cbSelect
 id center
@@ -3390,6 +3412,7 @@ id center_vertical
 id chain
 id chain2
 id chains
+id channelBar
 id checkbox
 id checked
 id chipActive
@@ -3416,9 +3439,9 @@ id chipGroupFft
 id chipGroupFontSize
 id chipGroupLanguage
 id chipGroupMode
+id chipGroupNavRailSide
 id chipGroupPalette
 id chipGroupPower
-id chipGroupPttLine
 id chipGroupRadios
 id chipGroupScanSpeed
 id chipGroupStatus
@@ -3429,6 +3452,8 @@ id chipMartinM1
 id chipMedium
 id chipModeHandset
 id chipModePhone
+id chipNavRailLeft
+id chipNavRailRight
 id chipNeedEvac
 id chipNeedInfo
 id chipNeedMedical
@@ -3439,8 +3464,6 @@ id chipPortuguese
 id chipPowerHigh
 id chipPowerLow
 id chipPowerMid
-id chipPttDtr
-id chipPttRts
 id chipRepeaters
 id chipRobot36
 id chipScanFast
@@ -3460,7 +3483,6 @@ id closest
 id collapseActionView
 id compress
 id confirm_button
-id connectionBar
 id constraint
 id container
 id content
@@ -3476,6 +3498,7 @@ id custom
 id customPanel
 id cut
 id dark
+id dashboardContainer
 id date_picker_actions
 id decelerate
 id decelerateAndComplete
@@ -3505,6 +3528,7 @@ id dragRight
 id dragStart
 id dragUp
 id dropdown_menu
+id dtmfModal
 id easeIn
 id easeInOut
 id easeOut
@@ -3546,7 +3570,6 @@ id etTxFreq
 id exitUntilCollapsed
 id expand_activities_button
 id expanded_menu
-id fabAction
 id fade
 id fill
 id fill_horizontal
@@ -3561,6 +3584,7 @@ id fixed
 id flip
 id floating
 id forever
+id fragmentContainer
 id fragment_container_view_tag
 id frost
 id fullscreen_header
@@ -3570,6 +3594,9 @@ id gone
 id graph
 id graph_wrap
 id groupChipsContainer
+id groupDataTools
+id groupExtras
+id groupRecording
 id groupScroller
 id group_divider
 id grouping
@@ -3683,6 +3710,14 @@ id mtrl_picker_text_input_range_start
 id mtrl_picker_title_text
 id mtrl_view_tag_bottom_padding
 id multiply
+id navContainer
+id navRail
+id nav_channels
+id nav_emergency
+id nav_live
+id nav_repeaters
+id nav_routes
+id nav_settings
 id navigation_bar_item_active_indicator_view
 id navigation_bar_item_icon_container
 id navigation_bar_item_icon_view
@@ -3733,6 +3768,12 @@ id pathRelative
 id peakLevelBar
 id peekHeight
 id percent
+id pillActionBtn
+id pillContentLayout
+id pillDisconnectBtn
+id pillExpandedContent
+id pillStatusIndicator
+id pillStatusText
 id pin
 id pooling_container_listener_holder_tag
 id position
@@ -3753,6 +3794,8 @@ id rbEmergencyKit
 id rbFamilyPack
 id rbFullRepeaters
 id rbGmrsStandard
+id rbIdCw
+id rbIdTts
 id rbScanCarrier
 id rbScanSearch
 id rbScanTime
@@ -3766,6 +3809,7 @@ id recyclerChannels
 id recyclerMessages
 id report_drawn
 id reverseSawtooth
+id rgIdMethod
 id rgScanMode
 id rgTemplates
 id rgTheme
@@ -3810,6 +3854,7 @@ id search_mag_icon
 id search_plate
 id search_src_text
 id search_voice_btn
+id secondaryPanel
 id sectionsContainer
 id seekConfidence
 id select_dialog_listview
@@ -3860,6 +3905,8 @@ id startVertical
 id staticLayout
 id staticPostLayout
 id statusIndicator
+id statusPill
+id statusRow
 id status_bar_latest_event_content
 id stepCallsign
 id stepConnect
@@ -3884,13 +3931,12 @@ id switchEq
 id switchHaptic
 id switchHighContrast
 id switchNotifications
-id switchPttInverted
 id switchRecordRx
 id switchRecordTx
 id switchRecordingEnabled
 id switchRoger
 id switchScan
-id switchSpeakerphone
+id switchStatusPill
 id switchTranslation
 id switchTts
 id switchVox
@@ -3901,6 +3947,7 @@ id tag_accessibility_actions
 id tag_accessibility_clickable_spans
 id tag_accessibility_heading
 id tag_accessibility_pane_title
+id tag_font_scaled
 id tag_on_apply_window_listener
 id tag_on_receive_content_listener
 id tag_on_receive_content_mime_types
@@ -3954,6 +4001,7 @@ id tvBandwidth
 id tvBtStatus
 id tvCacheStatus
 id tvCallsign
+id tvCallsignDisplay
 id tvCategory
 id tvChannel
 id tvChannelCount
@@ -3961,7 +4009,6 @@ id tvChannelName
 id tvChannelNumber
 id tvConfidence
 id tvConfidenceDisplay
-id tvConnectionStatus
 id tvContactCallsign
 id tvContactLastCheckIn
 id tvContactName
@@ -4239,9 +4286,12 @@ layout abc_search_view
 layout abc_select_dialog_material
 layout abc_tooltip
 layout activity_accessibility_settings
+layout activity_appearance
 layout activity_compliance
+layout activity_fragment_host
 layout activity_hardware_guide
 layout activity_main
+layout activity_radio_settings
 layout activity_setup_wizard
 layout activity_spectrum
 layout activity_sstv
@@ -4364,6 +4414,7 @@ layout select_dialog_singlechoice_material
 layout support_simple_spinner_dropdown_item
 layout widget_radio_large
 layout widget_radio_small
+menu nav_rail_menu
 mipmap ic_launcher
 mipmap ic_launcher_round
 plurals mtrl_badge_content_description
@@ -5175,6 +5226,7 @@ style Theme_AppCompat_NoActionBar
 style Theme_DB20GController
 style Theme_DB20GController_AMOLED
 style Theme_DB20GController_RedLight
+style Theme_DB20GController_System
 style Theme_Design
 style Theme_Design_BottomSheetDialog
 style Theme_Design_Light

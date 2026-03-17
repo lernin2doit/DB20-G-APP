@@ -10,51 +10,20 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar">
+        android:background="?attr/colorSurface">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:title="@string/app_name" />
+            android:layout_height="48dp"
+            android:background="?attr/colorSurface"
+            app:tabMode="fixed"
+            app:tabGravity="fill"
+            app:tabIndicatorColor="?attr/colorPrimary"
+            app:tabIndicatorHeight="3dp"
+            app:tabPaddingStart="0dp"
+            app:tabPaddingEnd="0dp" />
 
-        <!-- Connection status bar -->
-        <LinearLayout
-            android:id="@+id/connectionBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="6dp"
-            android:background="#263238">
-
-            <View
-                android:id="@+id/statusIndicator"
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:background="@drawable/circle_indicator" />
-
-            <TextView
-                android:id="@+id/tvConnectionStatus"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="8dp"
-                android:textColor="#FFFFFFCC"
-                android:textSize="13sp"
-                android:text="Disconnected" />
-
-            <Button
-                android:id="@+id/btnConnect"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:text="Connect"
-                android:textColor="#81C784" />
-        </LinearLayout>
-
-        <!-- Progress bar -->
         <ProgressBar
             android:id="@+id/progressBar"
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
@@ -62,13 +31,6 @@
             android:layout_height="4dp"
             android:visibility="gone"
             android:max="100" />
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabMode="fixed"
-            app:tabGravity="fill" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager2.widget.ViewPager2
@@ -77,14 +39,77 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAction"
+    <!-- Status Pill (collapsible, replaces connection bar + FAB) -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/statusPill"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:src="@android:drawable/stat_sys_download"
-        android:contentDescription="Download from radio"
-        app:tint="@android:color/white" />
+        app:cardCornerRadius="24dp"
+        app:cardElevation="6dp"
+        app:cardBackgroundColor="?attr/colorSurface"
+        android:foreground="?android:selectableItemBackground"
+        android:contentDescription="Connection status">
+
+        <LinearLayout
+            android:id="@+id/pillContentLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:minWidth="48dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp">
+
+            <View
+                android:id="@+id/pillStatusIndicator"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:background="@drawable/circle_indicator" />
+
+            <LinearLayout
+                android:id="@+id/pillExpandedContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/pillStatusText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:textSize="13sp"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:text="Disconnected"
+                    android:singleLine="true" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/pillActionBtn"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_marginStart="4dp"
+                    android:text="Connect"
+                    android:textColor="?attr/colorPrimary"
+                    android:minWidth="0dp"
+                    android:paddingHorizontal="12dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/pillDisconnectBtn"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:text="✕"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:minWidth="0dp"
+                    android:paddingHorizontal="0dp"
+                    android:visibility="gone"
+                    android:contentDescription="Disconnect" />
+            </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

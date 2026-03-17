@@ -74,6 +74,31 @@
             android:theme="@style/Theme.DB20GController" />
 
         <activity
+            android:name=".ui.BluetoothPttActivity"
+            android:exported="false"
+            android:theme="@style/Theme.DB20GController" />
+
+        <activity
+            android:name=".ui.ToolsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.DB20GController" />
+
+        <activity
+            android:name=".ui.RadioSettingsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.DB20GController" />
+
+        <activity
+            android:name=".ui.AppearanceActivity"
+            android:exported="false"
+            android:theme="@style/Theme.DB20GController" />
+
+        <activity
+            android:name=".ui.DataToolsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.DB20GController" />
+
+        <activity
             android:name=".ui.MainActivity"
             android:exported="true">
             <intent-filter>

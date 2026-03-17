@@ -75,7 +75,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
                         android:text="Reset Progress"
-                        android:textSize="12sp" />
+                        android:textSize="14sp" />
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>

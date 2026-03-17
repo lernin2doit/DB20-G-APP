@@ -208,8 +208,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    app:cardBackgroundColor="#1B5E20"
-                    app:strokeColor="#4CAF50"
+                    app:cardBackgroundColor="?attr/colorPrimary"
+                    app:strokeColor="?attr/colorPrimary"
                     app:strokeWidth="1dp">
 
                     <LinearLayout
@@ -233,7 +233,7 @@
                             android:layout_marginTop="4dp"
                             android:text="Press any BT button..."
                             android:textSize="14sp"
-                            android:textColor="#FFFFFF"
+                            android:textColor="?android:attr/textColorPrimary"
                             android:fontFamily="monospace" />
 
                         <TextView
