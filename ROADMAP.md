@@ -151,13 +151,16 @@
 ### 12. Custom Interface Box PCB Design
 **Why:** Current breadboard/perfboard design works but isn't durable for permanent vehicle installation. Community builds suggest more robust solutions.
 
-- [ ] KiCad schematic and PCB layout
-- [x] Single board: CP2102 + CM108 + PTT circuit + audio attenuators + relay
+- [x] KiCad schematic (fully wired with labels, no-connects, all symbols)
+- [x] KiCad PCB layout (all footprints with pad definitions, net assignments, partial routing)
+- [x] Single board: CP2102N + CM108AH + PTT circuit + audio attenuators + relay
 - [x] 3D-printable enclosure design (STL files)
 - [x] USB-C connector for phone side
 - [x] RJ-45 pass-through for handset
 - [x] LED indicators: power, PTT active, audio activity, serial TX/RX
-- [x] Gerber files for PCB fabrication (JLCPCB/PCBWay ready)
+- [ ] Complete PCB trace routing (USB diff pairs, remaining signals — use KiCad autorouter or manual)
+- [ ] Run DRC in KiCad (requires KiCad installation)
+- [ ] Generate Gerber files for PCB fabrication (JLCPCB/PCBWay ready)
 - [x] Bill of materials with component sourcing links
 - [x] In-app hardware setup guide with interactive assembly checklist
 - [x] Wiring diagram and pin mapping reference

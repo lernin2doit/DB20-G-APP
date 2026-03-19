@@ -46,6 +46,9 @@ Complete parts list for building the interface box. All components are commonly 
 | R10   | 330Ω  | LED4 current limit (Serial, blue)    | 1   | $0.01     |
 | R11   | 4.7kΩ | USB D+ pull-up (FE1.1s)              | 1   | $0.01     |
 | R12   | 1.5kΩ | USB D+ pull-up (hub upstream)        | 1   | $0.01     |
+| R13   | 5.1kΩ | USB-C CC1 pull-down (device ID)      | 1   | $0.01     |
+| R14   | 5.1kΩ | USB-C CC2 pull-down (device ID)      | 1   | $0.01     |
+| R15   | 10kΩ  | CP2102N CTS pull-up to 3.3V          | 1   | $0.01     |
 
 ## Passive Components — Capacitors (0805 SMD unless noted)
 
@@ -63,6 +66,8 @@ Complete parts list for building the interface box. All components are commonly 
 | C10   | 1µF    | MLCC      | Audio coupling, CM108→MIC        | 1   | $0.01     |
 | C11   | 22pF   | MLCC      | Crystal load cap 1               | 1   | $0.01     |
 | C12   | 22pF   | MLCC      | Crystal load cap 2               | 1   | $0.01     |
+| C13   | 4.7µF  | MLCC      | CM108AH VREF decoupling            | 1   | $0.02     |
+| C14   | 100nF  | MLCC      | FE1.1s VDD18 bypass                 | 1   | $0.01     |
 
 ## Other Components
 
@@ -91,8 +96,8 @@ Complete parts list for building the interface box. All components are commonly 
 | ICs             | $3.20          |
 | Connectors      | $1.45          |
 | Semiconductors  | $0.15          |
-| Resistors (×12) | $0.12          |
-| Capacitors (×12)| $0.18          |
+| Resistors (×15) | $0.15          |
+| Capacitors (×14)| $0.21          |
 | Other           | $1.06          |
 | **PCB Total**   | **~$6.16**     |
 | PCB fabrication | $2-5 (5 pcs)  |

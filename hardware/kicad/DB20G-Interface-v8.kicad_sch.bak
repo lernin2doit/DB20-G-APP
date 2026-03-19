@@ -1,0 +1,1227 @@
+(kicad_sch
+  (version 20231120)
+  (generator "eeschema")
+  (generator_version "8.0")
+  (uuid "db2c6c2e-3e4a-4b8f-9d1a-1a2b3c4d5e6f")
+
+  (paper "A3")
+  (title_block
+    (title "DB20-G Interface Box")
+    (date "2026-03-13")
+    (rev "1.0")
+    (company "DB20-G Controller Project")
+    (comment 1 "USB Interface: CP2102N Serial + CM108AH Audio + PTT")
+    (comment 2 "License: CERN-OHL-P-2.0")
+  )
+
+  ;; =========================================================================
+  ;; LIBRARY SYMBOLS — Component definitions used in this schematic
+  ;; =========================================================================
+  (lib_symbols
+
+    ;; --- USB-C Receptacle (simplified USB 2.0) ---
+    (symbol "DB20G:USB_C_Receptacle"
+      (pin_names (offset 1.016))
+      (in_bom yes) (on_board yes)
+      (property "Reference" "J" (at 0 13.97 0) (effects (font (size 1.27 1.27))))
+      (property "Value" "USB_C" (at 0 -13.97 0) (effects (font (size 1.27 1.27))))
+      (property "Footprint" "Connector_USB:USB_C_Receptacle_GCT_USB4105" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
+      (symbol "DB20G:USB_C_Receptacle_0_1"
+        (rectangle (start -5.08 12.7) (end 5.08 -12.7) (stroke (width 0.254) (type default)) (fill (type background)))
+      )
+      (symbol "DB20G:USB_C_Receptacle_1_1"
+        (pin power_in line (at -7.62 10.16 0) (length 2.54) (name "VBUS" (effects (font (size 1.016 1.016)))) (number "A4" (effects (font (size 1.016 1.016)))))
+        (pin bidirectional line (at -7.62 5.08 0) (length 2.54) (name "D+" (effects (font (size 1.016 1.016)))) (number "A6" (effects (font (size 1.016 1.016)))))
+        (pin bidirectional line (at -7.62 2.54 0) (length 2.54) (name "D-" (effects (font (size 1.016 1.016)))) (number "A7" (effects (font (size 1.016 1.016)))))
+        (pin passive line (at -7.62 -2.54 0) (length 2.54) (name "CC1" (effects (font (size 1.016 1.016)))) (number "A5" (effects (font (size 1.016 1.016)))))
+        (pin passive line (at -7.62 -5.08 0) (length 2.54) (name "CC2" (effects (font (size 1.016 1.016)))) (number "B5" (effects (font (size 1.016 1.016)))))
+        (pin power_in line (at -7.62 -10.16 0) (length 2.54) (name "GND" (effects (font (size 1.016 1.016)))) (number "A1" (effects (font (size 1.016 1.016)))))
+        (pin passive line (at -7.62 -7.62 0) (length 2.54) (name "SHIELD" (effects (font (size 1.016 1.016)))) (number "S1" (effects (font (size 1.016 1.016)))))
+      )
+    )
+
+    ;; --- FE1.1s USB 2.0 Hub Controller ---
+    (symbol "DB20G:FE1.1s"
+      (pin_names (offset 1.016))
+      (in_bom yes) (on_board yes)
+      (property "Reference" "U" (at 0 21.59 0) (effects (font (size 1.27 1.27))))
+      (property "Value" "FE1.1s" (at 0 -21.59 0) (effects (font (size 1.27 1.27))))
+      (property "Footprint" "Package_SO:SSOP-28_5.3x10.2mm_P0.65mm" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
+      (symbol "DB20G:FE1.1s_0_1"
+        (rectangle (start -10.16 20.32) (end 10.16 -20.32) (stroke (width 0.254) (type default)) (fill (type background)))
+      )
+      (symbol "DB20G:FE1.1s_1_1"
+        ;; Upstream USB
+        (pin bidirectional line (at -12.7 17.78 0) (length 2.54) (name "UD+" (effects (font (size 1.016 1.016)))) (number "15" (effects (font (size 1.016 1.016)))))
+        (pin bidirectional line (at -12.7 15.24 0) (length 2.54) (name "UD-" (effects (font (size 1.016 1.016)))) (number "16" (effects (font (size 1.016 1.016)))))
+        ;; Downstream Port 1
+        (pin bidirectional line (at 12.7 17.78 180) (length 2.54) (name "DD1+" (effects (font (size 1.016 1.016)))) (number "1" (effects (font (size 1.016 1.016)))))
+        (pin bidirectional line (at 12.7 15.24 180) (length 2.54) (name "DD1-" (effects (font (size 1.016 1.016)))) (number "2" (effects (font (size 1.016 1.016)))))
+        ;; Downstream Port 2
+        (pin bidirectional line (at 12.7 10.16 180) (length 2.54) (name "DD2+" (effects (font (size 1.016 1.016)))) (number "3" (effects (font (size 1.016 1.016)))))
+        (pin bidirectional line (at 12.7 7.62 180) (length 2.54) (name "DD2-" (effects (font (size 1.016 1.016)))) (number "4" (effects (font (size 1.016 1.016)))))
+        ;; Downstream Port 3 (unused, optional)
+        (pin bidirectional line (at 12.7 2.54 180) (length 2.54) (name "DD3+" (effects (font (size 1.016 1.016)))) (number "5" (effects (font (size 1.016 1.016)))))
+        (pin bidirectional line (at 12.7 0 180) (length 2.54) (name "DD3-" (effects (font (size 1.016 1.016)))) (number "6" (effects (font (size 1.016 1.016)))))
+        ;; Downstream Port 4 (unused, optional)
+        (pin bidirectional line (at 12.7 -5.08 180) (length 2.54) (name "DD4+" (effects (font (size 1.016 1.016)))) (number "7" (effects (font (size 1.016 1.016)))))
+        (pin bidirectional line (at 12.7 -7.62 180) (length 2.54) (name "DD4-" (effects (font (size 1.016 1.016)))) (number "8" (effects (font (size 1.016 1.016)))))
+        ;; Crystal
+        (pin input line (at -12.7 5.08 0) (length 2.54) (name "XI" (effects (font (size 1.016 1.016)))) (number "11" (effects (font (size 1.016 1.016)))))
+        (pin output line (at -12.7 2.54 0) (length 2.54) (name "XO" (effects (font (size 1.016 1.016)))) (number "12" (effects (font (size 1.016 1.016)))))
+        ;; Power
+        (pin power_in line (at -12.7 -10.16 0) (length 2.54) (name "VCC5" (effects (font (size 1.016 1.016)))) (number "21" (effects (font (size 1.016 1.016)))))
+        (pin power_in line (at -12.7 -12.7 0) (length 2.54) (name "VCC33" (effects (font (size 1.016 1.016)))) (number "24" (effects (font (size 1.016 1.016)))))
+        (pin power_in line (at -12.7 -17.78 0) (length 2.54) (name "GND" (effects (font (size 1.016 1.016)))) (number "14" (effects (font (size 1.016 1.016)))))
+        ;; Config
+        (pin input line (at -12.7 -5.08 0) (length 2.54) (name "GANGED" (effects (font (size 1.016 1.016)))) (number "9" (effects (font (size 1.016 1.016)))))
+        (pin input line (at -12.7 -7.62 0) (length 2.54) (name "SELF_PWR" (effects (font (size 1.016 1.016)))) (number "10" (effects (font (size 1.016 1.016)))))
+        (pin output line (at 12.7 -12.7 180) (length 2.54) (name "PRTPWR1" (effects (font (size 1.016 1.016)))) (number "25" (effects (font (size 1.016 1.016)))))
+        (pin output line (at 12.7 -15.24 180) (length 2.54) (name "PRTPWR2" (effects (font (size 1.016 1.016)))) (number "26" (effects (font (size 1.016 1.016)))))
+      )
+    )
+
+    ;; --- CP2102N USB-to-UART Bridge ---
+    (symbol "DB20G:CP2102N"
+      (pin_names (offset 1.016))
+      (in_bom yes) (on_board yes)
+      (property "Reference" "U" (at 0 16.51 0) (effects (font (size 1.27 1.27))))
+      (property "Value" "CP2102N" (at 0 -16.51 0) (effects (font (size 1.27 1.27))))
+      (property "Footprint" "Package_DFN_QFN:QFN-28-1EP_5x5mm_P0.5mm_EP3.35x3.35mm" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
+      (symbol "DB20G:CP2102N_0_1"
+        (rectangle (start -10.16 15.24) (end 10.16 -15.24) (stroke (width 0.254) (type default)) (fill (type background)))
+      )
+      (symbol "DB20G:CP2102N_1_1"
+        ;; USB
+        (pin bidirectional line (at -12.7 12.7 0) (length 2.54) (name "D+" (effects (font (size 1.016 1.016)))) (number "4" (effects (font (size 1.016 1.016)))))
+        (pin bidirectional line (at -12.7 10.16 0) (length 2.54) (name "D-" (effects (font (size 1.016 1.016)))) (number "5" (effects (font (size 1.016 1.016)))))
+        ;; UART
+        (pin output line (at 12.7 12.7 180) (length 2.54) (name "TXD" (effects (font (size 1.016 1.016)))) (number "25" (effects (font (size 1.016 1.016)))))
+        (pin input line (at 12.7 10.16 180) (length 2.54) (name "RXD" (effects (font (size 1.016 1.016)))) (number "26" (effects (font (size 1.016 1.016)))))
+        (pin output line (at 12.7 5.08 180) (length 2.54) (name "RTS" (effects (font (size 1.016 1.016)))) (number "23" (effects (font (size 1.016 1.016)))))
+        (pin output line (at 12.7 2.54 180) (length 2.54) (name "DTR" (effects (font (size 1.016 1.016)))) (number "22" (effects (font (size 1.016 1.016)))))
+        (pin input line (at 12.7 0 180) (length 2.54) (name "CTS" (effects (font (size 1.016 1.016)))) (number "24" (effects (font (size 1.016 1.016)))))
+        (pin output line (at 12.7 -2.54 180) (length 2.54) (name "TX_LED" (effects (font (size 1.016 1.016)))) (number "20" (effects (font (size 1.016 1.016)))))
+        (pin output line (at 12.7 -5.08 180) (length 2.54) (name "RX_LED" (effects (font (size 1.016 1.016)))) (number "21" (effects (font (size 1.016 1.016)))))
+        ;; Power
+        (pin power_in line (at -12.7 -7.62 0) (length 2.54) (name "VDD" (effects (font (size 1.016 1.016)))) (number "6" (effects (font (size 1.016 1.016)))))
+        (pin power_in line (at -12.7 -10.16 0) (length 2.54) (name "REGIN" (effects (font (size 1.016 1.016)))) (number "7" (effects (font (size 1.016 1.016)))))
+        (pin power_in line (at -12.7 -12.7 0) (length 2.54) (name "GND" (effects (font (size 1.016 1.016)))) (number "3" (effects (font (size 1.016 1.016)))))
+        (pin passive line (at -12.7 -15.24 0) (length 2.54) (name "EP" (effects (font (size 1.016 1.016)))) (number "29" (effects (font (size 1.016 1.016)))))
+        ;; Reset
+        (pin input line (at -12.7 5.08 0) (length 2.54) (name "~{RST}" (effects (font (size 1.016 1.016)))) (number "9" (effects (font (size 1.016 1.016)))))
+        ;; Suspend
+        (pin output line (at -12.7 2.54 0) (length 2.54) (name "~{SUSPEND}" (effects (font (size 1.016 1.016)))) (number "11" (effects (font (size 1.016 1.016)))))
+      )
+    )
+
+    ;; --- CM108AH USB Audio Codec ---
+    (symbol "DB20G:CM108AH"
+      (pin_names (offset 1.016))
+      (in_bom yes) (on_board yes)
+      (property "Reference" "U" (at 0 19.05 0) (effects (font (size 1.27 1.27))))
+      (property "Value" "CM108AH" (at 0 -19.05 0) (effects (font (size 1.27 1.27))))
+      (property "Footprint" "Package_SO:SSOP-28_5.3x10.2mm_P0.65mm" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
+      (symbol "DB20G:CM108AH_0_1"
+        (rectangle (start -10.16 17.78) (end 10.16 -17.78) (stroke (width 0.254) (type default)) (fill (type background)))
+      )
+      (symbol "DB20G:CM108AH_1_1"
+        ;; USB
+        (pin bidirectional line (at -12.7 15.24 0) (length 2.54) (name "D+" (effects (font (size 1.016 1.016)))) (number "4" (effects (font (size 1.016 1.016)))))
+        (pin bidirectional line (at -12.7 12.7 0) (length 2.54) (name "D-" (effects (font (size 1.016 1.016)))) (number "5" (effects (font (size 1.016 1.016)))))
+        ;; Audio Output (Speaker/Line-Out)
+        (pin output line (at 12.7 15.24 180) (length 2.54) (name "SPK_L" (effects (font (size 1.016 1.016)))) (number "19" (effects (font (size 1.016 1.016)))))
+        (pin output line (at 12.7 12.7 180) (length 2.54) (name "SPK_R" (effects (font (size 1.016 1.016)))) (number "20" (effects (font (size 1.016 1.016)))))
+        ;; Audio Input (Microphone/Line-In)
+        (pin input line (at 12.7 7.62 180) (length 2.54) (name "MIC_IN" (effects (font (size 1.016 1.016)))) (number "13" (effects (font (size 1.016 1.016)))))
+        (pin power_out line (at 12.7 5.08 180) (length 2.54) (name "MIC_BIAS" (effects (font (size 1.016 1.016)))) (number "14" (effects (font (size 1.016 1.016)))))
+        ;; GPIO
+        (pin bidirectional line (at 12.7 0 180) (length 2.54) (name "GPIO0" (effects (font (size 1.016 1.016)))) (number "9" (effects (font (size 1.016 1.016)))))
+        (pin bidirectional line (at 12.7 -2.54 180) (length 2.54) (name "GPIO1" (effects (font (size 1.016 1.016)))) (number "10" (effects (font (size 1.016 1.016)))))
+        (pin bidirectional line (at 12.7 -5.08 180) (length 2.54) (name "GPIO2" (effects (font (size 1.016 1.016)))) (number "11" (effects (font (size 1.016 1.016)))))
+        (pin bidirectional line (at 12.7 -7.62 180) (length 2.54) (name "GPIO3" (effects (font (size 1.016 1.016)))) (number "12" (effects (font (size 1.016 1.016)))))
+        (pin bidirectional line (at 12.7 -10.16 180) (length 2.54) (name "GPIO4" (effects (font (size 1.016 1.016)))) (number "8" (effects (font (size 1.016 1.016)))))
+        ;; Power
+        (pin power_in line (at -12.7 -10.16 0) (length 2.54) (name "VCC" (effects (font (size 1.016 1.016)))) (number "7" (effects (font (size 1.016 1.016)))))
+        (pin power_in line (at -12.7 -12.7 0) (length 2.54) (name "AVCC" (effects (font (size 1.016 1.016)))) (number "17" (effects (font (size 1.016 1.016)))))
+        (pin power_in line (at -12.7 -15.24 0) (length 2.54) (name "GND" (effects (font (size 1.016 1.016)))) (number "6" (effects (font (size 1.016 1.016)))))
+        ;; Reference
+        (pin passive line (at -12.7 5.08 0) (length 2.54) (name "VREF" (effects (font (size 1.016 1.016)))) (number "15" (effects (font (size 1.016 1.016)))))
+        (pin passive line (at -12.7 2.54 0) (length 2.54) (name "AGND" (effects (font (size 1.016 1.016)))) (number "16" (effects (font (size 1.016 1.016)))))
+      )
+    )
+
+    ;; --- AMS1117-3.3 LDO Regulator ---
+    (symbol "DB20G:AMS1117-3.3"
+      (pin_names (offset 1.016))
+      (in_bom yes) (on_board yes)
+      (property "Reference" "U" (at 0 5.08 0) (effects (font (size 1.27 1.27))))
+      (property "Value" "AMS1117-3.3" (at 0 -5.08 0) (effects (font (size 1.27 1.27))))
+      (property "Footprint" "Package_TO_SOT_SMD:SOT-223-3_TabPin2" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
+      (symbol "DB20G:AMS1117-3.3_0_1"
+        (rectangle (start -5.08 3.81) (end 5.08 -3.81) (stroke (width 0.254) (type default)) (fill (type background)))
+      )
+      (symbol "DB20G:AMS1117-3.3_1_1"
+        (pin power_in line (at -7.62 2.54 0) (length 2.54) (name "IN" (effects (font (size 1.016 1.016)))) (number "3" (effects (font (size 1.016 1.016)))))
+        (pin power_out line (at 7.62 2.54 180) (length 2.54) (name "OUT" (effects (font (size 1.016 1.016)))) (number "2" (effects (font (size 1.016 1.016)))))
+        (pin power_in line (at 0 -6.35 90) (length 2.54) (name "GND" (effects (font (size 1.016 1.016)))) (number "1" (effects (font (size 1.016 1.016)))))
+      )
+    )
+
+    ;; --- 2N2222A NPN Transistor ---
+    (symbol "DB20G:2N2222A"
+      (pin_names (offset 1.016))
+      (in_bom yes) (on_board yes)
+      (property "Reference" "Q" (at 5.08 0 0) (effects (font (size 1.27 1.27))))
+      (property "Value" "2N2222A" (at 5.08 -2.54 0) (effects (font (size 1.27 1.27))))
+      (property "Footprint" "Package_TO_SOT_THT:TO-92_Inline" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
+      (symbol "DB20G:2N2222A_0_1"
+        (circle (center 1.27 0) (radius 2.54) (stroke (width 0.254) (type default)) (fill (type none)))
+        (polyline (pts (xy 0.635 0.635) (xy 2.54 2.54)) (stroke (width 0.254) (type default)) (fill (type none)))
+        (polyline (pts (xy 0.635 -0.635) (xy 2.54 -2.54)) (stroke (width 0.254) (type default)) (fill (type none)))
+        (polyline (pts (xy 0.635 1.905) (xy 0.635 -1.905)) (stroke (width 0.254) (type default)) (fill (type none)))
+        (polyline (pts (xy 1.27 -1.27) (xy 2.286 -2.286) (xy 1.524 -2.032)) (stroke (width 0.254) (type default)) (fill (type outline)))
+      )
+      (symbol "DB20G:2N2222A_1_1"
+        (pin passive line (at 2.54 5.08 270) (length 2.54) (name "C" (effects (font (size 1.016 1.016)))) (number "1" (effects (font (size 1.016 1.016)))))
+        (pin input line (at -2.54 0 0) (length 2.54) (name "B" (effects (font (size 1.016 1.016)))) (number "2" (effects (font (size 1.016 1.016)))))
+        (pin passive line (at 2.54 -5.08 90) (length 2.54) (name "E" (effects (font (size 1.016 1.016)))) (number "3" (effects (font (size 1.016 1.016)))))
+      )
+    )
+
+    ;; --- Generic Resistor ---
+    (symbol "DB20G:R"
+      (pin_names (offset 0)) (in_bom yes) (on_board yes)
+      (property "Reference" "R" (at 2.032 0 90) (effects (font (size 1.27 1.27))))
+      (property "Value" "R" (at -2.032 0 90) (effects (font (size 1.27 1.27))))
+      (property "Footprint" "Resistor_SMD:R_0805_2012Metric" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
+      (symbol "DB20G:R_0_1"
+        (polyline (pts (xy 0 -2.54) (xy 0 -2.286) (xy -1.016 -1.778) (xy 1.016 -1.27) (xy -1.016 -0.762) (xy 1.016 -0.254) (xy -1.016 0.254) (xy 1.016 0.762) (xy -1.016 1.27) (xy 1.016 1.778) (xy 0 2.286) (xy 0 2.54)) (stroke (width 0) (type default)) (fill (type none)))
+      )
+      (symbol "DB20G:R_1_1"
+        (pin passive line (at 0 3.81 270) (length 1.27) (name "1" (effects (font (size 0 0)))) (number "1" (effects (font (size 1.016 1.016)))))
+        (pin passive line (at 0 -3.81 90) (length 1.27) (name "2" (effects (font (size 0 0)))) (number "2" (effects (font (size 1.016 1.016)))))
+      )
+    )
+
+    ;; --- Generic Capacitor ---
+    (symbol "DB20G:C"
+      (pin_names (offset 0.254)) (in_bom yes) (on_board yes)
+      (property "Reference" "C" (at 2.54 0 90) (effects (font (size 1.27 1.27))))
+      (property "Value" "C" (at -2.54 0 90) (effects (font (size 1.27 1.27))))
+      (property "Footprint" "Capacitor_SMD:C_0805_2012Metric" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
+      (symbol "DB20G:C_0_1"
+        (polyline (pts (xy -1.524 -0.508) (xy 1.524 -0.508)) (stroke (width 0.3048) (type default)) (fill (type none)))
+        (polyline (pts (xy -1.524 0.508) (xy 1.524 0.508)) (stroke (width 0.3048) (type default)) (fill (type none)))
+      )
+      (symbol "DB20G:C_1_1"
+        (pin passive line (at 0 2.54 270) (length 2.032) (name "1" (effects (font (size 0 0)))) (number "1" (effects (font (size 1.016 1.016)))))
+        (pin passive line (at 0 -2.54 90) (length 2.032) (name "2" (effects (font (size 0 0)))) (number "2" (effects (font (size 1.016 1.016)))))
+      )
+    )
+
+    ;; --- Diode ---
+    (symbol "DB20G:D"
+      (pin_names (offset 0)) (in_bom yes) (on_board yes)
+      (property "Reference" "D" (at 0 2.54 0) (effects (font (size 1.27 1.27))))
+      (property "Value" "D" (at 0 -2.54 0) (effects (font (size 1.27 1.27))))
+      (property "Footprint" "" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
+      (symbol "DB20G:D_0_1"
+        (polyline (pts (xy -1.27 1.27) (xy -1.27 -1.27)) (stroke (width 0.254) (type default)) (fill (type none)))
+        (polyline (pts (xy -1.27 0) (xy 1.27 0)) (stroke (width 0) (type default)) (fill (type none)))
+        (polyline (pts (xy 1.27 1.27) (xy -1.27 0) (xy 1.27 -1.27) (xy 1.27 1.27)) (stroke (width 0.254) (type default)) (fill (type outline)))
+      )
+      (symbol "DB20G:D_1_1"
+        (pin passive line (at -3.81 0 0) (length 2.54) (name "K" (effects (font (size 0 0)))) (number "1" (effects (font (size 1.016 1.016)))))
+        (pin passive line (at 3.81 0 180) (length 2.54) (name "A" (effects (font (size 0 0)))) (number "2" (effects (font (size 1.016 1.016)))))
+      )
+    )
+
+    ;; --- LED ---
+    (symbol "DB20G:LED"
+      (pin_names (offset 0)) (in_bom yes) (on_board yes)
+      (property "Reference" "LED" (at 0 3.81 0) (effects (font (size 1.27 1.27))))
+      (property "Value" "LED" (at 0 -3.81 0) (effects (font (size 1.27 1.27))))
+      (property "Footprint" "LED_SMD:LED_0805_2012Metric" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
+      (symbol "DB20G:LED_0_1"
+        (polyline (pts (xy -1.27 1.27) (xy -1.27 -1.27)) (stroke (width 0.254) (type default)) (fill (type none)))
+        (polyline (pts (xy 1.27 1.27) (xy -1.27 0) (xy 1.27 -1.27) (xy 1.27 1.27)) (stroke (width 0.254) (type default)) (fill (type outline)))
+      )
+      (symbol "DB20G:LED_1_1"
+        (pin passive line (at -3.81 0 0) (length 2.54) (name "K" (effects (font (size 0 0)))) (number "1" (effects (font (size 1.016 1.016)))))
+        (pin passive line (at 3.81 0 180) (length 2.54) (name "A" (effects (font (size 0 0)))) (number "2" (effects (font (size 1.016 1.016)))))
+      )
+    )
+
+    ;; --- Crystal ---
+    (symbol "DB20G:Crystal"
+      (pin_names (offset 0)) (in_bom yes) (on_board yes)
+      (property "Reference" "Y" (at 0 3.81 0) (effects (font (size 1.27 1.27))))
+      (property "Value" "Crystal" (at 0 -3.81 0) (effects (font (size 1.27 1.27))))
+      (property "Footprint" "Crystal:Crystal_HC49-U_Vertical" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
+      (symbol "DB20G:Crystal_0_1"
+        (rectangle (start -0.762 2.032) (end 0.762 -2.032) (stroke (width 0.254) (type default)) (fill (type none)))
+        (polyline (pts (xy -1.524 -1.524) (xy -1.524 1.524)) (stroke (width 0.254) (type default)) (fill (type none)))
+        (polyline (pts (xy 1.524 -1.524) (xy 1.524 1.524)) (stroke (width 0.254) (type default)) (fill (type none)))
+      )
+      (symbol "DB20G:Crystal_1_1"
+        (pin passive line (at -3.81 0 0) (length 2.286) (name "1" (effects (font (size 0 0)))) (number "1" (effects (font (size 1.016 1.016)))))
+        (pin passive line (at 3.81 0 180) (length 2.286) (name "2" (effects (font (size 0 0)))) (number "2" (effects (font (size 1.016 1.016)))))
+      )
+    )
+
+    ;; --- Relay SPDT ---
+    (symbol "DB20G:Relay_SPDT"
+      (pin_names (offset 1.016)) (in_bom yes) (on_board yes)
+      (property "Reference" "K" (at 0 7.62 0) (effects (font (size 1.27 1.27))))
+      (property "Value" "G5V-1-DC5" (at 0 -7.62 0) (effects (font (size 1.27 1.27))))
+      (property "Footprint" "Relay_THT:Relay_DPDT_Omron_G5V-2" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
+      (symbol "DB20G:Relay_SPDT_0_1"
+        (rectangle (start -5.08 6.35) (end 5.08 -6.35) (stroke (width 0.254) (type default)) (fill (type background)))
+      )
+      (symbol "DB20G:Relay_SPDT_1_1"
+        (pin passive line (at -7.62 3.81 0) (length 2.54) (name "Coil+" (effects (font (size 1.016 1.016)))) (number "1" (effects (font (size 1.016 1.016)))))
+        (pin passive line (at -7.62 -3.81 0) (length 2.54) (name "Coil-" (effects (font (size 1.016 1.016)))) (number "2" (effects (font (size 1.016 1.016)))))
+        (pin passive line (at 7.62 3.81 180) (length 2.54) (name "COM" (effects (font (size 1.016 1.016)))) (number "3" (effects (font (size 1.016 1.016)))))
+        (pin passive line (at 7.62 0 180) (length 2.54) (name "NO" (effects (font (size 1.016 1.016)))) (number "4" (effects (font (size 1.016 1.016)))))
+        (pin passive line (at 7.62 -3.81 180) (length 2.54) (name "NC" (effects (font (size 1.016 1.016)))) (number "5" (effects (font (size 1.016 1.016)))))
+      )
+    )
+
+    ;; --- RJ-45 Connector ---
+    (symbol "DB20G:RJ45"
+      (pin_names (offset 1.016)) (in_bom yes) (on_board yes)
+      (property "Reference" "J" (at 0 12.7 0) (effects (font (size 1.27 1.27))))
+      (property "Value" "RJ45" (at 0 -12.7 0) (effects (font (size 1.27 1.27))))
+      (property "Footprint" "Connector_RJ:RJ45_Amphenol_RJHSE-5380" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
+      (symbol "DB20G:RJ45_0_1"
+        (rectangle (start -5.08 11.43) (end 5.08 -11.43) (stroke (width 0.254) (type default)) (fill (type background)))
+      )
+      (symbol "DB20G:RJ45_1_1"
+        (pin passive line (at 7.62 10.16 180) (length 2.54) (name "1" (effects (font (size 1.016 1.016)))) (number "1" (effects (font (size 1.016 1.016)))))
+        (pin passive line (at 7.62 7.62 180) (length 2.54) (name "2" (effects (font (size 1.016 1.016)))) (number "2" (effects (font (size 1.016 1.016)))))
+        (pin passive line (at 7.62 5.08 180) (length 2.54) (name "3" (effects (font (size 1.016 1.016)))) (number "3" (effects (font (size 1.016 1.016)))))
+        (pin passive line (at 7.62 2.54 180) (length 2.54) (name "4" (effects (font (size 1.016 1.016)))) (number "4" (effects (font (size 1.016 1.016)))))
+        (pin passive line (at 7.62 0 180) (length 2.54) (name "5" (effects (font (size 1.016 1.016)))) (number "5" (effects (font (size 1.016 1.016)))))
+        (pin passive line (at 7.62 -2.54 180) (length 2.54) (name "6" (effects (font (size 1.016 1.016)))) (number "6" (effects (font (size 1.016 1.016)))))
+        (pin passive line (at 7.62 -5.08 180) (length 2.54) (name "7" (effects (font (size 1.016 1.016)))) (number "7" (effects (font (size 1.016 1.016)))))
+        (pin passive line (at 7.62 -7.62 180) (length 2.54) (name "8" (effects (font (size 1.016 1.016)))) (number "8" (effects (font (size 1.016 1.016)))))
+        (pin passive line (at 7.62 -10.16 180) (length 2.54) (name "SHIELD" (effects (font (size 1.016 1.016)))) (number "9" (effects (font (size 1.016 1.016)))))
+      )
+    )
+
+    ;; --- 3.5mm TRS Audio Jack ---
+    (symbol "DB20G:AudioJack3"
+      (pin_names (offset 1.016)) (in_bom yes) (on_board yes)
+      (property "Reference" "J" (at 0 6.35 0) (effects (font (size 1.27 1.27))))
+      (property "Value" "3.5mm_TRS" (at 0 -6.35 0) (effects (font (size 1.27 1.27))))
+      (property "Footprint" "Connector_Audio:AudioJack_3.5mm_CUI_SJ1-3533NG" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
+      (symbol "DB20G:AudioJack3_0_1"
+        (rectangle (start -5.08 5.08) (end 5.08 -5.08) (stroke (width 0.254) (type default)) (fill (type background)))
+      )
+      (symbol "DB20G:AudioJack3_1_1"
+        (pin passive line (at 7.62 2.54 180) (length 2.54) (name "TIP" (effects (font (size 1.016 1.016)))) (number "1" (effects (font (size 1.016 1.016)))))
+        (pin passive line (at 7.62 0 180) (length 2.54) (name "RING" (effects (font (size 1.016 1.016)))) (number "2" (effects (font (size 1.016 1.016)))))
+        (pin passive line (at 7.62 -2.54 180) (length 2.54) (name "SLEEVE" (effects (font (size 1.016 1.016)))) (number "3" (effects (font (size 1.016 1.016)))))
+      )
+    )
+
+    ;; --- Polyfuse ---
+    (symbol "DB20G:Polyfuse"
+      (pin_names (offset 0)) (in_bom yes) (on_board yes)
+      (property "Reference" "F" (at 2.54 0 90) (effects (font (size 1.27 1.27))))
+      (property "Value" "500mA" (at -2.54 0 90) (effects (font (size 1.27 1.27))))
+      (property "Footprint" "Fuse:Fuse_1206_3216Metric" (at 0 0 0) (effects (font (size 1.27 1.27)) hide))
+      (symbol "DB20G:Polyfuse_0_1"
+        (polyline (pts (xy 0 -2.54) (xy 0 -1.27)) (stroke (width 0) (type default)) (fill (type none)))
+        (polyline (pts (xy 0 1.27) (xy 0 2.54)) (stroke (width 0) (type default)) (fill (type none)))
+        (rectangle (start -0.762 1.27) (end 0.762 -1.27) (stroke (width 0.254) (type default)) (fill (type none)))
+      )
+      (symbol "DB20G:Polyfuse_1_1"
+        (pin passive line (at 0 3.81 270) (length 1.27) (name "1" (effects (font (size 0 0)))) (number "1" (effects (font (size 1.016 1.016)))))
+        (pin passive line (at 0 -3.81 90) (length 1.27) (name "2" (effects (font (size 0 0)))) (number "2" (effects (font (size 1.016 1.016)))))
+      )
+    )
+
+    ;; --- Power flag ---
+    (symbol "DB20G:PWR_FLAG"
+      (pin_names (offset 0)) (in_bom no) (on_board no)
+      (property "Reference" "#FLG" (at 0 2.032 0) (effects (font (size 0.508 0.508)) hide))
+      (property "Value" "PWR_FLAG" (at 0 4.064 0) (effects (font (size 1.016 1.016))))
+      (symbol "DB20G:PWR_FLAG_0_1"
+        (pin power_out line (at 0 0 90) (length 0) (name "pwr" (effects (font (size 0 0)))) (number "1" (effects (font (size 0 0)))))
+      )
+    )
+
+  ) ;; end lib_symbols
+
+  ;; =========================================================================
+  ;; POWER SYMBOLS (global net labels for power rails)
+  ;; =========================================================================
+
+  ;; +5V power symbol
+  (symbol (lib_id "DB20G:PWR_FLAG") (at 22.86 25.4 0) (unit 1)
+    (in_bom no) (on_board no) (dnp no)
+    (uuid "pf-5v-001")
+    (property "Reference" "#FLG01" (at 22.86 21.59 0) (effects (font (size 1.27 1.27)) hide))
+    (property "Value" "+5V" (at 22.86 29.21 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "pf-5v-pin1"))
+  )
+
+  ;; GND power symbol
+  (symbol (lib_id "DB20G:PWR_FLAG") (at 22.86 200.66 0) (unit 1)
+    (in_bom no) (on_board no) (dnp no)
+    (uuid "pf-gnd-001")
+    (property "Reference" "#FLG02" (at 22.86 196.85 0) (effects (font (size 1.27 1.27)) hide))
+    (property "Value" "GND" (at 22.86 204.47 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "pf-gnd-pin1"))
+  )
+
+  ;; =========================================================================
+  ;; COMPONENT INSTANCES — Placed on schematic
+  ;; =========================================================================
+
+  ;; --- J1: USB-C Receptacle (Phone Connection) ---
+  (symbol (lib_id "DB20G:USB_C_Receptacle") (at 30.48 55.88 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "j1-usbc-001")
+    (property "Reference" "J1" (at 30.48 40.64 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "USB-C" (at 30.48 71.12 0) (effects (font (size 1.27 1.27))))
+    (pin "A4" (uuid "j1-vbus")) ;; VBUS → +5V
+    (pin "A6" (uuid "j1-dp"))   ;; D+ → HUB_UD+
+    (pin "A7" (uuid "j1-dm"))   ;; D- → HUB_UD-
+    (pin "A5" (uuid "j1-cc1"))  ;; CC1 → 5.1k to GND
+    (pin "B5" (uuid "j1-cc2"))  ;; CC2 → 5.1k to GND
+    (pin "A1" (uuid "j1-gnd"))  ;; GND
+    (pin "S1" (uuid "j1-shld")) ;; Shield → GND
+  )
+
+  ;; --- F1: Polyfuse 500mA (USB Protection) ---
+  (symbol (lib_id "DB20G:Polyfuse") (at 50.8 30.48 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "f1-fuse-001")
+    (property "Reference" "F1" (at 53.34 30.48 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "500mA" (at 48.26 30.48 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "f1-p1")) ;; VBUS from J1
+    (pin "2" (uuid "f1-p2")) ;; → +5V rail
+  )
+
+  ;; --- D2: 1N5819 Reverse Protection ---
+  (symbol (lib_id "DB20G:D") (at 63.5 30.48 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "d2-schottky-001")
+    (property "Reference" "D2" (at 63.5 27.94 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "1N5819" (at 63.5 33.02 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "d2-k")) ;; Cathode → +5V rail
+    (pin "2" (uuid "d2-a")) ;; Anode → VBUS
+  )
+
+  ;; --- U4: AMS1117-3.3 LDO Regulator ---
+  (symbol (lib_id "DB20G:AMS1117-3.3") (at 88.9 30.48 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "u4-ldo-001")
+    (property "Reference" "U4" (at 88.9 22.86 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "AMS1117-3.3" (at 88.9 38.1 0) (effects (font (size 1.27 1.27))))
+    (pin "3" (uuid "u4-in"))  ;; IN ← +5V
+    (pin "2" (uuid "u4-out")) ;; OUT → +3V3
+    (pin "1" (uuid "u4-gnd")) ;; GND
+  )
+
+  ;; --- C7: 10µF Input Cap (AMS1117) ---
+  (symbol (lib_id "DB20G:C") (at 78.74 38.1 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "c7-cap-001")
+    (property "Reference" "C7" (at 81.28 38.1 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "10µF" (at 76.2 38.1 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "c7-p1")) ;; +5V
+    (pin "2" (uuid "c7-p2")) ;; GND
+  )
+
+  ;; --- C8: 22µF Output Cap (AMS1117) ---
+  (symbol (lib_id "DB20G:C") (at 99.06 38.1 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "c8-cap-001")
+    (property "Reference" "C8" (at 101.6 38.1 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "22µF" (at 96.52 38.1 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "c8-p1")) ;; +3V3
+    (pin "2" (uuid "c8-p2")) ;; GND
+  )
+
+  ;; --- U1: FE1.1s USB Hub ---
+  (symbol (lib_id "DB20G:FE1.1s") (at 76.2 76.2 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "u1-hub-001")
+    (property "Reference" "U1" (at 76.2 53.34 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "FE1.1s" (at 76.2 99.06 0) (effects (font (size 1.27 1.27))))
+    (pin "15" (uuid "u1-udp")) ;; UD+ ← J1 D+
+    (pin "16" (uuid "u1-udm")) ;; UD- ← J1 D-
+    (pin "1"  (uuid "u1-d1p")) ;; DD1+ → CP2102N D+
+    (pin "2"  (uuid "u1-d1m")) ;; DD1- → CP2102N D-
+    (pin "3"  (uuid "u1-d2p")) ;; DD2+ → CM108AH D+
+    (pin "4"  (uuid "u1-d2m")) ;; DD2- → CM108AH D-
+    (pin "5"  (uuid "u1-d3p")) ;; DD3+ (unused, pull-down)
+    (pin "6"  (uuid "u1-d3m")) ;; DD3- (unused, pull-down)
+    (pin "7"  (uuid "u1-d4p")) ;; DD4+ (unused, pull-down)
+    (pin "8"  (uuid "u1-d4m")) ;; DD4- (unused, pull-down)
+    (pin "11" (uuid "u1-xi"))  ;; XI ← Y1
+    (pin "12" (uuid "u1-xo"))  ;; XO → Y1
+    (pin "21" (uuid "u1-vcc5"))  ;; VCC5 ← +5V
+    (pin "24" (uuid "u1-vcc33")) ;; VCC33 ← +3V3
+    (pin "14" (uuid "u1-gnd"))   ;; GND
+    (pin "9"  (uuid "u1-gang"))  ;; GANGED → GND (bus-powered)
+    (pin "10" (uuid "u1-spwr"))  ;; SELF_PWR → GND (bus-powered)
+    (pin "25" (uuid "u1-pp1"))   ;; PRTPWR1
+    (pin "26" (uuid "u1-pp2"))   ;; PRTPWR2
+  )
+
+  ;; --- Y1: 12MHz Crystal ---
+  (symbol (lib_id "DB20G:Crystal") (at 55.88 83.82 90) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "y1-xtal-001")
+    (property "Reference" "Y1" (at 50.8 83.82 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "12MHz" (at 60.96 83.82 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "y1-p1")) ;; → U1 XI
+    (pin "2" (uuid "y1-p2")) ;; → U1 XO
+  )
+
+  ;; --- C11, C12: Crystal Load Caps ---
+  (symbol (lib_id "DB20G:C") (at 50.8 91.44 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "c11-cap-001")
+    (property "Reference" "C11" (at 53.34 91.44 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "22pF" (at 48.26 91.44 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "c11-p1")) ;; Y1 pin 1 / U1 XI
+    (pin "2" (uuid "c11-p2")) ;; GND
+  )
+
+  (symbol (lib_id "DB20G:C") (at 60.96 91.44 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "c12-cap-001")
+    (property "Reference" "C12" (at 63.5 91.44 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "22pF" (at 58.42 91.44 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "c12-p1")) ;; Y1 pin 2 / U1 XO
+    (pin "2" (uuid "c12-p2")) ;; GND
+  )
+
+  ;; --- C1: FE1.1s Bypass ---
+  (symbol (lib_id "DB20G:C") (at 58.42 68.58 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "c1-cap-001")
+    (property "Reference" "C1" (at 60.96 68.58 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "100nF" (at 55.88 68.58 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "c1-p1")) ;; +5V (U1 VCC5)
+    (pin "2" (uuid "c1-p2")) ;; GND
+  )
+
+  ;; --- C2: FE1.1s Bulk ---
+  (symbol (lib_id "DB20G:C") (at 53.34 68.58 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "c2-cap-001")
+    (property "Reference" "C2" (at 55.88 68.58 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "10µF" (at 50.8 68.58 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "c2-p1")) ;; +5V
+    (pin "2" (uuid "c2-p2")) ;; GND
+  )
+
+  ;; --- U2: CP2102N USB-to-UART ---
+  (symbol (lib_id "DB20G:CP2102N") (at 139.7 76.2 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "u2-uart-001")
+    (property "Reference" "U2" (at 139.7 58.42 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "CP2102N" (at 139.7 93.98 0) (effects (font (size 1.27 1.27))))
+    (pin "4"  (uuid "u2-dp"))   ;; D+ ← U1 DD1+
+    (pin "5"  (uuid "u2-dm"))   ;; D- ← U1 DD1-
+    (pin "25" (uuid "u2-txd"))  ;; TXD → J4 TIP (data to radio)
+    (pin "26" (uuid "u2-rxd"))  ;; RXD ← J4 RING (data from radio)
+    (pin "23" (uuid "u2-rts"))  ;; RTS → R1 → Q1 (PTT driver)
+    (pin "22" (uuid "u2-dtr"))  ;; DTR → R2 → Q2 (Relay driver)
+    (pin "24" (uuid "u2-cts"))  ;; CTS (unused, pull-up to VDD)
+    (pin "20" (uuid "u2-txled")) ;; TX_LED → R10 → LED4
+    (pin "21" (uuid "u2-rxled")) ;; RX_LED (active low)
+    (pin "6"  (uuid "u2-vdd"))  ;; VDD ← +3V3
+    (pin "7"  (uuid "u2-regin")) ;; REGIN ← +3V3
+    (pin "3"  (uuid "u2-gnd"))  ;; GND
+    (pin "29" (uuid "u2-ep"))   ;; Exposed pad → GND
+    (pin "9"  (uuid "u2-rst"))  ;; ~RST ← +3V3 (pull-up)
+    (pin "11" (uuid "u2-susp")) ;; ~SUSPEND (unused)
+  )
+
+  ;; --- C3, C4: CP2102N Bypass Caps ---
+  (symbol (lib_id "DB20G:C") (at 121.92 68.58 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "c3-cap-001")
+    (property "Reference" "C3" (at 124.46 68.58 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "100nF" (at 119.38 68.58 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "c3-p1")) ;; +3V3
+    (pin "2" (uuid "c3-p2")) ;; GND
+  )
+
+  (symbol (lib_id "DB20G:C") (at 116.84 68.58 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "c4-cap-001")
+    (property "Reference" "C4" (at 119.38 68.58 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "10µF" (at 114.3 68.58 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "c4-p1")) ;; +3V3
+    (pin "2" (uuid "c4-p2")) ;; GND
+  )
+
+  ;; --- J4: 3.5mm TRS (Data Port) ---
+  (symbol (lib_id "DB20G:AudioJack3") (at 185.42 76.2 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "j4-trs-001")
+    (property "Reference" "J4" (at 185.42 68.58 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "DATA_PORT" (at 185.42 83.82 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "j4-tip"))    ;; TIP ← CP2102N TXD
+    (pin "2" (uuid "j4-ring"))   ;; RING → CP2102N RXD
+    (pin "3" (uuid "j4-sleeve")) ;; SLEEVE → GND
+  )
+
+  ;; --- U3: CM108AH USB Audio Codec ---
+  (symbol (lib_id "DB20G:CM108AH") (at 139.7 137.16 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "u3-audio-001")
+    (property "Reference" "U3" (at 139.7 116.84 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "CM108AH" (at 139.7 157.48 0) (effects (font (size 1.27 1.27))))
+    (pin "4"  (uuid "u3-dp"))     ;; D+ ← U1 DD2+
+    (pin "5"  (uuid "u3-dm"))     ;; D- ← U1 DD2-
+    (pin "19" (uuid "u3-spkl"))   ;; SPK_L → R5/R6 attenuator → Radio MIC
+    (pin "20" (uuid "u3-spkr"))   ;; SPK_R (tied to SPK_L)
+    (pin "13" (uuid "u3-micin"))  ;; MIC_IN ← R3/R4 attenuator ← Radio SPK
+    (pin "14" (uuid "u3-micbias")) ;; MIC_BIAS (unused for line-in)
+    (pin "9"  (uuid "u3-gpio0"))  ;; GPIO0
+    (pin "10" (uuid "u3-gpio1"))  ;; GPIO1
+    (pin "11" (uuid "u3-gpio2"))  ;; GPIO2
+    (pin "12" (uuid "u3-gpio3"))  ;; GPIO3
+    (pin "8"  (uuid "u3-gpio4"))  ;; GPIO4 → R9 → LED3 (Audio Activity)
+    (pin "7"  (uuid "u3-vcc"))    ;; VCC ← +5V
+    (pin "17" (uuid "u3-avcc"))   ;; AVCC ← +5V (with ferrite bead if needed)
+    (pin "6"  (uuid "u3-gnd"))    ;; GND
+    (pin "15" (uuid "u3-vref"))   ;; VREF (internal reference, cap to GND)
+    (pin "16" (uuid "u3-agnd"))   ;; AGND → GND
+  )
+
+  ;; --- C5, C6: CM108AH Bypass Caps ---
+  (symbol (lib_id "DB20G:C") (at 121.92 129.54 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "c5-cap-001")
+    (property "Reference" "C5" (at 124.46 129.54 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "100nF" (at 119.38 129.54 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "c5-p1")) ;; +5V
+    (pin "2" (uuid "c5-p2")) ;; GND
+  )
+
+  (symbol (lib_id "DB20G:C") (at 116.84 129.54 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "c6-cap-001")
+    (property "Reference" "C6" (at 119.38 129.54 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "10µF" (at 114.3 129.54 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "c6-p1")) ;; +5V
+    (pin "2" (uuid "c6-p2")) ;; GND
+  )
+
+  ;; --- Audio RX Path: Radio Speaker → CM108 MIC_IN ---
+  ;; R3 (10kΩ) + R4 (1kΩ) voltage divider with C9 (1µF) coupling cap
+
+  (symbol (lib_id "DB20G:C") (at 170.18 132.08 90) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "c9-cap-001")
+    (property "Reference" "C9" (at 170.18 129.54 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "1µF" (at 170.18 134.62 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "c9-p1")) ;; Radio SPK+ (from J2 pin 5)
+    (pin "2" (uuid "c9-p2")) ;; → R3 top
+  )
+
+  (symbol (lib_id "DB20G:R") (at 180.34 132.08 90) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "r3-res-001")
+    (property "Reference" "R3" (at 180.34 129.54 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "10kΩ" (at 180.34 134.62 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "r3-p1")) ;; C9 → divider input
+    (pin "2" (uuid "r3-p2")) ;; → junction (to CM108 MIC_IN and R4)
+  )
+
+  (symbol (lib_id "DB20G:R") (at 190.5 139.7 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "r4-res-001")
+    (property "Reference" "R4" (at 193.04 139.7 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "1kΩ" (at 187.96 139.7 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "r4-p1")) ;; junction (R3 output / CM108 MIC_IN)
+    (pin "2" (uuid "r4-p2")) ;; GND
+  )
+
+  ;; --- Audio TX Path: CM108 SPK_OUT → Radio Microphone ---
+  ;; R5 (10kΩ) + R6 (1kΩ) voltage divider with C10 (1µF) coupling cap
+
+  (symbol (lib_id "DB20G:C") (at 170.18 147.32 90) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "c10-cap-001")
+    (property "Reference" "C10" (at 170.18 144.78 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "1µF" (at 170.18 149.86 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "c10-p1")) ;; CM108 SPK_L
+    (pin "2" (uuid "c10-p2")) ;; → R5 top
+  )
+
+  (symbol (lib_id "DB20G:R") (at 180.34 147.32 90) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "r5-res-001")
+    (property "Reference" "R5" (at 180.34 144.78 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "10kΩ" (at 180.34 149.86 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "r5-p1")) ;; C10 →
+    (pin "2" (uuid "r5-p2")) ;; → junction (to Radio MIC and R6)
+  )
+
+  (symbol (lib_id "DB20G:R") (at 190.5 154.94 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "r6-res-001")
+    (property "Reference" "R6" (at 193.04 154.94 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "1kΩ" (at 187.96 154.94 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "r6-p1")) ;; junction (R5 output / Radio MIC)
+    (pin "2" (uuid "r6-p2")) ;; GND
+  )
+
+  ;; --- PTT Driver Circuit ---
+  ;; R1 (10kΩ) base resistor → Q1 (2N2222A) → PTT line
+
+  (symbol (lib_id "DB20G:R") (at 170.18 91.44 90) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "r1-res-001")
+    (property "Reference" "R1" (at 170.18 88.9 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "10kΩ" (at 170.18 93.98 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "r1-p1")) ;; CP2102N RTS
+    (pin "2" (uuid "r1-p2")) ;; Q1 Base
+  )
+
+  (symbol (lib_id "DB20G:2N2222A") (at 182.88 91.44 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "q1-npn-001")
+    (property "Reference" "Q1" (at 187.96 91.44 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "2N2222A" (at 187.96 93.98 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "q1-c"))  ;; Collector → PTT line (J2 pin 4)
+    (pin "2" (uuid "q1-b"))  ;; Base ← R1
+    (pin "3" (uuid "q1-e"))  ;; Emitter → GND
+  )
+
+  ;; --- Relay Driver Circuit ---
+  ;; R2 (10kΩ) base resistor → Q2 (2N2222A) → Relay K1
+
+  (symbol (lib_id "DB20G:R") (at 170.18 106.68 90) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "r2-res-001")
+    (property "Reference" "R2" (at 170.18 104.14 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "10kΩ" (at 170.18 109.22 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "r2-p1")) ;; CP2102N DTR
+    (pin "2" (uuid "r2-p2")) ;; Q2 Base
+  )
+
+  (symbol (lib_id "DB20G:2N2222A") (at 182.88 106.68 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "q2-npn-001")
+    (property "Reference" "Q2" (at 187.96 106.68 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "2N2222A" (at 187.96 109.22 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "q2-c"))  ;; Collector → K1 Coil(-)
+    (pin "2" (uuid "q2-b"))  ;; Base ← R2
+    (pin "3" (uuid "q2-e"))  ;; Emitter → GND
+  )
+
+  ;; --- K1: Relay (SPDT, backup PTT) ---
+  (symbol (lib_id "DB20G:Relay_SPDT") (at 205.74 106.68 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "k1-relay-001")
+    (property "Reference" "K1" (at 205.74 97.79 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "G5V-1-DC5" (at 205.74 115.57 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "k1-coilp"))  ;; Coil+ ← +5V
+    (pin "2" (uuid "k1-coilm"))  ;; Coil- ← Q2 Collector
+    (pin "3" (uuid "k1-com"))    ;; COM → GND
+    (pin "4" (uuid "k1-no"))     ;; NO → PTT line (J2 pin 4)
+    (pin "5" (uuid "k1-nc"))     ;; NC (unused)
+  )
+
+  ;; --- D1: Flyback Diode (across relay coil) ---
+  (symbol (lib_id "DB20G:D") (at 198.12 99.06 90) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "d1-diode-001")
+    (property "Reference" "D1" (at 195.58 99.06 90) (effects (font (size 1.27 1.27))))
+    (property "Value" "1N4148" (at 200.66 99.06 90) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "d1-k")) ;; Cathode → +5V (K1 Coil+)
+    (pin "2" (uuid "d1-a")) ;; Anode → K1 Coil(-) / Q2 Collector
+  )
+
+  ;; --- LED1: Power (Green) ---
+  (symbol (lib_id "DB20G:LED") (at 30.48 170.18 270) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "led1-001")
+    (property "Reference" "LED1" (at 30.48 165.1 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "Green" (at 30.48 175.26 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "led1-k")) ;; Cathode → GND
+    (pin "2" (uuid "led1-a")) ;; Anode ← R7
+  )
+
+  (symbol (lib_id "DB20G:R") (at 22.86 170.18 90) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "r7-res-001")
+    (property "Reference" "R7" (at 22.86 167.64 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "330Ω" (at 22.86 172.72 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "r7-p1")) ;; +5V
+    (pin "2" (uuid "r7-p2")) ;; LED1 Anode
+  )
+
+  ;; --- LED2: PTT (Red) ---
+  (symbol (lib_id "DB20G:LED") (at 50.8 170.18 270) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "led2-001")
+    (property "Reference" "LED2" (at 50.8 165.1 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "Red" (at 50.8 175.26 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "led2-k")) ;; Cathode → GND
+    (pin "2" (uuid "led2-a")) ;; Anode ← R8
+  )
+
+  (symbol (lib_id "DB20G:R") (at 43.18 170.18 90) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "r8-res-001")
+    (property "Reference" "R8" (at 43.18 167.64 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "330Ω" (at 43.18 172.72 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "r8-p1")) ;; PTT signal (Q1 collector)
+    (pin "2" (uuid "r8-p2")) ;; LED2 Anode
+  )
+
+  ;; --- LED3: Audio Activity (Yellow) ---
+  (symbol (lib_id "DB20G:LED") (at 71.12 170.18 270) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "led3-001")
+    (property "Reference" "LED3" (at 71.12 165.1 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "Yellow" (at 71.12 175.26 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "led3-k")) ;; Cathode → GND
+    (pin "2" (uuid "led3-a")) ;; Anode ← R9
+  )
+
+  (symbol (lib_id "DB20G:R") (at 63.5 170.18 90) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "r9-res-001")
+    (property "Reference" "R9" (at 63.5 167.64 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "330Ω" (at 63.5 172.72 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "r9-p1")) ;; CM108 GPIO4
+    (pin "2" (uuid "r9-p2")) ;; LED3 Anode
+  )
+
+  ;; --- LED4: Serial (Blue) ---
+  (symbol (lib_id "DB20G:LED") (at 91.44 170.18 270) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "led4-001")
+    (property "Reference" "LED4" (at 91.44 165.1 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "Blue" (at 91.44 175.26 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "led4-k")) ;; Cathode → GND
+    (pin "2" (uuid "led4-a")) ;; Anode ← R10
+  )
+
+  (symbol (lib_id "DB20G:R") (at 83.82 170.18 90) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "r10-res-001")
+    (property "Reference" "R10" (at 83.82 167.64 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "330Ω" (at 83.82 172.72 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "r10-p1")) ;; CP2102 TX_LED
+    (pin "2" (uuid "r10-p2")) ;; LED4 Anode
+  )
+
+  ;; --- J2: RJ-45 Radio Side ---
+  (symbol (lib_id "DB20G:RJ45") (at 236.22 147.32 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "j2-rj45-001")
+    (property "Reference" "J2" (at 236.22 132.08 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "RADIO" (at 236.22 162.56 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "j2-p1")) ;; +V Supply → pass-through J3
+    (pin "2" (uuid "j2-p2")) ;; Microphone → CM108 TX audio
+    (pin "3" (uuid "j2-p3")) ;; Ground
+    (pin "4" (uuid "j2-p4")) ;; PTT (active low) ← Q1 collector / K1 NO
+    (pin "5" (uuid "j2-p5")) ;; Speaker+ → C9 → R3/R4 → CM108 MIC_IN
+    (pin "6" (uuid "j2-p6")) ;; Speaker- → pass-through J3
+    (pin "7" (uuid "j2-p7")) ;; UP Button → pass-through J3
+    (pin "8" (uuid "j2-p8")) ;; DOWN Button → pass-through J3
+    (pin "9" (uuid "j2-sh")) ;; Shield → GND
+  )
+
+  ;; --- J3: RJ-45 Handset Pass-through ---
+  (symbol (lib_id "DB20G:RJ45") (at 276.86 147.32 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "j3-rj45-001")
+    (property "Reference" "J3" (at 276.86 132.08 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "HANDSET" (at 276.86 162.56 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "j3-p1")) ;; +V Supply ← J2 pin 1
+    (pin "2" (uuid "j3-p2")) ;; Microphone ← J2 pin 2
+    (pin "3" (uuid "j3-p3")) ;; Ground ← J2 pin 3
+    (pin "4" (uuid "j3-p4")) ;; PTT ← J2 pin 4
+    (pin "5" (uuid "j3-p5")) ;; Speaker+ ← J2 pin 5
+    (pin "6" (uuid "j3-p6")) ;; Speaker- ← J2 pin 6
+    (pin "7" (uuid "j3-p7")) ;; UP ← J2 pin 7
+    (pin "8" (uuid "j3-p8")) ;; DOWN ← J2 pin 8
+    (pin "9" (uuid "j3-sh")) ;; Shield → GND
+  )
+
+  ;; --- R11, R12: USB Pull-up Resistors ---
+  (symbol (lib_id "DB20G:R") (at 45.72 50.8 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "r11-res-001")
+    (property "Reference" "R11" (at 48.26 50.8 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "4.7kΩ" (at 43.18 50.8 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "r11-p1")) ;; +3V3
+    (pin "2" (uuid "r11-p2")) ;; D+ (hub downstream)
+  )
+
+  (symbol (lib_id "DB20G:R") (at 48.26 55.88 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "r12-res-001")
+    (property "Reference" "R12" (at 50.8 55.88 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "1.5kΩ" (at 45.72 55.88 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "r12-p1")) ;; +3V3
+    (pin "2" (uuid "r12-p2")) ;; D+ (upstream)
+  )
+
+  ;; --- R13: USB-C CC1 Pull-down (5.1kΩ) ---
+  (symbol (lib_id "DB20G:R") (at 35.56 48.26 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "r13-res-001")
+    (property "Reference" "R13" (at 38.1 48.26 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "5.1kΩ" (at 33.02 48.26 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "r13-p1")) ;; CC1 (J1 pin A5)
+    (pin "2" (uuid "r13-p2")) ;; GND
+  )
+
+  ;; --- R14: USB-C CC2 Pull-down (5.1kΩ) ---
+  (symbol (lib_id "DB20G:R") (at 35.56 43.18 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "r14-res-001")
+    (property "Reference" "R14" (at 38.1 43.18 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "5.1kΩ" (at 33.02 43.18 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "r14-p1")) ;; CC2 (J1 pin B5)
+    (pin "2" (uuid "r14-p2")) ;; GND
+  )
+
+  ;; --- R15: CP2102N CTS Pull-up (10kΩ) ---
+  (symbol (lib_id "DB20G:R") (at 157.48 76.2 90) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "r15-res-001")
+    (property "Reference" "R15" (at 157.48 73.66 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "10kΩ" (at 157.48 78.74 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "r15-p1")) ;; CTS (U2 pin 24)
+    (pin "2" (uuid "r15-p2")) ;; +3V3
+  )
+
+  ;; --- C13: CM108AH VREF Decoupling (4.7µF) ---
+  (symbol (lib_id "DB20G:C") (at 121.92 137.16 0) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no)
+    (uuid "c13-cap-001")
+    (property "Reference" "C13" (at 124.46 137.16 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "4.7µF" (at 119.38 137.16 0) (effects (font (size 1.27 1.27))))
+    (pin "1" (uuid "c13-p1")) ;; VREF
+    (pin "2" (uuid "c13-p2")) ;; GND
+  )
+
+  ;; =========================================================================
+  ;; WIRING — Power labels, signal labels, wires, junctions, no-connect flags
+  ;; All labels placed at exact pin connection-point coordinates.
+  ;; Pin endpoints calculated: abs = (inst + pin_x, inst - pin_y) for 0° rot.
+  ;; =========================================================================
+
+  ;; ----- Power: VBUS (raw USB bus voltage) -----
+  (global_label "VBUS" (shape input) (at 22.86 45.72 180) (effects (font (size 1.27 1.27))) (uuid "gl-vbus-j1"))
+  (global_label "VBUS" (shape input) (at 50.8 26.67 90) (effects (font (size 1.27 1.27))) (uuid "gl-vbus-f1"))
+  (global_label "VBUS" (shape input) (at 67.31 30.48 0) (effects (font (size 1.27 1.27))) (uuid "gl-vbus-d2"))
+
+  ;; ----- Power: +5V (after polyfuse) -----
+  (global_label "+5V" (shape input) (at 50.8 34.29 270) (effects (font (size 1.27 1.27))) (uuid "gl-5v-f1"))
+  (global_label "+5V" (shape input) (at 59.69 30.48 180) (effects (font (size 1.27 1.27))) (uuid "gl-5v-d2"))
+  (global_label "+5V" (shape input) (at 81.28 27.94 180) (effects (font (size 1.27 1.27))) (uuid "gl-5v-u4"))
+  (global_label "+5V" (shape input) (at 78.74 35.56 90) (effects (font (size 1.27 1.27))) (uuid "gl-5v-c7"))
+  (global_label "+5V" (shape input) (at 63.5 86.36 180) (effects (font (size 1.27 1.27))) (uuid "gl-5v-u1"))
+  (global_label "+5V" (shape input) (at 58.42 66.04 90) (effects (font (size 1.27 1.27))) (uuid "gl-5v-c1"))
+  (global_label "+5V" (shape input) (at 53.34 66.04 90) (effects (font (size 1.27 1.27))) (uuid "gl-5v-c2"))
+  (global_label "+5V" (shape input) (at 127 147.32 180) (effects (font (size 1.27 1.27))) (uuid "gl-5v-u3vcc"))
+  (global_label "+5V" (shape input) (at 127 149.86 180) (effects (font (size 1.27 1.27))) (uuid "gl-5v-u3avcc"))
+  (global_label "+5V" (shape input) (at 121.92 127 90) (effects (font (size 1.27 1.27))) (uuid "gl-5v-c5"))
+  (global_label "+5V" (shape input) (at 116.84 127 90) (effects (font (size 1.27 1.27))) (uuid "gl-5v-c6"))
+  (global_label "+5V" (shape input) (at 198.12 102.87 180) (effects (font (size 1.27 1.27))) (uuid "gl-5v-k1"))
+  (global_label "+5V" (shape input) (at 19.05 170.18 180) (effects (font (size 1.27 1.27))) (uuid "gl-5v-r7"))
+
+  ;; ----- Power: +3V3 (LDO regulated) -----
+  (global_label "+3V3" (shape input) (at 96.52 27.94 0) (effects (font (size 1.27 1.27))) (uuid "gl-3v3-u4"))
+  (global_label "+3V3" (shape input) (at 99.06 35.56 90) (effects (font (size 1.27 1.27))) (uuid "gl-3v3-c8"))
+  (global_label "+3V3" (shape input) (at 63.5 88.9 180) (effects (font (size 1.27 1.27))) (uuid "gl-3v3-u1"))
+  (global_label "+3V3" (shape input) (at 127 83.82 180) (effects (font (size 1.27 1.27))) (uuid "gl-3v3-u2vdd"))
+  (global_label "+3V3" (shape input) (at 127 86.36 180) (effects (font (size 1.27 1.27))) (uuid "gl-3v3-u2reg"))
+  (global_label "+3V3" (shape input) (at 121.92 66.04 90) (effects (font (size 1.27 1.27))) (uuid "gl-3v3-c3"))
+  (global_label "+3V3" (shape input) (at 116.84 66.04 90) (effects (font (size 1.27 1.27))) (uuid "gl-3v3-c4"))
+  (global_label "+3V3" (shape input) (at 45.72 46.99 90) (effects (font (size 1.27 1.27))) (uuid "gl-3v3-r11"))
+  (global_label "+3V3" (shape input) (at 48.26 52.07 90) (effects (font (size 1.27 1.27))) (uuid "gl-3v3-r12"))
+  (global_label "+3V3" (shape input) (at 127 71.12 180) (effects (font (size 1.27 1.27))) (uuid "gl-3v3-u2rst"))
+  (global_label "+3V3" (shape input) (at 161.29 76.2 0) (effects (font (size 1.27 1.27))) (uuid "gl-3v3-r15"))
+
+  ;; ----- Power: GND -----
+  (global_label "GND" (shape input) (at 22.86 66.04 180) (effects (font (size 1.27 1.27))) (uuid "gl-gnd-j1"))
+  (global_label "GND" (shape input) (at 22.86 63.5 180) (effects (font (size 1.27 1.27))) (uuid "gl-gnd-j1sh"))
+  (global_label "GND" (shape input) (at 88.9 36.83 270) (effects (font (size 1.27 1.27))) (uuid "gl-gnd-u4"))
+  (global_label "GND" (shape input) (at 78.74 40.64 270) (effects (font (size 1.27 1.27))) (uuid "gl-gnd-c7"))
+  (global_label "GND" (shape input) (at 99.06 40.64 270) (effects (font (size 1.27 1.27))) (uuid "gl-gnd-c8"))
+  (global_label "GND" (shape input) (at 63.5 93.98 180) (effects (font (size 1.27 1.27))) (uuid "gl-gnd-u1"))
+  (global_label "GND" (shape input) (at 63.5 81.28 180) (effects (font (size 1.27 1.27))) (uuid "gl-gnd-u1g"))
+  (global_label "GND" (shape input) (at 63.5 83.82 180) (effects (font (size 1.27 1.27))) (uuid "gl-gnd-u1s"))
+  (global_label "GND" (shape input) (at 50.8 93.98 270) (effects (font (size 1.27 1.27))) (uuid "gl-gnd-c11"))
+  (global_label "GND" (shape input) (at 60.96 93.98 270) (effects (font (size 1.27 1.27))) (uuid "gl-gnd-c12"))
+  (global_label "GND" (shape input) (at 58.42 71.12 270) (effects (font (size 1.27 1.27))) (uuid "gl-gnd-c1"))
+  (global_label "GND" (shape input) (at 53.34 71.12 270) (effects (font (size 1.27 1.27))) (uuid "gl-gnd-c2"))
+  (global_label "GND" (shape input) (at 127 88.9 180) (effects (font (size 1.27 1.27))) (uuid "gl-gnd-u2"))
+  (global_label "GND" (shape input) (at 127 91.44 180) (effects (font (size 1.27 1.27))) (uuid "gl-gnd-u2ep"))
+  (global_label "GND" (shape input) (at 121.92 71.12 270) (effects (font (size 1.27 1.27))) (uuid "gl-gnd-c3"))
+  (global_label "GND" (shape input) (at 116.84 71.12 270) (effects (font (size 1.27 1.27))) (uuid "gl-gnd-c4"))
+  (global_label "GND" (shape input) (at 127 152.4 180) (effects (font (size 1.27 1.27))) (uuid "gl-gnd-u3"))
+  (global_label "GND" (shape input) (at 127 134.62 180) (effects (font (size 1.27 1.27))) (uuid "gl-gnd-u3a"))
+  (global_label "GND" (shape input) (at 121.92 132.08 270) (effects (font (size 1.27 1.27))) (uuid "gl-gnd-c5"))
+  (global_label "GND" (shape input) (at 116.84 132.08 270) (effects (font (size 1.27 1.27))) (uuid "gl-gnd-c6"))
+  (global_label "GND" (shape input) (at 121.92 139.7 270) (effects (font (size 1.27 1.27))) (uuid "gl-gnd-c13"))
+  (global_label "GND" (shape input) (at 190.5 143.51 270) (effects (font (size 1.27 1.27))) (uuid "gl-gnd-r4"))
+  (global_label "GND" (shape input) (at 190.5 158.75 270) (effects (font (size 1.27 1.27))) (uuid "gl-gnd-r6"))
+  (global_label "GND" (shape input) (at 185.42 96.52 270) (effects (font (size 1.27 1.27))) (uuid "gl-gnd-q1"))
+  (global_label "GND" (shape input) (at 185.42 111.76 270) (effects (font (size 1.27 1.27))) (uuid "gl-gnd-q2"))
+  (global_label "GND" (shape input) (at 193.04 78.74 0) (effects (font (size 1.27 1.27))) (uuid "gl-gnd-j4"))
+  (global_label "GND" (shape input) (at 243.84 142.24 0) (effects (font (size 1.27 1.27))) (uuid "gl-gnd-j2"))
+  (global_label "GND" (shape input) (at 243.84 157.48 0) (effects (font (size 1.27 1.27))) (uuid "gl-gnd-j2s"))
+  (global_label "GND" (shape input) (at 284.48 142.24 0) (effects (font (size 1.27 1.27))) (uuid "gl-gnd-j3"))
+  (global_label "GND" (shape input) (at 284.48 157.48 0) (effects (font (size 1.27 1.27))) (uuid "gl-gnd-j3s"))
+  (global_label "GND" (shape input) (at 30.48 166.37 90) (effects (font (size 1.27 1.27))) (uuid "gl-gnd-l1"))
+  (global_label "GND" (shape input) (at 50.8 166.37 90) (effects (font (size 1.27 1.27))) (uuid "gl-gnd-l2"))
+  (global_label "GND" (shape input) (at 71.12 166.37 90) (effects (font (size 1.27 1.27))) (uuid "gl-gnd-l3"))
+  (global_label "GND" (shape input) (at 91.44 166.37 90) (effects (font (size 1.27 1.27))) (uuid "gl-gnd-l4"))
+  (global_label "GND" (shape input) (at 35.56 52.07 270) (effects (font (size 1.27 1.27))) (uuid "gl-gnd-r13"))
+  (global_label "GND" (shape input) (at 35.56 46.99 270) (effects (font (size 1.27 1.27))) (uuid "gl-gnd-r14"))
+  (global_label "GND" (shape input) (at 213.36 102.87 0) (effects (font (size 1.27 1.27))) (uuid "gl-gnd-k1c"))
+
+  ;; ----- Signal: USB-C CC pins -----
+  (label "CC1" (at 22.86 58.42 180) (effects (font (size 1.27 1.27))) (uuid "nl-cc1-j1"))
+  (label "CC1" (at 35.56 44.45 90) (effects (font (size 1.27 1.27))) (uuid "nl-cc1-r13"))
+  (label "CC2" (at 22.86 60.96 180) (effects (font (size 1.27 1.27))) (uuid "nl-cc2-j1"))
+  (label "CC2" (at 35.56 39.37 90) (effects (font (size 1.27 1.27))) (uuid "nl-cc2-r14"))
+
+  ;; ----- Signal: USB upstream (Phone ↔ Hub) -----
+  (label "USB_D+" (at 22.86 50.8 180) (effects (font (size 1.27 1.27))) (uuid "nl-udp-j1"))
+  (label "USB_D+" (at 63.5 58.42 180) (effects (font (size 1.27 1.27))) (uuid "nl-udp-u1"))
+  (label "USB_D+" (at 45.72 54.61 270) (effects (font (size 1.27 1.27))) (uuid "nl-udp-r11"))
+  (label "USB_D+" (at 48.26 59.69 270) (effects (font (size 1.27 1.27))) (uuid "nl-udp-r12"))
+  (label "USB_D-" (at 22.86 53.34 180) (effects (font (size 1.27 1.27))) (uuid "nl-udm-j1"))
+  (label "USB_D-" (at 63.5 60.96 180) (effects (font (size 1.27 1.27))) (uuid "nl-udm-u1"))
+
+  ;; ----- Signal: Hub Port 1 → CP2102N -----
+  (label "HUB_P1_D+" (at 88.9 58.42 0) (effects (font (size 1.27 1.27))) (uuid "nl-h1dp-u1"))
+  (label "HUB_P1_D+" (at 127 63.5 180) (effects (font (size 1.27 1.27))) (uuid "nl-h1dp-u2"))
+  (label "HUB_P1_D-" (at 88.9 60.96 0) (effects (font (size 1.27 1.27))) (uuid "nl-h1dm-u1"))
+  (label "HUB_P1_D-" (at 127 66.04 180) (effects (font (size 1.27 1.27))) (uuid "nl-h1dm-u2"))
+
+  ;; ----- Signal: Hub Port 2 → CM108AH -----
+  (label "HUB_P2_D+" (at 88.9 66.04 0) (effects (font (size 1.27 1.27))) (uuid "nl-h2dp-u1"))
+  (label "HUB_P2_D+" (at 127 121.92 180) (effects (font (size 1.27 1.27))) (uuid "nl-h2dp-u3"))
+  (label "HUB_P2_D-" (at 88.9 68.58 0) (effects (font (size 1.27 1.27))) (uuid "nl-h2dm-u1"))
+  (label "HUB_P2_D-" (at 127 124.46 180) (effects (font (size 1.27 1.27))) (uuid "nl-h2dm-u3"))
+
+  ;; ----- Signal: Crystal oscillator -----
+  (label "XI" (at 63.5 71.12 180) (effects (font (size 1.27 1.27))) (uuid "nl-xi-u1"))
+  (label "XI" (at 55.88 87.63 270) (effects (font (size 1.27 1.27))) (uuid "nl-xi-y1"))
+  (label "XI" (at 50.8 88.9 90) (effects (font (size 1.27 1.27))) (uuid "nl-xi-c11"))
+  (label "XO" (at 63.5 73.66 180) (effects (font (size 1.27 1.27))) (uuid "nl-xo-u1"))
+  (label "XO" (at 55.88 80.01 90) (effects (font (size 1.27 1.27))) (uuid "nl-xo-y1"))
+  (label "XO" (at 60.96 88.9 90) (effects (font (size 1.27 1.27))) (uuid "nl-xo-c12"))
+
+  ;; ----- Signal: UART data -----
+  (label "UART_TXD" (at 152.4 63.5 0) (effects (font (size 1.27 1.27))) (uuid "nl-txd-u2"))
+  (label "UART_TXD" (at 193.04 73.66 0) (effects (font (size 1.27 1.27))) (uuid "nl-txd-j4"))
+  (label "UART_RXD" (at 152.4 66.04 0) (effects (font (size 1.27 1.27))) (uuid "nl-rxd-u2"))
+  (label "UART_RXD" (at 193.04 76.2 0) (effects (font (size 1.27 1.27))) (uuid "nl-rxd-j4"))
+
+  ;; ----- Signal: Serial control (RTS/DTR) -----
+  (label "RTS" (at 152.4 71.12 0) (effects (font (size 1.27 1.27))) (uuid "nl-rts-u2"))
+  (label "RTS" (at 166.37 91.44 180) (effects (font (size 1.27 1.27))) (uuid "nl-rts-r1"))
+  (label "DTR" (at 152.4 73.66 0) (effects (font (size 1.27 1.27))) (uuid "nl-dtr-u2"))
+  (label "DTR" (at 166.37 106.68 180) (effects (font (size 1.27 1.27))) (uuid "nl-dtr-r2"))
+
+  ;; ----- Signal: PTT (active low) -----
+  (label "PTT" (at 185.42 86.36 90) (effects (font (size 1.27 1.27))) (uuid "nl-ptt-q1"))
+  (label "PTT" (at 213.36 106.68 0) (effects (font (size 1.27 1.27))) (uuid "nl-ptt-k1"))
+  (label "PTT" (at 243.84 144.78 0) (effects (font (size 1.27 1.27))) (uuid "nl-ptt-j2"))
+  (label "PTT" (at 284.48 144.78 0) (effects (font (size 1.27 1.27))) (uuid "nl-ptt-j3"))
+  (label "PTT" (at 39.37 170.18 180) (effects (font (size 1.27 1.27))) (uuid "nl-ptt-r8"))
+
+  ;; ----- Signal: Relay driver (Q2 collector ↔ K1 coil- ↔ D1 anode) -----
+  (label "RELAY_DRV" (at 185.42 101.6 90) (effects (font (size 1.27 1.27))) (uuid "nl-rdrv-q2"))
+  (label "RELAY_DRV" (at 198.12 110.49 180) (effects (font (size 1.27 1.27))) (uuid "nl-rdrv-k1"))
+  (label "RELAY_DRV" (at 198.12 95.25 90) (effects (font (size 1.27 1.27))) (uuid "nl-rdrv-d1"))
+
+  ;; ----- Signal: Audio TX (CM108 speaker → radio mic) -----
+  (label "CM108_SPK" (at 152.4 121.92 0) (effects (font (size 1.27 1.27))) (uuid "nl-spk-u3l"))
+  (label "CM108_SPK" (at 152.4 124.46 0) (effects (font (size 1.27 1.27))) (uuid "nl-spk-u3r"))
+  (label "CM108_SPK" (at 167.64 147.32 180) (effects (font (size 1.27 1.27))) (uuid "nl-spk-c10"))
+  (label "RADIO_MIC" (at 184.15 147.32 0) (effects (font (size 1.27 1.27))) (uuid "nl-rmic-r5"))
+  (label "RADIO_MIC" (at 190.5 151.13 90) (effects (font (size 1.27 1.27))) (uuid "nl-rmic-r6"))
+  (label "RADIO_MIC" (at 243.84 139.7 0) (effects (font (size 1.27 1.27))) (uuid "nl-rmic-j2"))
+  (label "RADIO_MIC" (at 284.48 139.7 0) (effects (font (size 1.27 1.27))) (uuid "nl-rmic-j3"))
+
+  ;; ----- Signal: Audio RX (radio speaker → CM108 mic) -----
+  (label "RADIO_SPK" (at 243.84 147.32 0) (effects (font (size 1.27 1.27))) (uuid "nl-rspk-j2"))
+  (label "RADIO_SPK" (at 284.48 147.32 0) (effects (font (size 1.27 1.27))) (uuid "nl-rspk-j3"))
+  (label "RADIO_SPK" (at 167.64 132.08 180) (effects (font (size 1.27 1.27))) (uuid "nl-rspk-c9"))
+  (label "CM108_MIC" (at 184.15 132.08 0) (effects (font (size 1.27 1.27))) (uuid "nl-cmic-r3"))
+  (label "CM108_MIC" (at 190.5 135.89 90) (effects (font (size 1.27 1.27))) (uuid "nl-cmic-r4"))
+  (label "CM108_MIC" (at 152.4 129.54 0) (effects (font (size 1.27 1.27))) (uuid "nl-cmic-u3"))
+
+  ;; ----- Signal: VREF (CM108AH internal reference) -----
+  (label "VREF" (at 127 132.08 180) (effects (font (size 1.27 1.27))) (uuid "nl-vref-u3"))
+  (label "VREF" (at 121.92 134.62 90) (effects (font (size 1.27 1.27))) (uuid "nl-vref-c13"))
+
+  ;; ----- Signal: LED indicators -----
+  (label "TX_LED" (at 152.4 78.74 0) (effects (font (size 1.27 1.27))) (uuid "nl-txled-u2"))
+  (label "TX_LED" (at 80.01 170.18 180) (effects (font (size 1.27 1.27))) (uuid "nl-txled-r10"))
+  (label "GPIO4" (at 152.4 147.32 0) (effects (font (size 1.27 1.27))) (uuid "nl-gpio4-u3"))
+  (label "GPIO4" (at 59.69 170.18 180) (effects (font (size 1.27 1.27))) (uuid "nl-gpio4-r9"))
+
+  ;; ----- Signal: RJ-45 pass-through (radio ↔ handset) -----
+  (label "HS_VCC" (at 243.84 137.16 0) (effects (font (size 1.27 1.27))) (uuid "nl-hsv-j2"))
+  (label "HS_VCC" (at 284.48 137.16 0) (effects (font (size 1.27 1.27))) (uuid "nl-hsv-j3"))
+  (label "HS_SPKM" (at 243.84 149.86 0) (effects (font (size 1.27 1.27))) (uuid "nl-hssm-j2"))
+  (label "HS_SPKM" (at 284.48 149.86 0) (effects (font (size 1.27 1.27))) (uuid "nl-hssm-j3"))
+  (label "HS_UP" (at 243.84 152.4 0) (effects (font (size 1.27 1.27))) (uuid "nl-hsup-j2"))
+  (label "HS_UP" (at 284.48 152.4 0) (effects (font (size 1.27 1.27))) (uuid "nl-hsup-j3"))
+  (label "HS_DN" (at 243.84 154.94 0) (effects (font (size 1.27 1.27))) (uuid "nl-hsdn-j2"))
+  (label "HS_DN" (at 284.48 154.94 0) (effects (font (size 1.27 1.27))) (uuid "nl-hsdn-j3"))
+
+  ;; =========================================================================
+  ;; WIRES — Direct component-to-component connections
+  ;; =========================================================================
+
+  ;; R1 pin 2 → Q1 Base (PTT driver)
+  (wire (pts (xy 173.99 91.44) (xy 180.34 91.44)) (stroke (width 0) (type default)) (uuid "w-r1-q1"))
+
+  ;; R2 pin 2 → Q2 Base (Relay driver)
+  (wire (pts (xy 173.99 106.68) (xy 180.34 106.68)) (stroke (width 0) (type default)) (uuid "w-r2-q2"))
+
+  ;; C9 pin 2 → R3 pin 1 (Audio RX coupling)
+  (wire (pts (xy 172.72 132.08) (xy 176.53 132.08)) (stroke (width 0) (type default)) (uuid "w-c9-r3"))
+
+  ;; C10 pin 2 → R5 pin 1 (Audio TX coupling)
+  (wire (pts (xy 172.72 147.32) (xy 176.53 147.32)) (stroke (width 0) (type default)) (uuid "w-c10-r5"))
+
+  ;; CTS pin → R15 pin 1 (CTS pull-up)
+  (wire (pts (xy 152.4 76.2) (xy 153.67 76.2)) (stroke (width 0) (type default)) (uuid "w-cts-r15"))
+
+  ;; R7 → LED1 (Power LED)
+  (wire (pts (xy 26.67 170.18) (xy 30.48 170.18)) (stroke (width 0) (type default)) (uuid "w-r7-led1a"))
+  (wire (pts (xy 30.48 170.18) (xy 30.48 173.99)) (stroke (width 0) (type default)) (uuid "w-r7-led1b"))
+
+  ;; R8 → LED2 (PTT LED)
+  (wire (pts (xy 46.99 170.18) (xy 50.8 170.18)) (stroke (width 0) (type default)) (uuid "w-r8-led2a"))
+  (wire (pts (xy 50.8 170.18) (xy 50.8 173.99)) (stroke (width 0) (type default)) (uuid "w-r8-led2b"))
+
+  ;; R9 → LED3 (Audio LED)
+  (wire (pts (xy 67.31 170.18) (xy 71.12 170.18)) (stroke (width 0) (type default)) (uuid "w-r9-led3a"))
+  (wire (pts (xy 71.12 170.18) (xy 71.12 173.99)) (stroke (width 0) (type default)) (uuid "w-r9-led3b"))
+
+  ;; R10 → LED4 (Serial LED)
+  (wire (pts (xy 87.63 170.18) (xy 91.44 170.18)) (stroke (width 0) (type default)) (uuid "w-r10-led4a"))
+  (wire (pts (xy 91.44 170.18) (xy 91.44 173.99)) (stroke (width 0) (type default)) (uuid "w-r10-led4b"))
+
+  ;; =========================================================================
+  ;; NO-CONNECT FLAGS — Unused pins
+  ;; =========================================================================
+
+  ;; U1 FE1.1s unused downstream ports
+  (no_connect (at 88.9 73.66) (uuid "nc-u1-dd3p"))
+  (no_connect (at 88.9 76.2) (uuid "nc-u1-dd3m"))
+  (no_connect (at 88.9 81.28) (uuid "nc-u1-dd4p"))
+  (no_connect (at 88.9 83.82) (uuid "nc-u1-dd4m"))
+  (no_connect (at 88.9 88.9) (uuid "nc-u1-pp1"))
+  (no_connect (at 88.9 91.44) (uuid "nc-u1-pp2"))
+
+  ;; U2 CP2102N unused outputs
+  (no_connect (at 152.4 81.28) (uuid "nc-u2-rxled"))
+  (no_connect (at 127 73.66) (uuid "nc-u2-susp"))
+
+  ;; U3 CM108AH unused pins
+  (no_connect (at 152.4 132.08) (uuid "nc-u3-micb"))
+  (no_connect (at 152.4 137.16) (uuid "nc-u3-gpio0"))
+  (no_connect (at 152.4 139.7) (uuid "nc-u3-gpio1"))
+  (no_connect (at 152.4 142.24) (uuid "nc-u3-gpio2"))
+  (no_connect (at 152.4 144.78) (uuid "nc-u3-gpio3"))
+
+  ;; K1 Relay NC contact (unused)
+  (no_connect (at 213.36 110.49) (uuid "nc-k1-nc"))
+  (label "CM108_MIC_IN" (at 154.94 132.08 0) (effects (font (size 1.27 1.27))) (uuid "nl-cmic"))
+  (label "CM108_SPK_OUT" (at 154.94 147.32 0) (effects (font (size 1.27 1.27))) (uuid "nl-cspk"))
+
+  ;; LED Signals
+  (label "TX_LED" (at 157.48 78.74 0) (effects (font (size 1.27 1.27))) (uuid "nl-txled"))
+  (label "AUDIO_GPIO" (at 154.94 160.02 0) (effects (font (size 1.27 1.27))) (uuid "nl-agpio"))
+
+  ;; =========================================================================
+  ;; NETLIST CONNECTIONS (text annotations for ERC/DRC)
+  ;; =========================================================================
+  ;;
+  ;; POWER:
+  ;;   J1.VBUS → F1.pin1
+  ;;   F1.pin2 → D2.Anode → +5V rail
+  ;;   +5V → U4.IN, U1.VCC5, U3.VCC, U3.AVCC, K1.Coil+, R7→LED1
+  ;;   U4.OUT → +3V3 rail
+  ;;   +3V3 → U1.VCC33, U2.VDD, U2.REGIN, U2.~RST (pull-up)
+  ;;
+  ;; USB HUB:
+  ;;   J1.D+ → U1.UD+ (via R12 pull-up)
+  ;;   J1.D- → U1.UD-
+  ;;   U1.DD1+ → U2.D+
+  ;;   U1.DD1- → U2.D-
+  ;;   U1.DD2+ → U3.D+
+  ;;   U1.DD2- → U3.D-
+  ;;   U1.XI → Y1.pin1, C11.pin1
+  ;;   U1.XO → Y1.pin2, C12.pin1
+  ;;   C11.pin2, C12.pin2 → GND
+  ;;   U1.GANGED → GND (bus-powered mode)
+  ;;   U1.SELF_PWR → GND (bus-powered mode)
+  ;;
+  ;; SERIAL:
+  ;;   U2.TXD → J4.TIP (data to radio)
+  ;;   U2.RXD ← J4.RING (data from radio)
+  ;;   J4.SLEEVE → GND
+  ;;
+  ;; PTT (TRANSISTOR):
+  ;;   U2.RTS → R1 → Q1.Base
+  ;;   Q1.Collector → J2.pin4 (PTT line)
+  ;;   Q1.Emitter → GND
+  ;;
+  ;; PTT (RELAY):
+  ;;   U2.DTR → R2 → Q2.Base
+  ;;   Q2.Collector → K1.Coil(-)
+  ;;   Q2.Emitter → GND
+  ;;   K1.Coil(+) → +5V
+  ;;   K1.NO → J2.pin4 (PTT line)
+  ;;   K1.COM → GND
+  ;;   D1 across K1 coil (cathode to +5V)
+  ;;
+  ;; AUDIO RX (Radio SPK → Phone):
+  ;;   J2.pin5 (Speaker+) → C9 → R3 → junction
+  ;;   junction → U3.MIC_IN
+  ;;   junction → R4 → GND
+  ;;
+  ;; AUDIO TX (Phone → Radio MIC):
+  ;;   U3.SPK_L → C10 → R5 → junction
+  ;;   junction → J2.pin2 (Microphone)
+  ;;   junction → R6 → GND
+  ;;
+  ;; RJ-45 PASS-THROUGH:
+  ;;   J2.pin1 ↔ J3.pin1 (+V)
+  ;;   J2.pin2 ↔ J3.pin2 (MIC, tapped for CM108 TX)
+  ;;   J2.pin3 ↔ J3.pin3 (GND)
+  ;;   J2.pin4 ↔ J3.pin4 (PTT, tapped for Q1/K1)
+  ;;   J2.pin5 ↔ J3.pin5 (SPK+, tapped for CM108 RX)
+  ;;   J2.pin6 ↔ J3.pin6 (SPK-)
+  ;;   J2.pin7 ↔ J3.pin7 (UP)
+  ;;   J2.pin8 ↔ J3.pin8 (DOWN)
+  ;;
+  ;; LEDS:
+  ;;   +5V → R7 → LED1(Green) → GND  (Power)
+  ;;   PTT_signal → R8 → LED2(Red) → GND  (PTT Active)
+  ;;   U3.GPIO4 → R9 → LED3(Yellow) → GND  (Audio)
+  ;;   U2.TX_LED → R10 → LED4(Blue) → GND  (Serial)
+
+)
