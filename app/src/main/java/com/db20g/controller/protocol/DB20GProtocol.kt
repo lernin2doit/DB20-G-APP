@@ -35,7 +35,9 @@ class DB20GProtocol(private val serial: UsbSerialManager) {
         const val READ_BLOCK_SIZE = 0x40
         const val WRITE_BLOCK_SIZE = 0x20
 
-        // Channel memory: 128 channels * 16 bytes = 0x0800
+        // Channel memory: 128 clone-mode slots * 16 bytes = 0x0800
+        // Note: The radio has 500 total channels (30 GMRS + 9 repeater + 454 programmable + 7 NOAA).
+        // Clone mode exposes 128 programmable slots; fixed GMRS/NOAA channels are in firmware.
         const val CHANNEL_MEM_START = 0x0000
         const val CHANNEL_SIZE = 16
         const val MAX_CHANNELS = 128

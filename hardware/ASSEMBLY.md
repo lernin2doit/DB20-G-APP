@@ -183,7 +183,7 @@ Build in this order to make each step accessible before later components block a
 |---|----------------------------------|----------------------------------------------|
 | 1 | App detects USB devices           | Shows CP2102 + CM108 in device list          |
 | 2 | Connect to CP2102                 | "Connected" status in app                    |
-| 3 | Download from radio               | All 128 channels read successfully           |
+| 3 | Download from radio               | All 500 channels read successfully           |
 | 4 | Switch audio to USB               | Audio routes through CM108                   |
 | 5 | Tune to active channel            | Hear received audio on phone speaker/headset |
 | 6 | Press PTT in app                  | Radio keys up, red LED lights                |

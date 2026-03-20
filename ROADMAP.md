@@ -50,7 +50,7 @@
   - CTCSS/DCS tone matches known repeater if programmed from database
 - [x] Warning vs. Error distinction (yellow caution vs. red block)
 - [x] "Why is this wrong?" explainer for each validation rule
-- [x] Batch validation: scan all 128 channels and report issues
+- [x] Batch validation: scan all 500 channels and report issues
 - [x] Block upload of clearly illegal configurations
 
 ### 4. CHIRP CSV Import/Export ✅
@@ -68,7 +68,7 @@
 ## P1 — High Priority (Core Experience)
 
 ### 5. Travel Route Repeater Planner ✅
-**Why:** Unique killer feature no other GMRS app offers. Users describe hitting repeaters 30-35 miles away on road trips. Channel limit (128) means "I have to pick and choose which repeaters" — route planning solves this.
+**Why:** Unique killer feature no other GMRS app offers. Users describe hitting repeaters 30-35 miles away on road trips. With 500 channels across GMRS, repeater, and programmable slots, route planning helps users organize optimal repeater lists for each trip.
 
 - [x] Enter start/end addresses or pick on map
 - [x] Query RepeaterBook for repeaters along route corridor
@@ -122,7 +122,7 @@
 - [x] Storage management (auto-delete after X days, max size)
 
 ### 10. Channel & Memory Management
-**Why:** DB20-G has 128 channel slots. Users complain about having to "pick and choose" repeaters. Smart management of this limited space is essential.
+**Why:** DB20-G has 500 channels (30 GMRS + 9 repeater + 454 programmable + 7 NOAA). Users complain about wanting to organize repeaters efficiently. Smart management of channel space is essential.
 
 - [x] Channel groups/banks (e.g., "Local Repeaters," "Family," "Travel")
 - [x] Drag-and-drop channel reordering
