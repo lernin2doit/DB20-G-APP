@@ -1,7 +1,7 @@
 package com.db20g.controller.protocol
 
 import android.util.Log
-import com.db20g.controller.serial.UsbSerialManager
+import com.db20g.controller.transport.RadioTransport
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.IOException
@@ -19,7 +19,7 @@ import java.nio.ByteOrder
  *   - Write: 'W' + uint16be(addr) + uint8(len=0x20) + data -> ACK 0x06
  *   - Memory: 0x0000-0x1C00 (channels + names + settings)
  */
-class DB20GProtocol(private val serial: UsbSerialManager) {
+class DB20GProtocol(private val serial: RadioTransport) {
 
     companion object {
         private const val TAG = "DB20GProtocol"

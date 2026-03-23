@@ -13,7 +13,7 @@
         "CM108AH USB audio codec for voice TX/RX",
         "PTT control via 2N2222A transistor (RTS) or G5V-1 relay (DTR)",
         "RJ-45 handset pass-through (use radio with hand mic AND phone simultaneously)",
-        "3.5mm TRS jack for rear data/programming port",
+        "K1 relay switches RJ-45 MIC/SPK pins between audio and serial modes",
         "4 status LEDs: Power (green), PTT (red), Audio (yellow), Serial (blue)"
       ]
     },
@@ -40,23 +40,15 @@
       "icon": "cable",
       "subsections": [
         {
-          "title": "3.5mm TRS — Data/Programming Port (J4)",
-          "table": [
-            ["Pin", "Signal", "Direction"],
-            ["Tip", "TX Data (to radio)", "CP2102N → Radio"],
-            ["Ring", "RX Data (from radio)", "Radio → CP2102N"],
-            ["Sleeve", "Ground", "Common"]
-          ]
-        },
-        {
           "title": "RJ-45 — Radio Handset Port (J2/J3)",
+          "note": "This pinout is configurable in the app. The table shows the assumed DB20-G default. Verify on your radio and update in Settings → Hardware Pinout if needed.",
           "table": [
             ["Pin", "Signal", "Notes"],
             ["1", "+V Supply", "Pass-through to handset"],
-            ["2", "Microphone", "Tapped for CM108AH TX audio output"],
+            ["2", "Microphone", "K1 relay: audio TX or serial TX via relay switching"],
             ["3", "Ground", "Common ground"],
-            ["4", "PTT", "Active LOW — tapped for Q1 collector / K1 relay NO"],
-            ["5", "Speaker+", "Tapped for CM108AH RX audio input"],
+            ["4", "PTT", "Active LOW — Q1 collector drives PTT"],
+            ["5", "Speaker+", "K1 relay: audio RX or serial RX via relay switching"],
             ["6", "Speaker−", "Pass-through"],
             ["7", "UP Button", "Pass-through"],
             ["8", "DOWN Button", "Pass-through"]
@@ -110,8 +102,7 @@
             {"id": "p3s1", "text": "Solder U2 (CP2102N QFN-28) — use flux, inspect bridges carefully"},
             {"id": "p3s2", "text": "Solder C3 (100nF) and C4 (10µF) bypass caps"},
             {"id": "p3s3", "text": "Connect U2 RST pin to 3V3 with 10kΩ pull-up"},
-            {"id": "p3s4", "text": "Solder J4 (3.5mm TRS jack)"},
-            {"id": "p3s5", "text": "TEST: Connect to phone. CP2102 should appear as /dev/ttyUSB0 in app."}
+            {"id": "p3s4", "text": "TEST: Connect to phone. CP2102 should appear as /dev/ttyUSB0. Serial routes through RJ-45 via relay."}
           ]
         },
         {
@@ -189,7 +180,7 @@
             "Verify 3.3V on U2 VDD pin",
             "Check USB D+/D− connections from hub port 1 to CP2102N",
             "Try different baud rate in app settings (should be 9600)",
-            "Verify J4 TRS jack connections (Tip=TX, Ring=RX, Sleeve=GND)"
+            "Verify RJ-45 cable connections and pinout configuration in app"
           ]
         },
         {
@@ -250,7 +241,6 @@
         "Y1: 12MHz Crystal (HC-49U)",
         "J1: USB-C Receptacle (USB 2.0)",
         "J2, J3: RJ-45 Through-Hole Connectors",
-        "J4: 3.5mm TRS Audio Jack",
         "R1–R12: Assorted Resistors (0805 SMD)",
         "C1–C12: Assorted Capacitors (0805 SMD)",
         "LED1–LED4: Green, Red, Yellow, Blue (0805 SMD)",
@@ -261,7 +251,7 @@
       "id": "wiring_diagram",
       "title": "Circuit Block Diagram",
       "icon": "schema",
-      "diagram": "Phone ──USB-C──► [F1 Fuse] ──► [FE1.1s Hub]\n                                    │\n                       ┌────────────┴────────────┐\n                       ▼                         ▼\n                  [CP2102N]                 [CM108AH]\n                   Serial                    Audio\n                       │                         │\n              ┌────────┴────┐          ┌─────────┴────────┐\n              ▼             ▼          ▼                  ▼\n          [J4 TRS]    [PTT Drive]  [RX Atten]       [TX Atten]\n          Data Port    Q1/Q2/K1    10:1 divider     10:1 divider\n              │             │          │                  │\n              ▼             ▼          ▼                  ▼\n          Radio Rear    Radio PTT   Radio SPK→Phone   Phone→Radio MIC\n          Data Port     (J2 pin4)   (J2 pin5)        (J2 pin2)\n\n              ◄──── RJ-45 Pass-through (J2 ↔ J3) ────►\n              Radio                              Handset"
+      "diagram": "Phone ──USB-C──► [F1 Fuse] ──► [FE1.1s Hub]\n                                    │\n                       ┌────────────┴────────────┐\n                       ▼                         ▼\n                  [CP2102N]                 [CM108AH]\n                   Serial                    Audio\n                       │                         │\n              ┌────────┴────┐          ┌─────────┴────────┐\n              ▼             ▼          ▼                  ▼\n         [K1 Relay]   [PTT Drive]  [K1 Relay]        [K1 Relay]\n         Serial TX     Q1/Q2       Audio RX          Audio TX\n              │             │          │                  │\n              ▼             ▼          ▼                  ▼\n          J2 MIC Pin    Radio PTT   Radio SPK→Phone   Phone→Radio MIC\n          (via relay)   (J2 pin4)   (via relay)       (via relay)\n\n              ◄──── RJ-45 Pass-through (J2 ↔ J3) ────►\n              Radio                              Handset"
     }
   ]
 }

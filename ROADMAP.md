@@ -1,6 +1,13 @@
 # DB20-G Android App — Development Roadmap
 
 > Prioritized feature roadmap for the Radioddity DB20-G GMRS remote control Android app and custom interface box. Informed by extensive community research across r/gmrs, r/amateurradio, CHIRP project, and real-world user feedback.
+>
+> **v2.0 ARCHITECTURE REDESIGN — COMPLETE** — The interface board has been
+> redesigned from a USB-tethered "dumb" pass-through to an ESP32-based
+> Bluetooth smart controller. The phone connects wirelessly, leaving the
+> phone's USB port free for vehicle charging. All phases (BT-1 through BT-5)
+> are complete pending hardware integration testing.
+> See [Phase 5](#phase-5--bluetooth-hardware-redesign) for full details.
 
 ---
 
@@ -12,6 +19,349 @@
 | 🟠 P1 | High — core experience improvements |
 | 🟡 P2 | Medium — strong user demand |
 | 🟢 P3 | Nice-to-have — polish and advanced features |
+| 🔵 BT | Bluetooth redesign — v2.0 hardware + firmware + app |
+
+---
+
+## 🔵 Phase 5 — Bluetooth Hardware Redesign
+
+### Motivation
+The USB-tethered design has fundamental UX problems:
+1. **Phone battery drain** — phone must power the board via OTG, draining its battery
+2. **Port occupied** — phone's only USB-C port is tied up; can't charge while using radio
+3. **Physical tether** — cable between phone and radio limits placement in a vehicle
+4. **Fragile** — USB connections vibrate loose in vehicles; cable snags are common
+
+The Bluetooth redesign solves all of these:
+- Phone connects wirelessly via Bluetooth Classic (SPP for data, audio for voice)
+- Board powers itself from an external source (vehicle 12V, radio handset port, or USB adapter)
+- Phone stays on its vehicle USB charger or wireless charging pad
+- No cable to snag, vibrate loose, or limit placement
+
+### Architecture Change Summary
+
+| Aspect | v1 (USB) | v2 (Bluetooth) |
+|--------|----------|----------------|
+| Phone connection | USB-C wired (OTG) | Bluetooth Classic wireless |
+| Board intelligence | Dumb pass-through | Smart (ESP32 MCU + firmware) |
+| Serial to radio | CP2102N USB-UART on board → USB to phone | ESP32 UART direct to radio |
+| Audio to/from radio | CM108AH USB audio codec → USB to phone | ESP32 ADC/DAC or I2S codec |
+| USB hub | FE1.1s (mux serial + audio to single USB) | Not needed |
+| Crystal | 12MHz external (for FE1.1s) | ESP32 internal oscillator |
+| Power source | Phone VBUS (drains phone battery) | External: vehicle 12V / radio / USB adapter |
+| PTT control | CP2102N RTS/DTR serial line → transistor | ESP32 GPIO → transistor (direct) |
+| Relay switching | Driven by CP2102N DTR | Driven by ESP32 GPIO |
+| Phone charging | Blocked (port in use) | Free (phone on vehicle USB or wireless) |
+| Firmware | None (all logic in Android app) | ESP32 firmware (BT stack, UART, audio, PTT) |
+
+### ICs Removed (v1 → v2)
+
+| IC | Function | Why Removed |
+|----|----------|-------------|
+| U1 FE1.1s | USB 2.0 4-port hub | No USB; ESP32 handles both serial and audio natively |
+| U2 CP2102N | USB-UART bridge | ESP32 has native UART; no USB path needed |
+| U3 CM108AH | USB audio codec | ESP32 ADC/I2S handles audio; BT audio to phone |
+| Y1 12MHz crystal | FE1.1s clock source | ESP32 has internal 40MHz crystal on module |
+
+### IC Added
+
+| IC | Function | Why |
+|----|----------|-----|
+| U1 ESP32-WROOM-32E | MCU + Bluetooth Classic + BLE + WiFi | Replaces all 3 former ICs; provides wireless connectivity, UART, ADC/DAC, GPIO |
+
+### Components Kept (with modifications)
+
+| Ref | Component | v1 Role | v2 Role | Changes |
+|-----|-----------|---------|---------|---------|
+| U2 | AMS1117-3.3 | 5V→3.3V LDO for FE1.1s/CP2102N | 5V→3.3V for ESP32 | Keep as-is if 5V input; replace with buck converter if 12V input |
+| K1 | G5V-2-DC5 DPDT relay | Switch MIC/SPK between serial and audio modes | Same function — ESP32 drives relay via GPIO→Q2 | Coil driver unchanged |
+| Q1 | 2N2222A | PTT driver (RTS→base) | PTT driver (ESP32 GPIO→base) | Base resistor stays; drive signal changes from CP2102N RTS to ESP32 GPIO |
+| Q2 | 2N2222A | Relay driver (DTR→base) | Relay driver (ESP32 GPIO→base) | Same change as Q1 |
+| D1 | 1N4148 | PTT clamp diode | Same | No change |
+| D2 | 1N5819 | Flyback diode (relay coil) | Same | No change |
+| F1 | 500mA polyfuse | USB VBUS protection | Input power protection | May need to upsize if 12V input; 500mA fine for 5V |
+| J2 | RJ-45 | Radio connection | Same | No change |
+| J3 | RJ-45 | Handset pass-through | Same | No change |
+| J4 | 2-pin header | External 5V input | External power input (5V or 12V) | If 12V, add buck converter before LDO |
+| R1-R2 | 10k | Transistor base resistors | Same | No change |
+| R3-R6 | Resistive dividers | Audio level matching (radio ↔ CM108AH) | Audio level matching (radio ↔ ESP32 ADC/DAC) | Values may change — ESP32 ADC is 0–3.3V vs CM108AH |
+| R7-R10 | 330Ω | LED current limiting | Same — ESP32 GPIO is 3.3V, LEDs need ~10mA | May adjust to 220Ω for same brightness at 3.3V |
+| R11-R12 | 5.1k CC pull-downs | USB-C device identification | **REMOVED** — no USB-C on board anymore | |
+| LED1-4 | 0805 LEDs | Power, PTT, Audio, Serial indicators | Power, PTT, Audio, BT status indicators | LED4 changes from "Serial TX" to "BT Connected" |
+| C1-C15 | Various | IC bypass + bulk decoupling | Reduced set — only ESP32 + AMS1117 bypass needed | ~8 caps vs 15 |
+| MH1-2 | Mounting holes | Board mounting | Same | No change |
+
+### New Components
+
+| Ref | Component | Purpose |
+|-----|-----------|---------|
+| U1 | ESP32-WROOM-32E module | MCU, Bluetooth Classic + BLE, WiFi, UART, ADC/DAC, GPIO |
+| J1 | USB-C or Micro-USB (optional) | ESP32 firmware flashing/debug only — NOT connected to phone in normal operation |
+| U3 | CP2102N (optional, for J1) | USB-UART for firmware flashing; could use ESP32-S3 native USB instead |
+| R16 | 10k | ESP32 EN pin pull-up |
+| R17 | 10k | ESP32 GPIO0 pull-up (boot mode select) |
+| C16 | 100nF | ESP32 EN pin decoupling (RC delay for stable boot) |
+| C17 | 22uF | ESP32 3.3V bulk decoupling |
+
+### Power Design Options
+
+**Option A — 5V input (simplest, recommended for prototyping)**
+- J4 = 2-pin header or USB-C (power only)
+- F1 → AMS1117-3.3 → 3.3V rail → ESP32 + peripherals
+- Relay K1 driven directly from 5V
+- Source: USB wall adapter, vehicle USB port, or power bank
+
+**Option B — Radio handset port power (if available)**
+- DB20-G may provide 5-8V on an RJ-45 pin for accessories
+- Needs investigation: which pin, what voltage, current capacity
+- If available, no external power connector needed — board self-powers from the radio
+
+**Option C — Vehicle 12V (permanent installation)**
+- J4 = barrel jack or screw terminal for 12V
+- Add buck converter (e.g., MP2315 5V/2A) before AMS1117, or single 12V→3.3V buck
+- Add TVS diode for automotive transient protection
+- Relay K1 still 5V coil — need 5V intermediate rail from buck converter
+
+### ESP32 Pin Assignments (Preliminary)
+
+| ESP32 GPIO | Function | Direction | Notes |
+|------------|----------|-----------|-------|
+| GPIO1 (TX0) | Debug UART TX | Output | To USB-UART for firmware flash |
+| GPIO3 (RX0) | Debug UART RX | Input | From USB-UART for firmware flash |
+| GPIO16 (TX2) | Radio UART TX | Output | To K1 P1_NO → radio MIC (serial mode) |
+| GPIO17 (RX2) | Radio UART RX | Input | From K1 P2_NO → radio SPK (serial mode) |
+| GPIO25 | DAC1 — TX audio out | Output | To K1 P1_NC → radio MIC (audio mode) via divider |
+| GPIO36 (VP) | ADC1_CH0 — RX audio in | Input | From K1 P2_NC → radio SPK (audio mode) via divider |
+| GPIO4 | PTT driver | Output | → R1 → Q1 base |
+| GPIO5 | Relay driver | Output | → R2 → Q2 base |
+| GPIO18 | LED1 (Power) | Output | Via R7 |
+| GPIO19 | LED2 (PTT active) | Output | Via R8 |
+| GPIO21 | LED3 (Audio activity) | Output | Via R9 |
+| GPIO22 | LED4 (BT connected) | Output | Via R10 |
+| EN | Enable (chip enable) | Input | Pull-up R16 + C16 |
+| GPIO0 | Boot mode | Input | Pull-up R17; hold low for flash mode |
+
+---
+
+## 🔵 BT-1: KiCad Schematic Redesign
+
+### Status: ✅ Complete
+
+> **Implementation:** `hardware/kicad/generate_v10.py` generates the complete
+> v10 schematic (`DB20G-Interface-v10.kicad_sch`). ERC result: **0 errors,
+> 42 warnings** (41 expected lib_symbol warnings + 1 cosmetic net overlap).
+> 42 components, 14 lib_symbols, 119 wires, 33 nets, 21 no-connects.
+
+**Remove:**
+- [x] Delete U1 FE1.1s symbol, instance, and all nets (VD18OUT, VD33OUT, XI, XO, FE_RESET, HUB_P1_DM, HUB_P1_DP, HUB_P2_DM, HUB_P2_DP)
+- [x] Delete U2 CP2102N symbol, instance, and all nets (CP_TXD, CP_RXD, CP_TXLED, CTS_PU, PTT_CTRL, DTR_CTRL)
+- [x] Delete U3 CM108AH symbol, instance, and all nets (CM_VDD18, CM_VREF, CM_GPIO4, CM_RESET, AUDIO_OUT, AUDIO_RX, AUDIO_RX_DIV, AUDIO_TX_DIV)
+- [x] Delete Y1 crystal and associated caps C7, C8
+- [x] Delete J1 USB-C connector (or repurpose for debug-only)
+- [x] Delete R11, R12 (CC pull-downs — no USB-C device mode)
+- [x] Delete R13 (FE_RESET pull-up), R14 (CTS pull-up), R15 (CM_RESET pull-up)
+- [x] Delete C1-C6 (FE/CP/CM bypass caps), C12-C15 (FE/CM internal rail caps)
+- [x] Delete #FLG01, #FLG03 if net topology changes
+
+**Add:**
+- [x] Create ESP32-WROOM-32E symbol definition (38 pins: power, GPIO, UART, ADC/DAC, EN, GPIO0, antenna)
+- [x] Add U1 ESP32-WROOM-32E instance with all pin nets
+- [x] Add R11 (10k EN pull-up), R12 (10k GPIO0 pull-up) *(renumbered from R16/R17)*
+- [x] Add C7 (100nF EN decoupling), C6 (22uF ESP32 bulk) *(renumbered from C16/C17)*
+- [x] Deferred J1 USB-C + U3 CP2102N — using UART header for flashing
+- [x] Add J5 (1x4 pin header) for UART flash: 3.3V, TX, RX, GND
+
+**Modify:**
+- [x] Change PTT_CTRL net: was CP2102N pin 21 (RTS) → now ESP32 GPIO4 (ESP_PTT)
+- [x] Change DTR_CTRL net: was CP2102N pin 23 (DTR) → now ESP32 GPIO5 (ESP_RELAY)
+- [x] Change LED3 drive: was CM_GPIO4 → now ESP32 GPIO21 (ESP_LED3)
+- [x] Change LED4 drive: was CP_TXLED → now ESP32 GPIO22 (ESP_LED4)
+- [x] Update relay K1 connections: P1_NO/P2_NO now connect to ESP32 UART2 TX/RX
+- [x] Update relay K1 connections: P1_NC/P2_NC now connect to ESP32 DAC/ADC via dividers
+- [x] Adjust R3-R6 divider values for ESP32 ADC (0–3.3V input range, ~1Vpp audio)
+- [x] Reduce LED resistors R7-R10 to 220Ω (3.3V GPIO vs 5V)
+- [x] Renumber/cleanup nets after IC removal
+
+**Validate:**
+- [x] Run ERC — 0 errors (42 warnings: 41 lib_symbol + 1 cosmetic)
+- [x] Verify all ESP32 GPIO assignments avoid bootstrap-sensitive pins
+- [x] Verify power rail decoupling is adequate (ESP32 draws ~240mA peak during TX)
+
+---
+
+## 🔵 BT-2: ESP32 Firmware (New Codebase)
+
+### Status: ✅ Complete
+
+> **Implementation:** `firmware/` directory — PlatformIO + Arduino project.
+> `main.cpp` implements BT SPP bridge, UART2, PTT, relay, LED control,
+> 8 kHz audio streaming (ADC/DAC), OTA updates via WiFi AP, NVS config
+> storage, and 3-minute FCC PTT timeout. See `firmware/README.md`.
+
+**Create `firmware/` directory** with PlatformIO + Arduino project structure. ✅
+
+**Core modules (implemented in `main.cpp`):**
+
+- [x] **BT SPP** — Bluetooth SPP (Serial Port Profile) server
+  - Advertises as "DB20G-Interface"
+  - Accepts SPP connections from the Android app
+  - Bidirectional data channel using framed command protocol
+  - Connection state callback (auto-releases PTT on disconnect)
+
+- [x] **BT audio** — Bluetooth audio streaming
+  - CMD_AUDIO (0x04) framed protocol for bidirectional voice
+  - 8 kHz 8-bit PCM, 160-byte (20 ms) frames
+  - ADC sampling (GPIO36) with ring buffer → BT SPP
+  - DAC playback (GPIO25) from incoming CMD_AUDIO frames
+  - Software TX/RX gain scaling, VOX threshold detection
+
+- [x] **Radio UART** — UART communication with DB20-G
+  - UART2 at 9600 baud 8N1
+  - Bridge between BT SPP data and radio serial port
+  - Transparent pass-through via CMD_SERIAL_DATA (0x01) framing
+  - Raw bytes forwarded radio→phone without framing
+
+- [x] **Radio audio** — Analog audio interface to radio
+  - DAC output (GPIO25) for TX audio → voltage divider → radio MIC
+  - ADC input (GPIO36) for RX audio ← voltage divider ← radio SPK
+  - Sample rate: 8kHz mono (voice-grade, matches radio bandwidth)
+  - 160-byte ring buffer for streaming between BT and ADC/DAC
+
+- [x] **PTT control** — PTT and relay management
+  - GPIO4 → Q1 → PTT (key/unkey radio) via CMD_PTT (0x02)
+  - GPIO5 → Q2 → K1 relay (switch serial ↔ audio mode) via CMD_RELAY (0x03)
+  - Safety: auto-releases PTT on BT disconnect
+  - 3-minute FCC TOT safety timeout with phone notification
+
+- [x] **LED status** — LED indicator control
+  - LED1: Power / heartbeat (1 Hz blink)
+  - LED2: PTT active (red when keyed)
+  - LED3: Audio activity (yellow — blinks on RX audio detection)
+  - LED4: BT connected (solid) / advertising (off)
+
+- [x] **OTA update** — Over-the-air firmware updates via WiFi
+  - ESP32 WiFi AP mode ("DB20G-Update" / "db20gota!") for firmware upload
+  - HTTP OTA endpoint at 192.168.4.1 with HTML upload form
+  - Dual-partition scheme (`min_spiffs.csv`) for safe rollback
+  - Streaming firmware upload via Arduino Update library, auto-reboot
+
+- [x] **Config storage** — NVS (Non-Volatile Storage) for settings
+  - TX gain, RX gain (0–255, default 128)
+  - PTT timeout (configurable, default 180000 ms)
+  - Persistent across power cycles via ESP32 Preferences library
+  - Remote config via CMD_CONFIG (0x05) from phone
+
+**Build system:**
+- [x] PlatformIO project with `platformio.ini` (Arduino framework)
+- [x] Pin definitions in `include/pins.h`, constants in `include/config.h`
+- [x] Flashing via J5 UART header (documented in `firmware/README.md`)
+- [x] Partition table: `min_spiffs.csv` (factory + ota_0 + ota_1 + nvs)
+- [ ] Kconfig for build-time options *(if migrating to ESP-IDF — deferred)*
+
+---
+
+## 🔵 BT-3: Android App Refactor
+
+### Status: ✅ Complete
+
+> **Implementation:** `RadioTransport` interface wired throughout the app.
+> `DB20GProtocol` accepts `RadioTransport`. `RadioViewModel` supports dual
+> USB + BT transport with runtime switching. Combined device picker in
+> `MainActivity`. BT permissions already in manifest.
+
+The existing app already has `BluetoothPttManager` for BLE HID buttons and audio routing. The refactor extends this to be the **primary** communication channel.
+
+**New class: `BluetoothRadioTransport.kt`** *(was BluetoothSerialManager)*
+- [x] Bluetooth Classic SPP client (connect to ESP32 "DB20G-Interface")
+- [x] Same interface contract: `connect()`, `write()`, `read()`, `disconnect()`
+- [x] Command framing protocol (0x01 serial, 0x02 PTT, 0x03 relay, 0x04 audio)
+- [ ] Auto-reconnect with exponential backoff *(deferred — needs real hardware testing)*
+
+**New class: `BluetoothAudioBridge.kt`**
+- [x] BT SCO audio link management (start/stop SCO)
+- [x] Route phone mic → BT SCO → ESP32 → DAC → radio MIC (TX path)
+- [x] Route radio SPK → ADC → ESP32 → BT SCO → phone speaker (RX path)
+- [x] VOX detection in the app (analyze audio amplitude)
+- [x] Audio level metering (callback with peak amplitude)
+- [ ] Full integration testing with real hardware *(deferred)*
+
+**Refactor `RadioViewModel.kt`**
+- [x] Abstract serial transport behind interface: `RadioTransport`
+  - [x] `UsbRadioTransport` implements `RadioTransport` (wraps UsbSerialManager)
+  - [x] `BluetoothRadioTransport` implements `RadioTransport` (BT SPP)
+- [x] Transport selection: BT and USB both available via device picker
+- [x] `activeTransport` property switches between USB and BT at runtime
+- [x] Update `DB20GProtocol` to accept `RadioTransport` instead of `UsbSerialManager`
+- [x] PTT, disconnect, pollRxStatus all route through `activeTransport`
+- [x] `TransportType` enum (USB, BLUETOOTH) exposed via LiveData
+
+**Update UI**
+- [x] Combined device picker: shows BT paired devices + USB serial devices
+- [x] Connection indicator: shows "(BT)" or "(USB)" in connection pill
+- [ ] First-launch BT pairing wizard *(deferred — standard Android pairing works)*
+- [ ] Firmware update screen for OTA *(deferred)*
+
+**Permissions**
+- [x] BT permissions in manifest: `BLUETOOTH`, `BLUETOOTH_ADMIN`, `BLUETOOTH_CONNECT`, `BLUETOOTH_SCAN`
+- [x] USB host permissions retained for fallback/development use
+
+---
+
+## 🔵 BT-4: Hardware Documentation Update
+
+### Status: ✅ Complete
+
+> **Implementation:** All hardware docs rewritten for v10 Bluetooth design.
+> Old v9 files archived in `hardware/archive/`. v10 BOM and README promoted
+> to primary filenames.
+
+All hardware docs rewritten for the new architecture:
+
+- [x] **hardware/README.md** — v10 block diagram, ESP32 pin table, command protocol, design decisions
+- [x] **hardware/BOM.md** — v10 BOM (~30 components, ~$5.28 total), updated sourcing
+- [x] **hardware/ASSEMBLY.md** — v10 build guide (5 phases: power, ESP32, PTT/relay, audio/LEDs, flash header)
+- [x] **hardware/WIRING.md** — ESP32 GPIO map, connector pinouts, signal routing, audio level matching
+- [x] **hardware/TROUBLESHOOTING.md** — v10 BT-specific troubleshooting (12 sections)
+- [x] **hardware/KICAD-CHANGES.md** — Complete v9→v10 schematic change log
+- [ ] **hardware/enclosure/DB20G-Enclosure.scad** — Resize for smaller board *(deferred — needs PCB dimensions)*
+- [ ] **docs/cable-build-guide.md** — Archived (v9 USB cable no longer needed; RJ-45 cable is standard)
+
+---
+
+## 🔵 BT-5: Power Source Investigation
+
+### Status: ✅ Resolved (Design Assumption)
+
+> **Assumption:** The DB20-G handset port supplies +5–8 V on RJ-45 pin 1 for
+> accessory power (the hand microphone is backlit, confirming voltage is
+> present).  The board is designed to accept this as its primary power source.
+> Physical measurement with a multimeter is still recommended before first
+> power-on to confirm exact voltage and current capacity.
+
+- [x] Design assumption: handset port RJ-45 pin 1 provides +5–8 V (backlit handset confirms supply)
+- [x] Voltage regulation path: Pin 1 → F1 polyfuse → AMS1117-3.3 → 3.3 V rail
+- [x] External power fallback: J4 2-pin header accepts 5 V from USB adapter or vehicle lighter
+- [x] Current budget documented: ~350 mA peak (ESP32 BT TX + relay + LEDs)
+- [x] AMS1117 thermal margin: 1.7 V drop × 0.35 A = 0.6 W — within SOT-223 limits for 5 V input
+- [ ] **TODO (requires hardware):** Measure actual pin 1 voltage and current under load with multimeter
+- [ ] **TODO (requires hardware):** Test ESP32 power consumption in all modes (idle, BT, BT+audio, WiFi OTA)
+- [ ] **TODO (requires hardware):** Verify AMS1117 doesn't overheat if radio supplies 8 V (8-3.3)×0.35 = 1.6 W — may need heatsink
+
+---
+
+## Implementation Order
+
+```
+BT-1  KiCad Schematic ────┐
+                           ├──► BT-4 Docs ──► BT-5 Power Investigation
+BT-2  ESP32 Firmware ──────┤
+                           │
+BT-3  Android App Refactor ┘
+```
+
+**All phases complete.** BT-1 (schematic), BT-2 (firmware), BT-3 (app refactor),
+BT-4 (docs), and BT-5 (power design) are done. Remaining work requires physical
+hardware for integration testing and validation.
 
 ---
 
@@ -319,6 +669,243 @@ Items 17–24. Pushes into vehicle integration, data modes, and advanced feature
 
 ---
 
+## 📋 Project Assessment — What Still Needs to Be Done
+
+> **Full audit performed 2026-03-20.** Every Kotlin source file, firmware file,
+> hardware document, resource file, and build config was inspected. Below is
+> the complete list of remaining work, grouped by severity.
+
+### Audit Summary
+
+| Area | Status |
+|------|--------|
+| Android app (84 .kt files, 18,128 LOC) | ✅ All 21 features implemented as real code |
+| ESP32 firmware (398 LOC) | ✅ Complete (SPP, audio, OTA, NVS, TOT) |
+| KiCad v10 schematic | ✅ Complete (0 ERC errors) |
+| Hardware documentation (6 docs) | ✅ Complete |
+| Android resources (24 layouts, strings, themes) | ✅ Complete |
+| **PCB layout & Gerber files** | ❌ **Not started** |
+| **Enclosure (v10 update)** | ❌ **Stale — designed for v9** |
+| **Test coverage** | ❌ **Zero tests** |
+| **CI/CD pipeline** | ❌ **None** |
+| **Play Store readiness** | ❌ **Multiple blockers** |
+
+---
+
+### 🔴 Critical — Blocks Hardware Fabrication
+
+#### HW-1: PCB Layout & Gerber Generation *(Not Started)*
+
+The v10 schematic is complete but there is **no PCB layout** — the board cannot be
+manufactured. This is the single biggest blocker for the entire project.
+
+- [ ] Create `DB20G-Interface-v10.kicad_pcb` with footprint placement
+- [ ] Create `DB20G-Interface-v10.kicad_pro` project file linking schematic + PCB
+- [ ] Route all traces (priority: ESP32 power, UART, analog audio, antenna keepout)
+- [ ] USB differential pairs N/A for v10 — but analog audio traces need guard grounding
+- [ ] ESP32 antenna keepout zone (≥10 mm clear of ground plane and copper on all layers)
+- [ ] Run DRC in KiCad — resolve all errors
+- [ ] Generate Gerber files (JLCPCB/PCBWay ready: F.Cu, B.Cu, F.Mask, B.Mask, F.Silk, B.Silk, Edge.Cuts, drill)
+- [ ] Generate BOM CSV and pick-and-place CPL for PCBA services
+- [ ] Review mounting hole count — schematic has MH1+MH2 but enclosure references 4× M3
+
+**Depends on:** Nothing — can start immediately
+**Blocks:** Hardware fabrication, enclosure update, integration testing
+
+#### HW-2: Enclosure Update for v10 *(Stale)*
+
+The OpenSCAD enclosure (`DB20G-Enclosure.scad`) was designed for the v9 USB board
+and has the wrong cutouts and dimensions for v10.
+
+- [ ] Update PCB dimensions to match v10 .kicad_pcb Edge.Cuts (after HW-1)
+- [ ] Remove J1 USB-C cutout (v10 has no USB-C connector)
+- [ ] Add J4 power header cutout (2-pin, likely on board edge)
+- [ ] Add J5 UART flash header cutout (1×4 pin header)
+- [ ] Add ESP32 antenna clearance window (≥10 mm keepout from enclosure wall, or open slot)
+- [ ] Verify RJ-45 (J2/J3) cutout positions match v10 footprint placement
+- [ ] Verify LED1-4 light pipe positions match v10 layout
+- [ ] Update version label from "v2.0" to "v10" or remove version from enclosure
+- [ ] Re-export STL and verify printability
+
+**Depends on:** HW-1 (need PCB dimensions)
+
+---
+
+### 🟠 High — Blocks Release & Store Submission
+
+#### APP-1: Fix `android.hardware.usb.host` Requirement
+
+[AndroidManifest.xml line 4](app/src/main/AndroidManifest.xml) declares:
+```xml
+<uses-feature android:name="android.hardware.usb.host" android:required="true" />
+```
+This **blocks installation on any device without USB host hardware**. Since v10 is
+primarily Bluetooth, USB is a fallback. Must change to `android:required="false"`.
+
+- [ ] Change `android:required="true"` to `android:required="false"` in manifest
+- [ ] Verify BT-only flow works without USB host support
+
+#### APP-2: Update `targetSdk` to 35
+
+Google Play requires `targetSdk 35` as of August 2025. Current value is 34.
+
+- [ ] Bump `targetSdk` to 35 in `app/build.gradle.kts`
+- [ ] Audit for Android 15 behavioral changes (predictive back, edge-to-edge, 16KB pages)
+- [ ] Test on Android 15 emulator
+
+#### APP-3: Release Signing Configuration
+
+No signing config exists. Cannot produce a signed release APK for Play Store.
+
+- [ ] Generate release keystore (`db20g-release.jks`)
+- [ ] Create `signing.properties` template (already gitignored)
+- [ ] Add `signingConfigs` block to `app/build.gradle.kts`
+- [ ] Enable `isMinifyEnabled = true` for release builds
+- [ ] Expand ProGuard rules (see APP-4)
+- [ ] Produce signed release APK and verify it installs/runs
+
+#### APP-4: ProGuard / R8 Rules *(Latent — Will Break on Minify)*
+
+[proguard-rules.pro](app/proguard-rules.pro) has only 1 rule (USB serial keep).
+Enabling minification will break these libraries:
+
+- [ ] Add ML Kit Translate + Language ID keep rules
+- [ ] Add Google Play Services Location keep rules
+- [ ] Add AndroidX Car App library keep rules
+- [ ] Add KotlinX Coroutines reflection keep rules
+- [ ] Add AndroidX Lifecycle ViewModel keep rules
+- [ ] Test release build with minification enabled
+
+---
+
+### 🟡 Medium — Quality & Reliability
+
+#### QA-1: Test Coverage *(Zero Tests)*
+
+There are **no unit tests and no instrumentation tests** anywhere in the project.
+No `testImplementation` or `androidTestImplementation` dependencies exist in
+`build.gradle.kts`.
+
+- [ ] Add test dependencies: JUnit 5, Mockk/Mockito, Robolectric, Turbine (Flow testing)
+- [ ] Unit tests — protocol layer:
+  - [ ] `DB20GProtocol` — read/write block encoding, memory address calculation
+  - [ ] `RadioChannel` — BCD frequency encode/decode, tone index lookup
+  - [ ] `ChannelValidator` — boundary validation (frequency limits, power limits, tone matching)
+  - [ ] `ChirpCsvManager` — CSV round-trip (import → export → re-import matches)
+  - [ ] `AfskModem` — AFSK encode/decode round-trip (Bell 202 bit accuracy)
+  - [ ] `SstvCodec` — VIS code encode/decode, frequency ↔ luminance
+  - [ ] `GmrsConstants` — CTCSS/DCS lookup table correctness
+- [ ] Unit tests — transport layer:
+  - [ ] `BluetoothRadioTransport` — command framing, state machine
+  - [ ] `UsbRadioTransport` — adapter delegation
+- [ ] Unit tests — managers:
+  - [ ] `ScanManager` — state machine transitions
+  - [ ] `ChannelGroupManager` — group CRUD, persistence round-trip
+  - [ ] `QsoLogger` — ADIF export format, search/filter
+  - [ ] `FccComplianceManager` — power limit lookups, channel classification
+- [ ] Instrumentation tests:
+  - [ ] `SetupWizardActivity` — step navigation, callsign validation
+  - [ ] `MainActivity` — device picker, transport connection flow
+  - [ ] Widget rendering — both sizes
+- [ ] Add `androidTestImplementation` dependencies for Espresso / Compose testing
+
+#### QA-2: CI/CD Pipeline *(None)*
+
+No GitHub Actions, no automated builds, no lint checks.
+
+- [ ] Create `.github/workflows/android-build.yml` — build + lint on push/PR
+- [ ] Create `.github/workflows/firmware-build.yml` — PlatformIO compile check
+- [ ] Add lint configuration (`lint.xml` or Gradle lint options)
+- [ ] Optional: automated APK artifact upload on tagged releases
+- [ ] Optional: KiCad DRC check in CI (kibot / kicad-cli)
+
+#### QA-3: `.gitignore` Missing Patterns
+
+- [ ] Add `.pio/` (PlatformIO build cache)
+- [ ] Add `.pioenvs/` (PlatformIO environments)
+- [ ] Add `.piolibdeps/` (PlatformIO library dependencies)
+- [ ] Add `*.stl` (generated OpenSCAD mesh files)
+- [ ] Add `fp-info-cache` (KiCad regenerated cache)
+
+---
+
+### 🟢 Low — Polish & Store Readiness
+
+#### STORE-1: Play Store Assets
+
+- [ ] 512×512 hi-res launcher icon (PNG) for Play Store listing
+- [ ] Feature graphic (1024×500) for Play Store
+- [ ] Screenshots (phone + tablet, at least 2 each)
+- [ ] Play Store listing text (short description, full description)
+- [ ] Privacy policy URL (required for Bluetooth + Location permissions)
+- [ ] Content rating questionnaire answers
+
+#### STORE-2: `docs/` Directory Repopulation
+
+The `docs/` directory is currently empty after the v9 cable build guide was archived.
+
+- [ ] User guide / quick-start tutorial (web-friendly Markdown or HTML)
+- [ ] Firmware flashing guide with photos (standalone from hardware/TROUBLESHOOTING.md)
+- [ ] FAQ / common questions
+
+#### POLISH-1: Miscellaneous Cleanup
+
+- [ ] BOM.md: mounting holes show MH1+MH2 but enclosure uses 4× M3 — reconcile when PCB is laid out
+- [ ] `versionCode` / `versionName` — define versioning strategy (semver, date-based, etc.)
+- [ ] Consider `compileSdk 35` bump alongside targetSdk change
+
+---
+
+### 🔵 Deferred — Requires Physical Hardware
+
+These items were identified during BT-2/BT-3/BT-5 development and explicitly
+deferred because they require a built board and radio for testing.
+
+- [ ] Auto-reconnect with exponential backoff *(BluetoothRadioTransport)*
+- [ ] Full BT audio integration testing (RX + TX paths, latency, quality)
+- [ ] First-launch BT pairing wizard *(standard Android pairing works for now)*
+- [ ] Firmware OTA update screen in Android app UI
+- [ ] Measure actual handset port pin 1 voltage and current under load
+- [ ] Test ESP32 power consumption in all modes (idle, BT, BT+audio, WiFi OTA)
+- [ ] Verify AMS1117 thermal margin at 8 V input (1.6 W dissipation — may need heatsink)
+- [ ] End-to-end integration test: phone → BT → ESP32 → radio → receive on second radio
+- [ ] Audio quality tuning: gain levels, noise floor, sidetone cancellation
+- [ ] Range test: Bluetooth SPP reliable range with ESP32 PCB antenna in enclosure
+
+---
+
+### Implementation Priority Order
+
+```
+                                         ┌─────────────────────┐
+  HW-1 PCB Layout ──────────────────────►│ HW-2 Enclosure      │
+       (Critical — blocks everything)    │ (needs PCB dims)     │
+                                         └─────────────────────┘
+  APP-1 USB feature flag ──┐
+  APP-2 targetSdk 35 ──────┤
+  APP-3 Signing config ────┼────────────► Release APK
+  APP-4 ProGuard rules ────┘
+
+  QA-1 Test coverage ──────┐
+  QA-2 CI/CD pipeline ─────┼────────────► Quality gates
+  QA-3 .gitignore ──────────┘
+
+  STORE-1 Assets ───────────┐
+  STORE-2 Docs ─────────────┼────────────► Play Store submission
+  POLISH-1 Cleanup ─────────┘
+```
+
+**Recommended sequence:**
+1. **HW-1** (PCB layout) — longest lead-time item; order boards ASAP
+2. **APP-1 + APP-2 + APP-3** (quick manifest/gradle fixes) — unblock release builds
+3. **QA-1** (unit tests) — catch bugs before hardware arrives
+4. **HW-2** (enclosure) — once PCB dimensions are final
+5. **QA-2** (CI/CD) — automate quality checks
+6. **STORE-1** (Play Store assets) — prepare while waiting for hardware
+7. **Deferred items** — once physical hardware is in hand
+
+---
+
 ## Community Research Sources
 
 - Reddit r/gmrs — DB20-G setup threads, emergency planning (138↑), programming complaints, repeater database discussions
@@ -329,4 +916,4 @@ Items 17–24. Pushes into vehicle integration, data modes, and advanced feature
 
 ---
 
-*Last updated: 2026-03-13*
+*Last updated: 2026-03-20*

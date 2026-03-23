@@ -15,6 +15,9 @@ import com.db20g.controller.repeater.GmrsRepeater
 import com.db20g.controller.repeater.RepeaterDatabase
 import com.db20g.controller.serial.MultiRadioManager
 import com.db20g.controller.serial.UsbSerialManager
+import com.db20g.controller.transport.BluetoothRadioTransport
+import com.db20g.controller.transport.RadioTransport
+import com.db20g.controller.transport.UsbRadioTransport
 import com.hoho.android.usbserial.driver.UsbSerialDriver
 import kotlinx.coroutines.launch
 import java.io.File
@@ -22,7 +25,11 @@ import java.io.File
 class RadioViewModel(application: Application) : AndroidViewModel(application) {
 
     private val serialManager = UsbSerialManager(application)
-    private val protocol = DB20GProtocol(serialManager)
+    private val btTransport = BluetoothRadioTransport(application)
+
+    /** The currently active transport — either USB or BT. */
+    private var activeTransport: RadioTransport = UsbRadioTransport(serialManager)
+    private var protocol = DB20GProtocol(activeTransport)
 
     // Multi-radio support
     val multiRadioManager = MultiRadioManager(application)
@@ -38,6 +45,14 @@ class RadioViewModel(application: Application) : AndroidViewModel(application) {
     // Available USB devices
     private val _availableDevices = MutableLiveData<List<UsbSerialDriver>>(emptyList())
     val availableDevices: LiveData<List<UsbSerialDriver>> = _availableDevices
+
+    // Active transport type
+    private val _transportType = MutableLiveData(TransportType.USB)
+    val transportType: LiveData<TransportType> = _transportType
+
+    // Available BT devices (paired)
+    private val _btDevices = MutableLiveData<List<android.bluetooth.BluetoothDevice>>(emptyList())
+    val btDevices: LiveData<List<android.bluetooth.BluetoothDevice>> = _btDevices
 
     // Channels
     private val _channels = MutableLiveData<List<RadioChannel>>(emptyList())
@@ -91,6 +106,47 @@ class RadioViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    // --- Bluetooth transport ---
+
+    fun scanBluetoothDevices() {
+        val devices = btTransport.pairedDevices()
+        _btDevices.value = devices
+        if (devices.isEmpty()) {
+            _statusMessage.value = "No paired Bluetooth devices. Pair DB20G-Interface in system settings."
+        } else {
+            _statusMessage.value = "Found ${devices.size} paired BT device(s)"
+        }
+    }
+
+    @Suppress("MissingPermission") // Callers must check BLUETOOTH_CONNECT
+    fun connectBluetooth(device: android.bluetooth.BluetoothDevice) {
+        viewModelScope.launch {
+            try {
+                _connectionState.value = ConnectionState.CONNECTING
+                _statusMessage.value = "Connecting via Bluetooth to ${device.name}..."
+
+                val success = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                    btTransport.connect(device)
+                }
+
+                if (success) {
+                    activeTransport = btTransport
+                    protocol = DB20GProtocol(activeTransport)
+                    _transportType.value = TransportType.BLUETOOTH
+                    _connectionState.value = ConnectionState.CONNECTED
+                    _statusMessage.value = "Connected via Bluetooth to ${device.name}"
+                } else {
+                    _connectionState.value = ConnectionState.DISCONNECTED
+                    _error.value = "Bluetooth connection failed. Is the board powered on?"
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "BT connection failed", e)
+                _connectionState.value = ConnectionState.DISCONNECTED
+                _error.value = "Bluetooth failed: ${e.message}"
+            }
+        }
+    }
+
     fun hasUsbPermission(driver: UsbSerialDriver): Boolean {
         val usbManager = getApplication<Application>()
             .getSystemService(Application.USB_SERVICE) as UsbManager
@@ -104,6 +160,9 @@ class RadioViewModel(application: Application) : AndroidViewModel(application) {
                 _statusMessage.value = "Connecting to ${driver.device.deviceName}..."
 
                 if (serialManager.connect(driver, baudRate = 9600)) {
+                    activeTransport = UsbRadioTransport(serialManager)
+                    protocol = DB20GProtocol(activeTransport)
+                    _transportType.value = TransportType.USB
                     _connectionState.value = ConnectionState.CONNECTED
                     _statusMessage.value = "Connected to ${driver.device.deviceName}"
                 } else {
@@ -119,7 +178,7 @@ class RadioViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun disconnect() {
-        serialManager.disconnect()
+        activeTransport.disconnect()
         _connectionState.value = ConnectionState.DISCONNECTED
         _statusMessage.value = "Disconnected"
     }
@@ -324,7 +383,7 @@ class RadioViewModel(application: Application) : AndroidViewModel(application) {
     // --- Live operation controls ---
 
     fun pttDown() {
-        serialManager.pttDown()
+        activeTransport.pttDown()
         _pttActive.value = true
         callsignManager.onPttDown()
         startRecording(AudioRecorder.RecordingType.TX)
@@ -332,7 +391,7 @@ class RadioViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun pttUp() {
-        serialManager.pttUp()
+        activeTransport.pttUp()
         _pttActive.value = false
         callsignManager.onPttUp()
         stopRecording()
@@ -355,7 +414,8 @@ class RadioViewModel(application: Application) : AndroidViewModel(application) {
      * Poll CTS line to detect receive activity (carrier/squelch open).
      */
     fun pollRxStatus() {
-        val active = serialManager.readCts()
+        // CTS polling only available over USB transport
+        val active = if (_transportType.value == TransportType.USB) serialManager.readCts() else false
         val wasActive = _rxActive.value ?: false
         _rxActive.postValue(active)
 
@@ -578,6 +638,8 @@ class RadioViewModel(application: Application) : AndroidViewModel(application) {
         super.onCleared()
         callsignManager.release()
         multiRadioManager.disconnectAll()
+        activeTransport.disconnect()
+        btTransport.disconnect()
         serialManager.disconnect()
     }
 
@@ -591,4 +653,9 @@ enum class ConnectionState {
     CONNECTING,
     CONNECTED,
     BUSY
+}
+
+enum class TransportType {
+    USB,
+    BLUETOOTH
 }

@@ -218,7 +218,8 @@ class MainActivity : AppCompatActivity() {
                 }
                 ConnectionState.CONNECTED -> {
                     binding.pillStatusIndicator.setBackgroundResource(R.drawable.circle_indicator_connected)
-                    binding.pillStatusText.text = "Connected"
+                    val transport = if (viewModel.transportType.value == TransportType.BLUETOOTH) "BT" else "USB"
+                    binding.pillStatusText.text = "Connected ($transport)"
                     binding.pillActionBtn.text = "Read"
                     binding.pillActionBtn.visibility = if (isPillExpanded) View.VISIBLE else View.GONE
                     binding.pillDisconnectBtn.visibility = if (isPillExpanded) View.VISIBLE else View.GONE
@@ -273,40 +274,47 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @Suppress("MissingPermission")
     private fun showDevicePicker() {
         viewModel.scanDevices()
-        val devices = viewModel.availableDevices.value ?: emptyList()
+        viewModel.scanBluetoothDevices()
+        val usbDevices = viewModel.availableDevices.value ?: emptyList()
+        val btDevices = viewModel.btDevices.value ?: emptyList()
 
-        if (devices.isEmpty()) {
-            Snackbar.make(binding.root, "No USB serial devices found", Snackbar.LENGTH_LONG).show()
+        if (usbDevices.isEmpty() && btDevices.isEmpty()) {
+            Snackbar.make(binding.root, "No USB or Bluetooth devices found", Snackbar.LENGTH_LONG).show()
             return
         }
 
-        if (devices.size == 1) {
-            val driver = devices[0]
-            if (viewModel.hasUsbPermission(driver)) {
-                viewModel.connect(driver)
-            } else {
-                requestUsbPermission(driver.device)
-            }
-            return
-        }
+        // Build combined list: BT devices first, then USB
+        val names = mutableListOf<String>()
+        val actions = mutableListOf<() -> Unit>()
 
-        val names = devices.map { driver ->
+        for (bt in btDevices) {
+            val name = bt.name ?: bt.address
+            names.add("\uD83D\uDCF6 BT: $name")
+            actions.add { viewModel.connectBluetooth(bt) }
+        }
+        for (driver in usbDevices) {
             val dev = driver.device
-            "${driver.javaClass.simpleName} — ${dev.deviceName} (${String.format("%04X:%04X", dev.vendorId, dev.productId)})"
-        }.toTypedArray()
-
-        MaterialAlertDialogBuilder(this)
-            .setTitle("Select USB Device")
-            .setItems(names) { _, which ->
-                val driver = devices[which]
+            names.add("\uD83D\uDD0C USB: ${dev.deviceName} (${String.format("%04X:%04X", dev.vendorId, dev.productId)})")
+            actions.add {
                 if (viewModel.hasUsbPermission(driver)) {
                     viewModel.connect(driver)
                 } else {
                     requestUsbPermission(driver.device)
                 }
             }
+        }
+
+        if (names.size == 1) {
+            actions[0]()
+            return
+        }
+
+        MaterialAlertDialogBuilder(this)
+            .setTitle("Select Device")
+            .setItems(names.toTypedArray()) { _, which -> actions[which]() }
             .show()
     }
 

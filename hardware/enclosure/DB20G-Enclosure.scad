@@ -8,7 +8,7 @@
 // Measured from KiCad PCB layout (DB20G-Interface.kicad_pcb).
 //
 // Connector layout by board edge:
-//   Top edge (Y=0):    J2 (RJ-45 Radio), J4 (3.5mm TRS)
+//   Top edge (Y=0):    J2 (RJ-45 Radio)
 //   Bottom edge (Y=73.5): J1 (USB-C), J3 (RJ-45 Handset)
 //   Right edge (X=46):  LED1–LED4 (vertical column)
 //   Left edge (X=0):    Clear
@@ -111,11 +111,6 @@ rj45_z_center = pcb_top_z + rj45_h/2;   // center at 12.85, bottom at 6.1
 
 // RJ-45 #2 — J3 Handset, bottom wall (Y=pcb_width edge), center at board x=32.41
 rj45_handset_x = 32.41;
-
-// 3.5mm TRS — J4, top wall (Y=0 edge), center at board x=12.53
-trs_d  = 6.5;          // 3.5mm jack barrel diameter
-trs_x = 12.53;         // Board-relative X center
-trs_z_center = pcb_top_z + trs_d/2;     // center at 9.35, bottom at 6.1
 
 // LED light pipe holes — right wall (X=pcb_length edge)
 // LED1–LED4 at board Y positions 31.0, 34.0, 37.0, 40.0 (3mm spacing)
@@ -224,11 +219,6 @@ module base() {
             rotate([-90, 0, 0])
             linear_extrude(wall + 2)
             rounded_rect(rj45_w + 1, rj45_h + 1, 1.0);
-
-        // 3.5mm TRS — J4, board top edge (Y=0 → -Y wall)
-        translate([board_to_enc_x(trs_x), -(outer_y/2 + 1), trs_z_center])
-            rotate([-90, 0, 0])
-            cylinder(d=trs_d + 1, h=wall + 2, $fn=24);
 
         // LED light pipe holes (right wall, +X side)
         for (ly = led_positions_y) {

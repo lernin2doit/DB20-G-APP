@@ -60,6 +60,9 @@ class SettingsFragment : Fragment() {
         binding.cardTranslationSettings.setOnClickListener {
             startActivity(Intent(requireContext(), TranslationActivity::class.java))
         }
+        binding.cardHardwarePinout.setOnClickListener {
+            startActivity(Intent(requireContext(), PinoutConfigActivity::class.java))
+        }
     }
 
     override fun onDestroyView() {

@@ -1,0 +1,653 @@
+{
+    "$schema": "https://schemas.kicad.org/erc.v1.json",
+    "coordinate_units": "mm",
+    "date": "2026-03-20T12:16:48-0400",
+    "kicad_version": "9.0.7",
+    "sheets": [
+        {
+            "path": "/",
+            "uuid_path": "/db2c6c2e-3e4a-4b8f-9d1a-1a2b3c4d5e6f",
+            "violations": [
+                {
+                    "description": "Both +3.3V and GND are attached to the same items; +3.3V will be used in the netlist",
+                    "items": [
+                        {
+                            "description": "Global Label '+3.3V'",
+                            "pos": {
+                                "x": 3.8227,
+                                "y": 0.4445
+                            },
+                            "uuid": "f7e596f3-1638-41b4-888f-2f055086bf2f"
+                        },
+                        {
+                            "description": "Global Label 'GND'",
+                            "pos": {
+                                "x": 3.8227,
+                                "y": 0.7747
+                            },
+                            "uuid": "e8d9b522-3323-4104-9ffd-fa2b37d2423e"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "multiple_net_names"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'DB20G'",
+                    "items": [
+                        {
+                            "description": "Symbol U1 [ESP32-WROOM-32E]",
+                            "pos": {
+                                "x": 4.0005,
+                                "y": 0.6985
+                            },
+                            "uuid": "f30fdb17-0065-486b-9de9-95cbe5d283e4"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'DB20G'",
+                    "items": [
+                        {
+                            "description": "Symbol J2 [RJ45]",
+                            "pos": {
+                                "x": 4.0005,
+                                "y": 1.6002
+                            },
+                            "uuid": "b60e78b5-b48c-400c-9cdc-3df384efcfa3"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'DB20G'",
+                    "items": [
+                        {
+                            "description": "Symbol Q1 [2N2222A]",
+                            "pos": {
+                                "x": 4.0005,
+                                "y": 2.2987
+                            },
+                            "uuid": "5241ba4d-9490-43cc-b042-a36fd68056e8"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'DB20G'",
+                    "items": [
+                        {
+                            "description": "Symbol J3 [RJ45]",
+                            "pos": {
+                                "x": 4.5974,
+                                "y": 1.6002
+                            },
+                            "uuid": "9982f1ef-9ae9-4e05-b923-a0ea3b8836ee"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'DB20G'",
+                    "items": [
+                        {
+                            "description": "Symbol F1 [Polyfuse]",
+                            "pos": {
+                                "x": 4.0005,
+                                "y": 2.794
+                            },
+                            "uuid": "ec126961-62f5-4037-a72f-b1d301cd5545"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'DB20G'",
+                    "items": [
+                        {
+                            "description": "Symbol Q2 [2N2222A]",
+                            "pos": {
+                                "x": 4.3942,
+                                "y": 2.2987
+                            },
+                            "uuid": "4832a139-6096-45ac-aa57-3a5a7483bf25"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'DB20G'",
+                    "items": [
+                        {
+                            "description": "Symbol U2 [AMS1117-3.3]",
+                            "pos": {
+                                "x": 5.0038,
+                                "y": 0.4953
+                            },
+                            "uuid": "4d7425d3-7545-4ea2-8045-b7f6f838adb1"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'DB20G'",
+                    "items": [
+                        {
+                            "description": "Symbol R1 [R]",
+                            "pos": {
+                                "x": 4.0005,
+                                "y": 3.302
+                            },
+                            "uuid": "ecf5730d-8af5-4f6a-a161-94116aaea216"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'DB20G'",
+                    "items": [
+                        {
+                            "description": "Symbol LED1 [LED]",
+                            "pos": {
+                                "x": 4.3942,
+                                "y": 2.794
+                            },
+                            "uuid": "2b1f90bd-31d5-4af2-b07e-704749cae523"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'DB20G'",
+                    "items": [
+                        {
+                            "description": "Symbol R7 [R]",
+                            "pos": {
+                                "x": 4.0005,
+                                "y": 3.5941
+                            },
+                            "uuid": "bd1914ca-62fb-472b-bcd8-1c4e641b5cf6"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'DB20G'",
+                    "items": [
+                        {
+                            "description": "Symbol R2 [R]",
+                            "pos": {
+                                "x": 4.2545,
+                                "y": 3.302
+                            },
+                            "uuid": "a49cb001-d818-4998-a846-f39bd927644f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'DB20G'",
+                    "items": [
+                        {
+                            "description": "Symbol J4 [Conn_01x02]",
+                            "pos": {
+                                "x": 5.1943,
+                                "y": 1.6002
+                            },
+                            "uuid": "473b1d43-4f0a-4642-ab90-bee77535c047"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'DB20G'",
+                    "items": [
+                        {
+                            "description": "Symbol LED2 [LED]",
+                            "pos": {
+                                "x": 4.699,
+                                "y": 2.794
+                            },
+                            "uuid": "13651f49-6963-4b67-a099-9d1e7b44bffb"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'DB20G'",
+                    "items": [
+                        {
+                            "description": "Symbol K1 [Relay_DPDT]",
+                            "pos": {
+                                "x": 5.0038,
+                                "y": 2.2987
+                            },
+                            "uuid": "6621f6d6-d49d-4516-bfe6-b7cac536603a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'DB20G'",
+                    "items": [
+                        {
+                            "description": "Symbol R8 [R]",
+                            "pos": {
+                                "x": 4.2545,
+                                "y": 3.5941
+                            },
+                            "uuid": "d212a6ed-e994-42ef-9b2c-b35cde3193d9"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'DB20G'",
+                    "items": [
+                        {
+                            "description": "Symbol R3 [R]",
+                            "pos": {
+                                "x": 4.4958,
+                                "y": 3.302
+                            },
+                            "uuid": "12f7c62f-85b3-4cb3-a9ac-23949c12fcc9"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'DB20G'",
+                    "items": [
+                        {
+                            "description": "Symbol C1 [C]",
+                            "pos": {
+                                "x": 4.0005,
+                                "y": 4.0005
+                            },
+                            "uuid": "f7c4693b-0dac-4061-8113-f4c4ae54537a"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'DB20G'",
+                    "items": [
+                        {
+                            "description": "Symbol LED3 [LED]",
+                            "pos": {
+                                "x": 5.0038,
+                                "y": 2.794
+                            },
+                            "uuid": "45647b3e-9495-4eda-a12c-40e24c396ce0"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'DB20G'",
+                    "items": [
+                        {
+                            "description": "Symbol R9 [R]",
+                            "pos": {
+                                "x": 4.4958,
+                                "y": 3.5941
+                            },
+                            "uuid": "8d12c849-7270-439b-a069-24769c424232"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'DB20G'",
+                    "items": [
+                        {
+                            "description": "Symbol R4 [R]",
+                            "pos": {
+                                "x": 4.7498,
+                                "y": 3.302
+                            },
+                            "uuid": "0158c1c2-2f27-4a81-bcc3-3e7cce9a20d2"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'DB20G'",
+                    "items": [
+                        {
+                            "description": "Symbol J5 [Conn_01x04]",
+                            "pos": {
+                                "x": 5.6007,
+                                "y": 1.6002
+                            },
+                            "uuid": "3a259972-bcd9-42dd-9152-50f7f0ada517"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'DB20G'",
+                    "items": [
+                        {
+                            "description": "Symbol C2 [C]",
+                            "pos": {
+                                "x": 4.2545,
+                                "y": 4.0005
+                            },
+                            "uuid": "6bd67aa1-a38b-42b8-8d90-e0ee0691eb08"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'DB20G'",
+                    "items": [
+                        {
+                            "description": "Symbol C6 [C]",
+                            "pos": {
+                                "x": 4.0005,
+                                "y": 4.3053
+                            },
+                            "uuid": "d717358a-b8ad-4573-96f8-f2a61a751a3c"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'DB20G'",
+                    "items": [
+                        {
+                            "description": "Symbol R10 [R]",
+                            "pos": {
+                                "x": 4.7498,
+                                "y": 3.5941
+                            },
+                            "uuid": "dd3d9cc4-4de3-4add-ae19-231c9372c402"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'DB20G'",
+                    "items": [
+                        {
+                            "description": "Symbol LED4 [LED]",
+                            "pos": {
+                                "x": 5.2959,
+                                "y": 2.794
+                            },
+                            "uuid": "6008b7ed-a885-4112-b665-6f1fd12ba4b3"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'DB20G'",
+                    "items": [
+                        {
+                            "description": "Symbol R5 [R]",
+                            "pos": {
+                                "x": 5.0038,
+                                "y": 3.302
+                            },
+                            "uuid": "f90573a6-ecc4-48ec-922d-b4d7dcb97364"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'DB20G'",
+                    "items": [
+                        {
+                            "description": "Symbol C3 [C]",
+                            "pos": {
+                                "x": 4.4958,
+                                "y": 4.0005
+                            },
+                            "uuid": "7a94770c-913d-46dd-b75b-173c47ae6d17"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'DB20G'",
+                    "items": [
+                        {
+                            "description": "Symbol C7 [C]",
+                            "pos": {
+                                "x": 4.2545,
+                                "y": 4.3053
+                            },
+                            "uuid": "7f4c845e-b73d-4c6c-bd45-197c4863c673"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'DB20G'",
+                    "items": [
+                        {
+                            "description": "Symbol D1 [D]",
+                            "pos": {
+                                "x": 5.6007,
+                                "y": 2.2987
+                            },
+                            "uuid": "4a664cac-89a3-401c-ba5f-f4cf8b7e889f"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'DB20G'",
+                    "items": [
+                        {
+                            "description": "Symbol R11 [R]",
+                            "pos": {
+                                "x": 5.0038,
+                                "y": 3.5941
+                            },
+                            "uuid": "53ce54fb-e716-487c-91b3-026aae2f6ba2"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'DB20G'",
+                    "items": [
+                        {
+                            "description": "Symbol MH1 [MountingHole_Pad]",
+                            "pos": {
+                                "x": 4.0005,
+                                "y": 4.699
+                            },
+                            "uuid": "651379a0-0c06-4c9a-979a-b5d56c59ede3"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'DB20G'",
+                    "items": [
+                        {
+                            "description": "Symbol R6 [R]",
+                            "pos": {
+                                "x": 5.2451,
+                                "y": 3.302
+                            },
+                            "uuid": "a9168f1a-950e-4014-981f-c9c5c29f1440"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'DB20G'",
+                    "items": [
+                        {
+                            "description": "Symbol C4 [C]",
+                            "pos": {
+                                "x": 4.7498,
+                                "y": 4.0005
+                            },
+                            "uuid": "3203095e-350a-4f0b-b5b7-45bb1cb907da"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'DB20G'",
+                    "items": [
+                        {
+                            "description": "Symbol C8 [C]",
+                            "pos": {
+                                "x": 4.4958,
+                                "y": 4.3053
+                            },
+                            "uuid": "8714040e-c88f-4774-b1b8-62afdbf1d8c2"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'DB20G'",
+                    "items": [
+                        {
+                            "description": "Symbol D2 [D]",
+                            "pos": {
+                                "x": 5.9055,
+                                "y": 2.2987
+                            },
+                            "uuid": "7c0d9af0-ca29-4127-8cea-4bc59977b7dd"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'DB20G'",
+                    "items": [
+                        {
+                            "description": "Symbol R12 [R]",
+                            "pos": {
+                                "x": 5.2451,
+                                "y": 3.5941
+                            },
+                            "uuid": "58119f4f-d5b2-44fb-ac56-0c7d250d06ea"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'DB20G'",
+                    "items": [
+                        {
+                            "description": "Symbol MH2 [MountingHole_Pad]",
+                            "pos": {
+                                "x": 4.3053,
+                                "y": 4.699
+                            },
+                            "uuid": "247356c1-9ef1-4b54-aed6-b1f52e89a0e2"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'DB20G'",
+                    "items": [
+                        {
+                            "description": "Symbol C5 [C]",
+                            "pos": {
+                                "x": 5.0038,
+                                "y": 4.0005
+                            },
+                            "uuid": "460f420f-e018-4afd-9b22-d1ee01433b3d"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'DB20G'",
+                    "items": [
+                        {
+                            "description": "Symbol C9 [C]",
+                            "pos": {
+                                "x": 4.7498,
+                                "y": 4.3053
+                            },
+                            "uuid": "eb615740-e6a9-454e-b5af-08c72dd2ce84"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'DB20G'",
+                    "items": [
+                        {
+                            "description": "Symbol #FLG02 [PWR_FLAG]",
+                            "pos": {
+                                "x": 4.3053,
+                                "y": 5.0038
+                            },
+                            "uuid": "586500cb-8795-4444-981a-2558058c7865"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                },
+                {
+                    "description": "The current configuration does not include the symbol library 'DB20G'",
+                    "items": [
+                        {
+                            "description": "Symbol #FLG03 [PWR_FLAG]",
+                            "pos": {
+                                "x": 4.5974,
+                                "y": 5.0038
+                            },
+                            "uuid": "9a3e7716-e753-4e3f-80ed-c7090feafb06"
+                        }
+                    ],
+                    "severity": "warning",
+                    "type": "lib_symbol_issues"
+                }
+            ]
+        }
+    ],
+    "source": "DB20G-Interface-v10.kicad_sch"
+}

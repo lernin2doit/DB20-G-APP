@@ -79,6 +79,11 @@
             android:theme="@style/Theme.DB20GController" />
 
         <activity
+            android:name=".ui.PinoutConfigActivity"
+            android:exported="false"
+            android:theme="@style/Theme.DB20GController" />
+
+        <activity
             android:name=".ui.ToolsActivity"
             android:exported="false"
             android:theme="@style/Theme.DB20GController" />

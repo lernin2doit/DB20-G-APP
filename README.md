@@ -1,12 +1,12 @@
 # DB20-G Controller
 
-**Open-source Android app and USB interface hardware for programming and operating the Radioddity DB20-G GMRS mobile radio.**
+**Open-source Android app and Bluetooth interface hardware for programming and operating the Radioddity DB20-G GMRS mobile radio.**
 
 > **⚠️ PROJECT STATUS: EARLY DEVELOPMENT — UNTESTED & INCOMPLETE**
 >
-> This project is in early development and is **not ready for production use**. Both the Android app and the USB interface hardware exist only as designs at this point — **neither has been fully tested**. The app contains numerous known bugs that still need to be resolved, and to our knowledge **no one has built the hardware yet** for proper end-to-end testing. If you choose to build or use any part of this project, you do so entirely at your own risk. Contributions and testing feedback are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md).
+> This project is in early development and is **not ready for production use**. Both the Android app and the v10 Bluetooth interface hardware exist only as designs at this point — **neither has been fully tested**. The app contains numerous known bugs that still need to be resolved, and to our knowledge **no one has built the hardware yet** for proper end-to-end testing. If you choose to build or use any part of this project, you do so entirely at your own risk. Contributions and testing feedback are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md).
 
-Connect your Android phone to your DB20-G with a single USB-C cable — program channels, manage repeaters, key PTT, and operate live, all from a beginner-friendly interface designed around real GMRS community feedback.
+Connect your Android phone to your DB20-G wirelessly over Bluetooth — program channels, manage repeaters, key PTT, and stream live audio, all from a beginner-friendly interface designed around real GMRS community feedback. Your phone stays on its charger while the interface box talks to the radio.
 
 ---
 
@@ -14,8 +14,9 @@ Connect your Android phone to your DB20-G with a single USB-C cable — program 
 
 The DB20-G Controller project is a complete ecosystem for GMRS radio operation:
 
-- **Android App** — Program channels, download/upload radio memory, operate live with PTT, search repeaters, and more
-- **USB Interface Box** — Custom open-hardware PCB that bridges your phone to the radio via USB-C (serial + audio + PTT in one cable)
+- **Android App** — Program channels, download/upload radio memory, operate live with PTT, search repeaters, stream audio, and more
+- **Bluetooth Interface Box** — Custom open-hardware PCB with ESP32 that wirelessly bridges your phone to the radio (serial + audio + PTT over Bluetooth)
+- **ESP32 Firmware** — PlatformIO-based firmware for the interface box (BT SPP, audio streaming, OTA updates)
 - **3D-Printable Enclosure** — Parametric OpenSCAD design for housing the interface board
 
 The Radioddity DB20-G is a popular 20-watt GMRS mobile radio, but programming it has been the #1 user complaint across every GMRS community. This project solves that with a 60-second setup wizard, live repeater database, and FCC-compliant validation — no PC required.
@@ -34,7 +35,7 @@ The Radioddity DB20-G is a popular 20-watt GMRS mobile radio, but programming it
 - **CHIRP Compatibility** — Import/export CHIRP `.csv` and `.img` files
 - **FCC Compliance Tools** — License lookup (ULS API), power limit validation, Part 95 quick reference
 - **Emergency Mode** — High-contrast SOS beacon with GPS coordinates, dead-man's switch, emergency net checklist
-- **Bluetooth PTT** — Wireless PTT button support (BLE HID) for Sena and generic buttons
+- **Bluetooth PTT** — Wireless PTT button support (BLE HID) for Sena and generic buttons, plus in-app PTT over Bluetooth SPP
 - **Scanner & Priority Scan** — Software-controlled scan lists, priority channel, dual-watch
 - **Signal Monitoring** — Audio level meter, RSSI history, spectrum analyzer, range test mode
 - **Text Messaging** — AFSK Bell 202 (1200 baud) text-over-radio with GPS position sharing
@@ -46,29 +47,31 @@ The Radioddity DB20-G is a popular 20-watt GMRS mobile radio, but programming it
 - **QSO Logging** — Contact database, net schedules, ADIF/CSV export
 - **Multi-Radio Support** — Manage multiple USB serial radios with profiles and cross-radio channel sync
 
-### Hardware (USB Interface Box)
+### Hardware (Bluetooth Interface Box — v10)
 
 ```
-┌──────────┐    USB-C     ┌──────────────────────────┐   RJ-45 + 3.5mm   ┌──────────┐
-│  Android  │◄───────────►│   DB20-G Interface Box    │◄─────────────────►│  DB20-G   │
-│   Phone   │  (single    │                           │  (handset port    │   Radio   │
-│           │   cable)    │  FE1.1s   → USB Hub       │   + data port)    │           │
-│           │             │  CP2102N  → Serial Data   │                   │           │
-│           │             │  CM108AH  → Audio I/O     │                   │           │
-│           │             │  PTT Ckt  → Transmit Key  │                   │           │
-└──────────┘              └──────────────────────────┘                    └──────────┘
+┌───────────┐  Bluetooth  ┌───────────────────────────┐     RJ-45      ┌──────────┐
+│  Android  │◄───────────►│   DB20-G Interface Box    │◄──────────────►│  DB20-G  │
+│   Phone   │  SPP serial │                           │ (handset port) │   Radio  │
+│           │  SCO audio  │  ESP32-WROOM-32E          │                │          │
+│           │             │   → BT serial bridge      │                │          │
+│           │             │   → DAC/ADC audio          │                │          │
+│           │             │   → PTT / relay control    │                │          │
+└───────────┘             └───────────────────────────┘                └──────────┘
 ```
 
-- **Single USB-C cable** carries serial, audio, and power to/from the phone
-- **FE1.1s USB hub** splits USB into serial (CP2102N) and audio (CM108AH) endpoints
-- **CP2102N USB-UART** — 9600 baud 8N1 for the DB20-G GA-510 programming protocol
-- **CM108AH USB audio codec** — 16-bit 48 kHz line-level audio in/out
-- **Transistor + relay PTT** — Keys transmit via RTS/DTR; hardware relay backup for noisy conditions
+- **Bluetooth Classic** (SPP + SCO) — phone connects wirelessly; no cable to the phone
+- **ESP32-WROOM-32E** — single module replaces the former USB hub, UART bridge, and audio codec
+- **9600 baud UART bridge** — BT SPP ↔ ESP32 UART2 for the DB20-G GA-510 programming protocol
+- **DAC/ADC audio** — 8 kHz 8-bit mono voice; ESP32 DAC (GPIO25) → radio MIC, radio SPK → ESP32 ADC (GPIO36)
+- **Transistor + relay PTT** — GPIO-driven PTT with 3-minute FCC timeout; DPDT relay switches serial ↔ audio mode
 - **RJ-45 handset pass-through** — Use the hand mic normally while the interface is connected
-- **Audio attenuators** — Resistive dividers match CM108 line levels to radio mic/speaker levels
-- **LED indicators** — Power (green), PTT (red), audio activity (yellow), serial (blue)
-- **46 × 73.5 mm PCB** — 2-layer FR4, easy to hand-solder; ~$3 per board from JLCPCB/PCBWay
-- **Total BOM cost** — ~$12–15 per unit (ICs + passives + connectors)
+- **Audio level matching** — Voltage dividers match ESP32 levels to radio mic/speaker levels
+- **LED indicators** — Power/heartbeat (green), PTT (red), audio activity (yellow), BT status (blue)
+- **OTA firmware updates** — ESP32 WiFi AP mode with HTTP upload for field-upgradeable firmware
+- **NVS config** — Persistent storage for TX/RX gain, PTT timeout, BT name
+- **External 5 V power** — Powered from radio handset port, USB adapter, or vehicle lighter. Phone stays on its charger.
+- **~30 components, ~$5.28 total BOM** — 2-layer FR4 PCB, hand-solderable
 
 ## Screenshots
 
@@ -78,10 +81,11 @@ The Radioddity DB20-G is a popular 20-watt GMRS mobile radio, but programming it
 
 ### Prerequisites
 
-- **Android device** running Android 8.0+ (API 26) with USB Host support
+- **Android device** running Android 8.0+ (API 26) with Bluetooth
 - **Radioddity DB20-G** GMRS mobile radio
-- **DB20-G Interface Box** ([build your own](#building-the-interface-box)) or a compatible USB serial adapter (CP2102, PL2303, FTDI, CH340)
-- **USB-C cable** and **RJ-45 patch cable** for connecting phone → interface → radio
+- **DB20-G Interface Box** ([build your own](#building-the-interface-box)) — ESP32 Bluetooth interface board
+- **RJ-45 patch cable** for connecting the interface box to the radio's handset port
+- **5 V power source** — USB adapter, vehicle lighter port, or radio handset port power
 
 ### Install the App
 
@@ -101,10 +105,13 @@ Check the [Releases](https://github.com/lernin2doit/DB20-G-APP/releases) page fo
 
 ### First Use
 
-1. Connect the interface box to your radio's handset port (RJ-45) and data port (3.5mm TRS)
-2. Connect your Android phone to the interface box via USB-C
-3. Grant USB permission when prompted
-4. The setup wizard will walk you through callsign entry, location, and programming your first channels
+1. Connect the interface box to your radio's handset port (RJ-45)
+2. Power the interface box (5 V via J4 or radio handset port)
+3. Open the app and pair with "DB20G-Interface" via Bluetooth
+4. Grant Bluetooth permission when prompted
+5. The setup wizard will walk you through callsign entry, location, and programming your first channels
+
+> **USB fallback:** The app also supports direct USB serial connection (CP2102, CH340, etc.) for firmware development and bench testing without the Bluetooth interface box.
 
 ### Building the Interface Box
 
@@ -112,15 +119,18 @@ Full hardware build documentation is in the [`hardware/`](hardware/) directory:
 
 | Document | Description |
 |----------|-------------|
-| [hardware/README.md](hardware/README.md) | Overview and circuit block diagram |
-| [hardware/BOM.md](hardware/BOM.md) | Full bill of materials with sourcing links |
-| [hardware/ASSEMBLY.md](hardware/ASSEMBLY.md) | Step-by-step build guide (4 phases) |
-| [hardware/WIRING.md](hardware/WIRING.md) | Pin mappings, RJ-45 pinout, 3.5mm TRS connections |
+| [hardware/README.md](hardware/README.md) | Overview, block diagram, ESP32 pin assignments |
+| [hardware/BOM.md](hardware/BOM.md) | Full bill of materials (~30 components, ~$5.28) |
+| [hardware/ASSEMBLY.md](hardware/ASSEMBLY.md) | Step-by-step build guide (5 phases) |
+| [hardware/WIRING.md](hardware/WIRING.md) | ESP32 GPIO map, connector pinouts, signal routing |
 | [hardware/TROUBLESHOOTING.md](hardware/TROUBLESHOOTING.md) | Common issues and diagnostics |
+| [hardware/KICAD-CHANGES.md](hardware/KICAD-CHANGES.md) | v9→v10 schematic change log |
 
-**Tools needed:** Soldering iron with fine tip, solder (0.5 mm recommended), flux, multimeter, 3D printer (for enclosure, optional).
+**Tools needed:** Soldering iron with fine tip, solder (0.5 mm recommended), flux, multimeter, USB-UART adapter (for initial ESP32 flashing), 3D printer (for enclosure, optional).
 
 **PCB fabrication:** Upload the KiCad files from `hardware/kicad/` to [JLCPCB](https://jlcpcb.com), [PCBWay](https://www.pcbway.com), or your preferred fab house. Default settings (2-layer, 1.6 mm FR4, HASL) work fine.
+
+**ESP32 firmware:** Flash via J5 UART header using PlatformIO: `cd firmware && pio run --target upload`. See [firmware/README.md](firmware/README.md) for details.
 
 **Enclosure:** Open `hardware/enclosure/DB20G-Enclosure.scad` in [OpenSCAD](https://openscad.org/) and export to STL for 3D printing.
 
@@ -155,26 +165,32 @@ DB20-G-APP/
 │   │   ├── ui/             # Activities, fragments, adapters (MVVM)
 │   │   ├── protocol/       # DB20-G serial protocol, channel/settings data classes
 │   │   ├── serial/         # USB serial communication (CP2102, PL2303, FTDI, CH340)
+│   │   ├── transport/      # RadioTransport interface, USB + Bluetooth implementations
 │   │   ├── repeater/       # RepeaterBook API, repeater database, callsign ID
-│   │   ├── audio/          # DTMF generation, Morse code (CW), VOX, audio routing
+│   │   ├── audio/          # DTMF, Morse, VOX, audio routing, Bluetooth audio bridge
 │   │   ├── auto/           # Android Auto integration
-│   │   ├── bluetooth/      # Bluetooth PTT button support
+│   │   ├── bluetooth/      # Bluetooth PTT button support, BT SPP transport
 │   │   ├── emergency/      # Emergency mode, SOS beacon
 │   │   ├── translation/    # On-device ML Kit translation
 │   │   ├── compliance/     # FCC license validation, power limit checking
 │   │   └── service/        # Foreground service for persistent radio connection
 │   ├── res/                # Layouts, drawables, strings (English + Spanish)
 │   └── AndroidManifest.xml
+├── firmware/               # ESP32 firmware (PlatformIO + Arduino)
+│   ├── src/main.cpp        # BT SPP bridge, audio streaming, OTA, NVS
+│   ├── include/pins.h      # GPIO pin definitions
+│   ├── include/config.h    # Firmware constants
+│   └── platformio.ini      # Build configuration
 ├── hardware/
-│   ├── kicad/              # KiCad 9 schematic + PCB design
+│   ├── kicad/              # KiCad 9 schematic (v10 ESP32 Bluetooth design)
 │   ├── enclosure/          # OpenSCAD 3D-printable enclosure
-│   ├── BOM.md / BOM.csv    # Bill of materials
+│   ├── BOM.md              # Bill of materials
 │   ├── ASSEMBLY.md         # Build guide
-│   ├── WIRING.md           # Pin mappings
-│   └── TROUBLESHOOTING.md  # Diagnostic guide
-├── docs/
-│   └── cable-build-guide.md  # Simple USB-serial breakout cable guide
-└── ROADMAP.md              # Feature roadmap (P0–P3)
+│   ├── WIRING.md           # Pin mappings, signal routing
+│   ├── TROUBLESHOOTING.md  # Diagnostic guide
+│   ├── KICAD-CHANGES.md    # v9→v10 schematic change log
+│   └── archive/            # Archived v9 USB design files
+└── ROADMAP.md              # Feature roadmap (P0–P3 + Bluetooth redesign)
 ```
 
 ## Technology Stack
@@ -184,6 +200,7 @@ DB20-G-APP/
 | Language | Kotlin 2.0 |
 | UI | Material Design 3, ViewPager2, RecyclerView |
 | Architecture | MVVM (ViewModel + LiveData + Coroutines) |
+| Transport | RadioTransport interface (USB serial + Bluetooth SPP) |
 | USB Serial | [usb-serial-for-android](https://github.com/mik3y/usb-serial-for-android) 3.7.3 |
 | Location | Google Play Services Location 21.1 |
 | Translation | ML Kit Translate 17.0 (on-device) |
@@ -191,6 +208,7 @@ DB20-G-APP/
 | Min SDK | Android 8.0 (API 26) |
 | Target SDK | Android 14 (API 34) |
 | Build | Gradle 8.7.3, JDK 17 |
+| Firmware | PlatformIO + Arduino framework (ESP32) |
 | PCB Design | KiCad 9 |
 | Enclosure | OpenSCAD |
 
@@ -259,6 +277,7 @@ See [ROADMAP.md](ROADMAP.md) for the full prioritized feature plan. Key areas:
 - **P1 (High)** — Travel route planner, emergency features, Bluetooth PTT ✅
 - **P2 (Medium)** — Scanner, signal monitoring, multi-radio, QSO logging ✅
 - **P3 (Nice-to-have)** — Android Auto, SSTV, text messaging, weather, spectrum display ✅
+- **BT (v2.0 Redesign)** — ESP32 Bluetooth hardware, firmware, app refactor, docs ✅
 
 ## License
 

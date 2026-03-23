@@ -1,234 +1,225 @@
-# DB20-G Interface Box — Wiring & Pin Mapping Reference
+# DB20-G Interface Board — Wiring & Signal Guide (v10, ESP32 Bluetooth)
 
-Complete wiring guide for connecting the interface box to the Radioddity DB20-G GMRS radio.
+> **Board revision:** v10 (ESP32-WROOM-32E Bluetooth)
+>
+> ⚠ The v9 USB wiring guide is archived in `archive/WIRING-v9.md`.
 
-## System Wiring Diagram
+---
+
+## Block Diagram
 
 ```
-  ┌─────────────────────────────────────────────────────────────────────────────┐
-  │                          DB20-G Interface Box                               │
-  │                                                                             │
-  │   ┌───────────┐        ┌───────────┐        ┌───────────┐                  │
-  │   │           │  USB   │           │  USB   │           │                  │
-  │   │  FE1.1s   │ Port1  │  CP2102N  │  UART  │   3.5mm   │◄── To Radio     │
-  │   │  USB Hub  │───────►│  USB-UART ├───────►│  TRS Jack │    Data Port    │
-  │   │    (U1)   │        │   (U2)    │  TX/RX │   (J4)    │                  │
-  │   │           │        │           │        │           │                  │
-  │   │           │        │     RTS ──┤──┐     └───────────┘                  │
-  │   │           │        └───────────┘  │                                    │
-  │   │           │                       │  ┌────────────┐                    │
-  │   │           │                       └─►│ PTT Driver │                    │
-  │   │           │                          │ Q1 2N2222A ├──┐                 │
-  │   │           │                          └────────────┘  │                 │
-  │   │           │        ┌───────────┐                     │                 │
-  │   │           │  USB   │           │  SPK_OUT            │                 │
-  │   │           │ Port2  │  CM108AH  ├──[R5]──[R6]──►MIC  │                 │
-  │   │           │───────►│  USB Audio│                     │  ┌───────────┐  │
-  │   │           │        │   (U3)    │  MIC_IN             ├─►│  RJ-45    │  │
-  │   └───────────┘        │           │◄─[R3]──[R4]──SPK   │  │  Radio    │──┼── To Radio
-  │        ▲               └───────────┘                     │  │  (J2)     │  │   Handset Port
-  │        │                                                 │  │           │  │
-  │   ┌────┴─────┐         ┌───────────┐                     │  └─────┬─────┘  │
-  │   │  USB-C   │         │  AMS1117  │ 3.3V                │        │        │
-  │   │   (J1)   │◄─Phone  │   (U4)    ├──► CP2102N VCC      │  ┌─────┴─────┐  │
-  │   │          │  5V ──►│           │                      │  │  RJ-45    │  │
-  │   └──────────┘         └───────────┘                      │  │ Pass-thru │──┼── To Handset
-  │                                                           │  │  (J3)     │  │
-  │   ┌──────────┐         ┌───────────┐                      │  └───────────┘  │
-  │   │ LEDs ×4  │         │   Relay   │◄─── Q2 driver ──────┘                 │
-  │   │ PWR/PTT/ │         │  G5V-1    ├──► PTT (backup path)                  │
-  │   │ AUD/SER  │         │   (K1)    │                                       │
-  │   └──────────┘         └───────────┘                                       │
-  └─────────────────────────────────────────────────────────────────────────────┘
+┌──────────────┐          ┌──────────────────────────────┐          ┌───────────┐
+│ Android Phone│──── BT ──│  ESP32-WROOM-32E (U1)        │          │ DB20-G    │
+│  (app)       │   SPP    │                              │          │ Radio     │
+│              │   +SCO   │  UART2 (GPIO16/17)  ──K1 NO──│──── J2 ──│ (serial)  │
+│              │          │  DAC (GPIO25)       ──K1 NC──│──── J2 ──│ (audio)   │
+│              │          │  ADC (GPIO36)       ──K1 NC──│──── J2 ──│ (audio)   │
+│              │          │  GPIO4 → Q1 ────────PTT──────│──── J2 ──│ PTT       │
+│              │          │  GPIO5 → Q2 ────────K1 coil──│          │           │
+└──────────────┘          │  GPIO18-22 → LEDs            │          └───────────┘
+                          └──────────────────────────────┘
+                                    │
+                          ┌─────────┴─────────┐
+                          │  AMS1117-3.3 (U2) │
+                          │  5V → 3.3V LDO    │
+                          └─────────┬─────────┘
+                                    │
+                            J4 (5V input) or
+                            J2 pin 2 (radio power)
 ```
+
+---
+
+## ESP32 GPIO Pin Map
+
+| GPIO | Function | Direction | Connect To | Notes |
+|------|----------|-----------|------------|-------|
+| 1 (TX0) | Debug UART TX | Out | J5 pin 2 | Firmware flash / serial monitor |
+| 3 (RX0) | Debug UART RX | In | J5 pin 3 | Firmware flash / serial monitor |
+| 16 | Radio UART RX | In | K1 P2_NO | Radio SPK → relay → ESP32 (serial mode) |
+| 17 | Radio UART TX | Out | K1 P1_NO | ESP32 → relay → radio MIC (serial mode) |
+| 25 | DAC1 — TX audio | Out | K1 P1_NC via R3/R4 | ESP32 → divider → relay → radio MIC (audio mode) |
+| 36 (VP) | ADC1_CH0 — RX audio | In | K1 P2_NC via R5/R6 | Radio SPK → relay → divider → ESP32 (audio mode) |
+| 4 | PTT driver | Out | R1 → Q1 base | GPIO HIGH = PTT keyed |
+| 5 | Relay driver | Out | R2 → Q2 base | GPIO HIGH = serial mode; LOW = audio mode |
+| 18 | LED1 (Power) | Out | R7 (220 Ω) → LED | Green — heartbeat blink |
+| 19 | LED2 (PTT) | Out | R8 (220 Ω) → LED | Red — solid when keyed |
+| 21 | LED3 (Audio) | Out | R9 (220 Ω) → LED | Yellow — blinks on RX audio |
+| 22 | LED4 (BT) | Out | R10 (220 Ω) → LED | Blue — solid=connected, blink=advertising |
+| 0 | Boot mode select | In | R12 (10 k pull-up) | Hold LOW during boot for flash mode |
+| EN | Chip enable | In | R11 (10 k pull-up) + C7 (100 nF) | RC delay for stable boot |
+
+---
 
 ## Connector Pinouts
 
-### J1 — USB-C Receptacle (Phone Connection)
+### J2 — Radio RJ-45 (to DB20-G radio accessory port)
 
-Standard USB 2.0 over USB-C. Only D+/D-/VBUS/GND are used.
+| Pin | Signal | Direction | Description |
+|-----|--------|-----------|-------------|
+| 1 | GND | — | Ground |
+| 2 | +V Supply | In | +5–8 V from radio (handset backlight power) |
+| 3 | SPK+ | Out (from radio) | Radio speaker / RX audio output |
+| 4 | SPK− | — | Speaker return (often GND) |
+| 5 | MIC | In (to radio) | Microphone / TX audio input |
+| 6 | PTT | In (to radio) | Pull low to transmit |
+| 7 | Serial Data | Bidirectional | 9600 baud programming data |
+| 8 | GND | — | Ground |
 
-| Pin   | Signal | Direction     | Note                           |
-|-------|--------|---------------|--------------------------------|
-| A1,B1 | GND    | —             | Ground                         |
-| A4,B4 | VBUS   | Phone → Box   | 5V power from phone            |
-| A6    | D+     | Bidirectional | USB data positive              |
-| A7    | D-     | Bidirectional | USB data negative              |
-| B6    | D+     | Bidirectional | Tied to A6                     |
-| B7    | D-     | Bidirectional | Tied to A7                     |
-| A5,B5 | CC     | —             | 5.1kΩ pull-down for UFP detect |
+> Pin numbering follows the DB20-G service manual / CHIRP convention.
+> Cross-reference with `docs/cable-build-guide.md` for cable construction.
 
-### J2 — RJ-45 Radio Side (Handset Port Connection)
+### J3 — Handset RJ-45 (pass-through for original handset)
 
-Connects to the DB20-G's front handset RJ-45 port. Standard T-568B wiring.
+Same pinout as J2. The DPDT relay K1 switches the MIC and SPK lines between
+the ESP32 (for programming/audio) and the handset connector (for normal
+handset operation).
 
-| RJ-45 Pin | Wire Color    | Signal           | Interface Box Connection          |
-|-----------|---------------|------------------|-----------------------------------|
-| 1         | Orange/White  | +V Supply (8V)   | Pass-through to J3 pin 1          |
-| 2         | Orange        | Microphone (Hot)  | CM108 SPK_OUT via R5/R6 divider   |
-| 3         | Green/White   | Ground            | Common GND plane                  |
-| 4         | Blue          | PTT (Active Low)  | Q1 collector / K1 relay NO        |
-| 5         | Blue/White    | Speaker+ (Hot)    | To R3/R4 divider → CM108 MIC_IN   |
-| 6         | Green         | Speaker- (Return) | Pass-through to J3 pin 6          |
-| 7         | Brown/White   | UP Button         | Pass-through to J3 pin 7          |
-| 8         | Brown         | DOWN Button       | Pass-through to J3 pin 8          |
+### J4 — Power Input (2-pin header)
 
-### J3 — RJ-45 Handset Pass-through
+| Pin | Signal | Notes |
+|-----|--------|-------|
+| 1 | +5 V | Input to F1 polyfuse → U2 AMS1117-3.3 |
+| 2 | GND | Board ground |
 
-Directly connected to J2 with taps for audio and PTT. The hand microphone works normally.
+### J5 — UART Flash Header (1×4 pin header)
 
-| J3 Pin | Connected To | Tap                                    |
-|--------|-------------|----------------------------------------|
-| 1      | J2 pin 1    | None (direct pass-through)             |
-| 2      | J2 pin 2    | Tapped: CM108 audio injected in parallel |
-| 3      | J2 pin 3    | None (common ground)                   |
-| 4      | J2 pin 4    | Tapped: PTT transistor in parallel     |
-| 5      | J2 pin 5    | Tapped: Audio tapped to CM108 MIC_IN   |
-| 6      | J2 pin 6    | None (direct pass-through)             |
-| 7      | J2 pin 7    | None (direct pass-through)             |
-| 8      | J2 pin 8    | None (direct pass-through)             |
+| Pin | Signal | Connect To |
+|-----|--------|------------|
+| 1 | 3.3 V | USB-UART adapter 3.3 V (optional — board is self-powered) |
+| 2 | TX (ESP32 TX0) | USB-UART adapter RX |
+| 3 | RX (ESP32 RX0) | USB-UART adapter TX |
+| 4 | GND | USB-UART adapter GND |
 
-### J4 — 3.5mm TRS (Data/Programming Port)
+---
 
-Connects to the rear data port on the DB20-G. This is a standard Kenwood-style programming cable pinout.
+## Signal Routing
 
-| TRS    | Signal       | Interface Box Connection | Direction     |
-|--------|-------------|-------------------------|---------------|
-| Tip    | TX Data      | CP2102N TXD (pin 25)    | Box → Radio   |
-| Ring   | RX Data      | CP2102N RXD (pin 26)    | Radio → Box   |
-| Sleeve | Ground       | Common GND              | —             |
-
-**Note:** The DB20-G data port uses 3.3V TTL levels. The CP2102N outputs 3.3V by default when powered from the 3.3V rail — no level shifting needed.
-
-### J5 — Debug/Expansion Header (2×5 pins)
-
-| Pin | Signal    | Pin | Signal      |
-|-----|-----------|-----|-------------|
-| 1   | 3.3V      | 2   | 5V          |
-| 3   | UART TX   | 4   | UART RX     |
-| 5   | RTS       | 6   | DTR         |
-| 7   | CTS       | 8   | GPIO (CM108)|
-| 9   | GND       | 10  | GND         |
-
-## PTT Circuit Detail
+### Serial Mode (Relay Energized — K1 HIGH)
 
 ```
-                  R1 (10kΩ)
-CP2102N RTS ──────┤├────────► Q1 Base
-                                │
-                           ┌────┤ 2N2222A (NPN)
-                           │    │
-               J2 Pin 4 ◄─┤    │
-               (PTT line)  │    ▼ Emitter
-                           │    │
-                           │   GND
-                      Collector
-                           │
-                      ┌────┘
-                      │
-                      ▼ Also connects to relay path:
-
-                  R2 (10kΩ)
-CP2102N DTR ──────┤├────────► Q2 Base
-                                │
-                           ┌────┤ 2N2222A (NPN)
-                           │    │
-              K1 Coil (-) ◄┤    │
-                           │    ▼ Emitter
-                      ┌────┘    │
-                      │        GND
-                  K1 Coil (+) ──── 5V
-                      │
-                 D1 ──┤── (1N4148 flyback, cathode to 5V)
-                      │
-                  K1 NO ──────── J2 Pin 4 (PTT)
-                  K1 COM ─────── GND
+Phone ──BT SPP──► ESP32 UART2 TX (GPIO17) → K1 P1_NO ──► Radio MIC (serial data)
+Radio Serial Data → K1 P2_NO → ESP32 UART2 RX (GPIO16) ──BT SPP──► Phone
 ```
 
-**How PTT works:**
-1. **App presses PTT** → CP2102N RTS line goes HIGH
-2. RTS HIGH → current flows through R1 (10kΩ) → Q1 base
-3. Q1 turns ON → collector pulls J2 pin 4 (PTT) to GND
-4. Radio sees PTT grounded → enters transmit mode
-5. **App releases PTT** → RTS goes LOW → Q1 turns OFF → PTT line floats high
+Used for programming the radio (reading/writing channels and settings).
 
-**Relay backup path:**
-1. **App sets DTR HIGH** → current through R2 → Q2 base
-2. Q2 turns ON → relay K1 energizes
-3. K1 NO contact closes → PTT line pulled to GND
-4. Use relay path if transistor PTT doesn't work (some radios need more current)
-
-**Configure in app:** Live tab → PTT Config → select RTS (transistor) or DTR (relay)
-
-## Audio Path Detail
-
-### Receive (Radio Speaker → Phone)
+### Audio Mode (Relay Released — K1 LOW, default)
 
 ```
-DB20-G Speaker+ ──── J2 Pin 5 ──── C9 (1µF, DC block)
-                                          │
-                                     R3 (10kΩ)
-                                          │
-                                     ┌────┤
-                                     │    │
-                              CM108  │  R4 (1kΩ)
-                              MIC_IN │    │
-                                     │   GND
-                                     │
-                                     └──► CM108AH → USB Audio → Phone
+Phone ──BT SCO──► ESP32 DAC (GPIO25) → R3/R4 divider → C4 → K1 P1_NC ──► Radio MIC
+Radio SPK → K1 P2_NC → C5 → R5/R6 divider → ESP32 ADC (GPIO36) ──BT──► Phone
 ```
 
-**Attenuation:** 10:1 voltage divider (10kΩ / 1kΩ) reduces ~1V p-p speaker output to ~90mV for CM108 MIC_IN. Fine-tune by changing R3:
-- Too loud: increase R3 to 22kΩ or 47kΩ
-- Too quiet: decrease R3 to 4.7kΩ
+Used for voice transmission and reception. The relay is in its default
+(de-energized) position, so audio passes through even if the ESP32 is off.
 
-### Transmit (Phone → Radio Microphone)
+### PTT Path
 
 ```
-Phone Audio → USB → CM108AH SPK_OUT ──── C10 (1µF, DC block)
-                                                │
-                                           R5 (10kΩ)
-                                                │
-                                           ┌────┤
-                                           │    │
-                                   J2 Pin 2│  R6 (1kΩ)
-                                   (MIC)   │    │
-                                           │   GND
-                                           │
-                               Radio Mic ◄─┘
+ESP32 GPIO4 → R1 (10k) → Q1 base
+                         Q1 collector → PTT line (J2 pin 6)
+                         Q1 emitter → GND
+
+GPIO4 HIGH → Q1 saturates → PTT pulled LOW → radio transmits
+GPIO4 LOW  → Q1 off → PTT floats HIGH → radio receives
 ```
 
-**Attenuation:** 10:1 voltage divider reduces ~1V p-p CM108 output to ~90mV for radio microphone input.
+D1 (1N4148) clamps the PTT line to protect against voltage spikes.
+
+### Relay Driver
+
+```
+ESP32 GPIO5 → R2 (10k) → Q2 base
+                         Q2 collector → K1 coil (−)
+                         Q2 emitter → GND
+                         K1 coil (+) → 5V rail
+
+GPIO5 HIGH → Q2 saturates → K1 energized → serial mode (NO contacts close)
+GPIO5 LOW  → Q2 off → K1 released → audio mode (NC contacts close)
+```
+
+D2 (1N5819 Schottky) across K1 coil absorbs the inductive flyback spike.
+
+---
+
+## Audio Level Matching
+
+### TX Path (ESP32 DAC → Radio MIC)
+
+ESP32 DAC output: 0–3.3 V (8-bit). Radio mic input expects ~100 mVpp.
+
+```
+GPIO25 ──► R3 (33k) ──┬── R4 (3.3k) → GND
+                       └── C4 (100nF) ──► K1 P1_NC → Radio MIC
+```
+
+Divider ratio: 3.3k / (33k + 3.3k) = 0.091 → ~300 mVpp max.
+C4 removes DC offset. Adjust R3/R4 for desired TX audio level.
+
+### RX Path (Radio SPK → ESP32 ADC)
+
+Radio speaker output: ~1–3 Vpp. ESP32 ADC input: 0–3.3 V, 12-bit.
+
+```
+Radio SPK → K1 P2_NC → C5 (100nF) → R5 (10k) ──┬── R6 (10k) → GND
+                                                  └── → GPIO36 (ADC)
+```
+
+Divider: 10k / (10k + 10k) = 0.5 → max ~1.65 Vpp at ADC.
+C5 AC-couples to remove DC. ADC pin biased to ~1.65 V by midpoint divider.
+
+---
 
 ## LED Wiring
 
-| LED  | Color  | Signal Source           | Behavior                      |
-|------|--------|------------------------|-------------------------------|
-| LED1 | Green  | 5V rail via R7 (330Ω)  | Solid ON when powered         |
-| LED2 | Red    | Q1 collector via R8    | ON during PTT (transmitting)  |
-| LED3 | Yellow | CM108 GPIO4 via R9     | Blinks with audio activity    |
-| LED4 | Blue   | CP2102 TX LED via R10  | Blinks during serial TX/RX    |
+All LEDs are 0805 SMD with 220 Ω series resistors for ~10 mA at 3.3 V.
 
-## Cable Recommendations
+| LED | GPIO | Color | Function |
+|-----|------|-------|----------|
+| LED1 | 18 | Green | Power heartbeat (50 ms flash every 3 s) |
+| LED2 | 19 | Red | PTT active (solid while keyed) |
+| LED3 | 21 | Yellow | RX audio activity (blinks on received audio) |
+| LED4 | 22 | Blue | BT status (solid = connected, fast blink = advertising) |
 
-### Phone Cable (USB-C)
-- Standard USB 2.0 USB-C to USB-C cable, 1 meter
-- Ensures data + power delivery
-- Avoid charge-only cables (no data pins)
+---
 
-### Data Cable (3.5mm TRS)
-- Use the programming cable that came with the DB20-G
-- Or build one: 3.5mm TRS plug → 3 wires (tip=TX, ring=RX, sleeve=GND)
-- Cable length: keep under 2 meters to maintain signal integrity at 9600 baud
+## Power Design
 
-### Handset Cable (RJ-45)
-- Standard Cat5e patch cable, 0.5-1 meter
-- Straight-through wiring (not crossover)
-- Connects interface box J2 to radio front handset port
+### Primary: External 5 V via J4
 
-## Grounding Notes
+```
+J4 pin 1 (+5V) → F1 (500mA polyfuse) → U2 AMS1117-3.3 Vin
+                                         U2 Vout → 3.3V rail → ESP32
+J4 pin 2 (GND) → Board GND
+```
 
-- All ground connections (USB GND, audio GND, PTT GND, RJ-45 pin 3) must be connected to the common ground plane on the PCB
-- The 3.5mm TRS sleeve provides the serial ground reference
-- Ground loops between the serial and audio paths can cause hum — the coupling capacitors (C9, C10) help isolate DC paths
-- If you hear a 50/60Hz hum, add a ferrite bead on the RJ-45 cable near the interface box
+### Alternative: Radio Handset Port Power (BT-5)
+
+The DB20-G provides +5–8 V on J2 RJ-45 pin 2 for handset backlight power.
+This voltage can feed the board directly:
+
+```
+J2 pin 2 (+5-8V) → F1 polyfuse → U2 AMS1117-3.3 → 3.3V
+```
+
+AMS1117-3.3 accepts up to 18 V input, so 5–8 V is well within range.
+The polyfuse protects against overcurrent. No external power supply needed.
+
+**Current budget:**
+- ESP32 idle (BT connected): ~80 mA @ 3.3 V
+- ESP32 BT + audio streaming: ~150 mA @ 3.3 V
+- ESP32 peak (WiFi OTA): ~240 mA @ 3.3 V
+- Relay K1 coil: ~50 mA @ 5 V
+- LEDs (all on): ~40 mA @ 3.3 V
+- **Total max:** ~350 mA @ 5 V input
+
+---
+
+## Grounding
+
+- Single-point star ground near U2 LDO output.
+- ESP32 GND pad must be solidly connected to the ground pour.
+- Audio ground traces should be routed away from digital switching noise.
+- K1 relay return current path should not cross audio signal traces.
